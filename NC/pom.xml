@@ -10,7 +10,7 @@
     <groupId>com.sep</groupId>
     <artifactId>nc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>NC</name>
+    <name>nc</name>
     <description>Project for NC</description>
 
     <properties>
