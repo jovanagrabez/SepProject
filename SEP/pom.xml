@@ -24,6 +24,7 @@
         <module>NC</module>
         <module>Discovery</module>
         <module>Gateway</module>
+        <module>PayPal</module>
     </modules>
 
     <dependencies>
