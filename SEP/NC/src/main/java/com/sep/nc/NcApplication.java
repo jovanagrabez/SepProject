@@ -1,5 +1,6 @@
 package com.sep.nc;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.ssl.TrustStrategy;
@@ -16,6 +17,7 @@ import java.security.cert.X509Certificate;
 import org.apache.http.impl.client.HttpClients;
 
 
+@Slf4j
 @SpringBootApplication
 @EnableEurekaClient
 public class NcApplication {

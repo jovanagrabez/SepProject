@@ -1,5 +1,6 @@
 package com.sep.kp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.net.ssl.SSLContext;
 import java.security.cert.X509Certificate;
 
+@Slf4j
 @SpringBootApplication
 @EnableEurekaClient
 public class KpApplication {

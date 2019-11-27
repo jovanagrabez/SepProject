@@ -7,6 +7,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eureka-peer1/eureka/,http://eureka-peer2/eureka/
+logging:
+  file: Discovery/logs/application.log
+
 tpd:
   peer1Port: 8761
   peer2Port: 8760
