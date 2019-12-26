@@ -48,7 +48,7 @@ export class UserService {
   }
 
   getUserByEmail(email: string) {
-    return this.http.get('user-admin-service/api/users/'.concat(email));
+    return this.http.get('https://localhost:8762/naucna_centrala/api/user/'.concat(email));
   }
 
   getLoggedUserType() {
