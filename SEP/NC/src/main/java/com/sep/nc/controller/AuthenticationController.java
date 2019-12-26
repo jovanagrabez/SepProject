@@ -16,14 +16,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+//@CrossOrigin(value = "https://localhost:4200")
 @RestController
 @RequestMapping(value = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
@@ -65,7 +63,10 @@ public class AuthenticationController {
             // new UserTokenState(jwt, expiresIn)
             // Vrati token kao odgovor na uspesno autentifikaciju
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization: Bearer", jwt);
+            headers.setBearerAuth(jwt);
+            headers.add("access-control-expose-headers", "Authorization");
+
+                //headers.add("Authorization: Bearer", jwt);
 
 
             return ResponseEntity.ok().headers(headers).build();

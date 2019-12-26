@@ -1,5 +1,6 @@
 package com.sep.nc.entity;
 
+import com.sep.nc.entity.enumeration.ScientificArea;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,17 @@ public class User implements Serializable, UserDetails {
 
     @Column
     private String lastName;
+
+    @Column
+    private String city;
+
+    @Column
+    private String country;
+
+    @Column
+    @Enumerated
+    @ElementCollection(targetClass = ScientificArea.class)
+    private List<ScientificArea> scientificAreasOfInterest;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -146,5 +158,21 @@ public class User implements Serializable, UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

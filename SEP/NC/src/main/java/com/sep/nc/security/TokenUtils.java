@@ -21,7 +21,7 @@ public class TokenUtils {
     @Value("spring-security-demo")
     private String APP_NAME;
 
-    @Value("somesecret")
+    @Value("pM0p1r2uGzRz3DCJBFvrQWm4")
     public String SECRET;
 
     @Value("5000")
