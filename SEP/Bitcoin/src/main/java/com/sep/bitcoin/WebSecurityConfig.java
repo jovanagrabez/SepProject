@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 // za neautorizovane zahteve posalji 401 gresku
-   //             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+                //             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
 
                 .authorizeRequests()
