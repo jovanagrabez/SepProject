@@ -25,6 +25,7 @@
         <module>Discovery</module>
         <module>Gateway</module>
         <module>PayPal</module>
+        <module>Bitcoin</module>
         <module>Bank</module>
     </modules>
 
