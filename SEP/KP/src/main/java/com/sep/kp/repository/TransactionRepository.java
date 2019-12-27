@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 
     Transaction findTransactionByIdHashValue(String hashedId);
+    Transaction findByMerchantOrderId(Long merchantOrderId);
 }

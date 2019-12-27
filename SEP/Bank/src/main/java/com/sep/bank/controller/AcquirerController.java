@@ -7,14 +7,12 @@ import com.sep.bank.service.BankService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin("https://localhost:5000")
 public class AcquirerController {
 
     @Autowired
@@ -27,7 +25,6 @@ public class AcquirerController {
     @PostMapping("/get-payment-url")
     public ResponseEntity<PaymentDTO> getPaymentUrl(@RequestBody RequestDTO request) {
 
-        System.out.println("KKKKKKKKKKKKKKK"+ request.getAmount());
 
         PaymentDTO paymentData = bankService.getPaymentUrl(request);
         return ResponseEntity.ok(paymentData);

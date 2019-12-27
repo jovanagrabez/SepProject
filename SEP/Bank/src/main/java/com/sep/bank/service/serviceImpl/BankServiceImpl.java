@@ -36,8 +36,8 @@ public class BankServiceImpl implements BankService {
         Account account = accountService.checkMerchantData(requestDTO.getMerchantId(), requestDTO.getMerchantPassword());
         PaymentDTO paymentDTO = new PaymentDTO();
         if (account != null) {
-            paymentDTO = new PaymentDTO(RandomStringUtils.randomAlphabetic(16), requestDTO.getAmount(),
-                    RandomStringUtils.randomAlphabetic(16),  requestDTO.getMerchantOrderId());
+            paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getAmount(),
+                    "https://localhost:5000/home",  requestDTO.getMerchantOrderId());
         }
 
         return paymentDTO;
