@@ -1,10 +1,13 @@
 package com.sep.kp.model;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 public class Transaction {
 
     @Id
@@ -12,7 +15,22 @@ public class Transaction {
     private Long id;
 
     @Column
+    private String idHashValue;                   // Hashed value of id for url compare
+
+    @Column
+    private TypeOfProduct typeOfProduct;        // magazine or scientific work
+
+    @Column
+    private Long productId;                     // id of magazine or scientific work
+
+    @Column
     private Long acquirerOrderId;
+
+    @Column
+    private Long sellerId;
+
+    @Column
+    private String buyerEmail;
 
     @Column
     private Long merchantOrderId;
@@ -41,9 +59,11 @@ public class Transaction {
         this.status = status;
     }
 
-    public Transaction(Long acquirerOrderId, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status) {
+    public Transaction(Long acquirerOrderId, Long sellerId, String buyerEmail, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status) {
         this.acquirerOrderId = acquirerOrderId;
         this.merchantOrderId = merchantOrderId;
+        this.sellerId = sellerId;
+        this.buyerEmail = buyerEmail;
         this.paymentId = paymentId;
         this.timestamp = timestamp;
         this.amount = amount;

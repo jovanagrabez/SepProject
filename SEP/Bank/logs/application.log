@@ -26,7 +26,7 @@
 2019-12-27 00:19:52.441  INFO 7984 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:19:52.617  WARN 7984 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:19:53.085  WARN 7984 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:19:55.978  INFO 7984 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:19:55.978  INFO 7984 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: 459e25a8-f7e3-4b1b-b885-68f25d289a78
 
@@ -119,7 +119,7 @@ Using generated security password: 459e25a8-f7e3-4b1b-b885-68f25d289a78
 2019-12-27 00:26:21.867  INFO 5792 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:26:21.939  WARN 5792 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:26:22.037  WARN 5792 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:26:23.350  INFO 5792 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:26:23.350  INFO 5792 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: dc5ed01d-9e14-446b-ba4a-72d7204eabfa
 
@@ -212,7 +212,7 @@ Using generated security password: dc5ed01d-9e14-446b-ba4a-72d7204eabfa
 2019-12-27 00:31:32.432  INFO 8800 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:31:32.495  WARN 8800 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:31:32.596  WARN 8800 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:31:33.940  INFO 8800 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:31:33.940  INFO 8800 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: afa83410-4c50-4971-a265-b209f67e39cd
 
@@ -306,7 +306,7 @@ Using generated security password: afa83410-4c50-4971-a265-b209f67e39cd
 2019-12-27 00:41:34.372  INFO 5308 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:41:34.449  WARN 5308 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:41:34.559  WARN 5308 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:41:35.942  INFO 5308 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:41:35.942  INFO 5308 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: 0ed76801-eb17-4756-b525-9b8ee99ecc41
 
@@ -399,7 +399,7 @@ Using generated security password: 0ed76801-eb17-4756-b525-9b8ee99ecc41
 2019-12-27 00:47:01.255  INFO 7884 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:47:01.324  WARN 7884 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:47:01.441  WARN 7884 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:47:02.789  INFO 7884 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:47:02.789  INFO 7884 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: c1c86300-a7e0-4a4b-a2d6-317bcdd4eedd
 
@@ -492,7 +492,7 @@ Using generated security password: c1c86300-a7e0-4a4b-a2d6-317bcdd4eedd
 2019-12-27 00:49:43.955  INFO 9928 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 00:49:44.018  WARN 9928 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 00:49:44.118  WARN 9928 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 00:49:45.463  INFO 9928 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 00:49:45.463  INFO 9928 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: 72f04015-b760-4242-87f6-79f21e6bed0a
 
@@ -588,7 +588,7 @@ Using generated security password: 72f04015-b760-4242-87f6-79f21e6bed0a
 2019-12-27 01:14:20.054  INFO 9768 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 01:14:20.135  WARN 9768 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 01:14:20.243  WARN 9768 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 01:14:21.691  INFO 9768 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 01:14:21.691  INFO 9768 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: f302d2a3-1ade-4bab-a9f2-0400860ce31e
 
@@ -668,7 +668,7 @@ Using generated security password: f302d2a3-1ade-4bab-a9f2-0400860ce31e
 2019-12-27 01:18:04.209  INFO 8124 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 01:18:04.296  WARN 8124 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 01:18:04.407  WARN 8124 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 01:18:05.765  INFO 8124 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 01:18:05.765  INFO 8124 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: efbe4c6d-687d-4c0b-a087-1ac2087d8147
 
@@ -749,7 +749,7 @@ Using generated security password: efbe4c6d-687d-4c0b-a087-1ac2087d8147
 2019-12-27 01:25:07.827  INFO 9268 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 01:25:07.889  WARN 9268 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 01:25:07.997  WARN 9268 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 01:25:09.372  INFO 9268 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 01:25:09.372  INFO 9268 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: 36476203-acc4-4786-a8d0-40d17d070931
 
@@ -829,7 +829,7 @@ Using generated security password: 36476203-acc4-4786-a8d0-40d17d070931
 2019-12-27 01:30:14.753  INFO 6692 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2019-12-27 01:30:14.819  WARN 6692 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
 2019-12-27 01:30:14.928  WARN 6692 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-12-27 01:30:16.266  INFO 6692 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2019-12-27 01:30:16.266  INFO 6692 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
 Using generated security password: 9590a616-4f40-43c7-ab10-12e31778d832
 
@@ -904,3 +904,131 @@ Using generated security password: 9590a616-4f40-43c7-ab10-12e31778d832
 2019-12-27 02:35:18.903  INFO 6692 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
 2019-12-27 02:40:18.909  INFO 6692 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
 2019-12-27 02:45:18.915  INFO 6692 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:02:12.324  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:07:12.338  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:12:12.351  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:17:12.354  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:22:12.361  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:27:12.363  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:32:12.366  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:37:12.367  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:42:12.369  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:47:12.371  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:52:12.372  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 00:57:12.373  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:02:12.384  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:07:12.385  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:12:12.387  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:17:12.388  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:22:12.390  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:27:12.392  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:32:12.393  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:37:12.396  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:42:12.397  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:47:12.399  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:52:12.400  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 01:57:12.401  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:02:12.418  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:07:12.421  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:12:12.423  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:17:12.425  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:22:12.426  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:27:12.428  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:32:12.430  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:37:12.431  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:42:12.432  INFO 6696 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 02:56:53.754  INFO 4020 --- [restartedMain] com.sep.bank.BankApplication             : No active profile set, falling back to default profiles: default
+2019-12-27 02:56:56.289  INFO 4020 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-12-27 02:56:56.443  INFO 4020 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 137ms. Found 5 repository interfaces.
+2019-12-27 02:56:57.054  INFO 4020 --- [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=843abf73-bba1-3506-913f-6340432baf94
+2019-12-27 02:56:57.464  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.591  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.597  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.601  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2f043155' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.604  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.609  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:57.654  INFO 4020 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$1d137bda] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-12-27 02:56:59.564  INFO 4020 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (https)
+2019-12-27 02:56:59.574  INFO 4020 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-12-27 02:56:59.574  INFO 4020 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.27]
+2019-12-27 02:56:59.933  INFO 4020 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-12-27 02:56:59.934 DEBUG 4020 --- [restartedMain] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2019-12-27 02:56:59.934  INFO 4020 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 5955 ms
+2019-12-27 02:57:00.540  INFO 4020 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2019-12-27 02:57:00.616  INFO 4020 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.8.Final}
+2019-12-27 02:57:00.751  INFO 4020 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-12-27 02:57:00.877  INFO 4020 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-12-27 02:57:01.385  INFO 4020 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-12-27 02:57:01.399  INFO 4020 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2019-12-27 03:00:28.161  INFO 4020 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'file:/C:/Users/EC/IdeaProjects/SEP/SEP/Bank/target/classes/import.sql'
+2019-12-27 03:00:29.695  INFO 4020 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-12-27 03:00:30.215  INFO 4020 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-12-27 03:00:30.347  WARN 4020 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2019-12-27 03:00:30.639  WARN 4020 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-12-27 03:00:43.347  INFO 4020 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3c8d362d-6645-494b-a749-a242abf67850
+
+2019-12-27 03:00:44.201 DEBUG 4020 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
+2019-12-27 03:00:45.124 DEBUG 4020 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2019-12-27 03:00:45.711  INFO 4020 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3541a60a, org.springframework.security.web.context.SecurityContextPersistenceFilter@46171fdb, org.springframework.security.web.header.HeaderWriterFilter@415e318e, org.springframework.web.filter.CorsFilter@72b682b9, org.springframework.security.web.authentication.logout.LogoutFilter@117b60cf, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1338c156, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3fe293d6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@746890c1, org.springframework.security.web.session.SessionManagementFilter@5015b5fa, org.springframework.security.web.access.ExceptionTranslationFilter@67f002fe, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@433055e5]
+2019-12-27 03:00:45.770  WARN 4020 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-12-27 03:00:45.771  INFO 4020 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-12-27 03:00:45.777  WARN 4020 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-12-27 03:00:45.778  INFO 4020 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-12-27 03:00:45.898  INFO 4020 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-12-27 03:00:45.960 DEBUG 4020 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2019-12-27 03:00:46.587 DEBUG 4020 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2019-12-27 03:00:48.643  INFO 4020 --- [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2019-12-27 03:00:50.855  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2019-12-27 03:00:51.562  INFO 4020 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2019-12-27 03:00:51.562  INFO 4020 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2019-12-27 03:01:00.443  INFO 4020 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2019-12-27 03:01:00.445  INFO 4020 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2019-12-27 03:01:04.543  INFO 4020 --- [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 03:01:05.427  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-12-27 03:01:05.428  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-12-27 03:01:05.429  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-12-27 03:01:05.430  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-12-27 03:01:05.431  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-12-27 03:01:05.431  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2019-12-27 03:01:05.432  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-12-27 03:01:12.447  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-12-27 03:01:12.923  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2019-12-27 03:01:12.929  INFO 4020 --- [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-12-27 03:01:13.103  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1577412072940 with initial instances count: 6
+2019-12-27 03:01:13.114  INFO 4020 --- [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application BANK_SERVICE with eureka with status UP
+2019-12-27 03:01:13.116  INFO 4020 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1577412073116, current=UP, previous=STARTING]
+2019-12-27 03:01:13.121  INFO 4020 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_BANK_SERVICE/EC-PC:bank_service:8083: registering service...
+2019-12-27 03:01:17.214  INFO 4020 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_BANK_SERVICE/EC-PC:bank_service:8083 - registration status: 204
+2019-12-27 03:01:22.188  INFO 4020 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (https) with context path ''
+2019-12-27 03:01:22.190  INFO 4020 --- [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8083
+2019-12-27 03:01:22.194  INFO 4020 --- [restartedMain] com.sep.bank.BankApplication             : Started BankApplication in 272.387 seconds (JVM running for 274.619)
+2019-12-27 03:06:05.440  INFO 4020 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-12-27 03:06:09.761  INFO 4020 --- [https-jsse-nio-8083-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-12-27 03:06:09.762  INFO 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-12-27 03:06:09.763 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2019-12-27 03:06:09.795 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2019-12-27 03:06:09.795  INFO 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 32 ms
+2019-12-27 03:06:09.815 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sep.bank.controller.AcquirerController#getPaymentUrl(RequestDTO)
+2019-12-27 03:06:09.848 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2019-12-27 03:06:09.877 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/api/get-payment-url", parameters={}
+2019-12-27 03:06:09.879 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sep.bank.controller.AcquirerController#getPaymentUrl(RequestDTO)
+2019-12-27 03:06:10.108 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.sep.bank.model.DTO.RequestDTO@12549368]
+2019-12-27 03:06:15.293 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, application/*+json] and supported [application/json, application/*+json, application/json, application/*+json]
+2019-12-27 03:06:15.294 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.sep.bank.model.DTO.PaymentDTO@2380f410]
+2019-12-27 03:06:15.556 DEBUG 4020 --- [https-jsse-nio-8083-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2019-12-27 03:09:42.982 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sep.bank.controller.AcquirerController#payByCard(CardAmountDTO)
+2019-12-27 03:09:42.983 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2019-12-27 03:09:42.984 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/pay-by-card", parameters={}
+2019-12-27 03:09:42.984 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sep.bank.controller.AcquirerController#payByCard(CardAmountDTO)
+2019-12-27 03:09:42.989 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.sep.bank.model.DTO.CardAmountDTO@95f4fc3]
+2019-12-27 03:09:46.374 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.client.RestTemplate              : HTTP POST https://localhost:8762/koncentrator_placanja/api/transaction/finish-transaction
+2019-12-27 03:09:46.416 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2019-12-27 03:09:46.420 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.client.RestTemplate              : Writing [com.sep.bank.model.DTO.TransactionDTO@18de5cef] with org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+2019-12-27 03:09:47.248 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
+2019-12-27 03:09:47.250 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.client.RestTemplate              : Reading to [com.sep.bank.model.DTO.TransactionDTO]
+2019-12-27 03:09:47.278 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2019-12-27 03:09:47.278 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Nothing to write: null body
+2019-12-27 03:09:47.279 DEBUG 4020 --- [https-jsse-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2019-12-27 03:11:05.452  INFO 4020 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

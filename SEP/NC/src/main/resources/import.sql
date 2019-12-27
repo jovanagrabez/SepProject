@@ -23,9 +23,9 @@ insert into user_role (user_id, role_id) VALUES (6, 4);
 insert into user_role (user_id, role_id) VALUES (7, 4);
 
 
-insert into magazine (id, issnnumber, name, payment_type, main_editor_id) values (1, '7342-8843', 'Brava casa', 0, 3);
-insert into magazine (id, issnnumber, name, payment_type, main_editor_id) values (2, '1729-6482', 'Cosmopolitan', 1, 4);
-insert into magazine (id, issnnumber, name, payment_type, main_editor_id) values (3, '3110-0072', 'Auto magazine', 0, 5);
+insert into magazine (id, issnnumber, name, payment_type, main_editor_id, price) values (1, '7342-8843', 'Brava casa', 0, 3, 100);
+insert into magazine (id, issnnumber, name, payment_type, main_editor_id, price) values (2, '1729-6482', 'Cosmopolitan', 1, 4, 150);
+insert into magazine (id, issnnumber, name, payment_type, main_editor_id, price) values (3, '3110-0072', 'Auto magazine', 0, 5, 125);
 
 insert into magazine_scientific_areas(magazine_id, scientific_areas) VALUES (1, 3);
 insert into magazine_scientific_areas(magazine_id, scientific_areas) VALUES (1, 5);

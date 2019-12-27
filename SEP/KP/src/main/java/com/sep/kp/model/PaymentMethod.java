@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Method implements Serializable {
+public class PaymentMethod implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +14,11 @@ public class Method implements Serializable {
     @Column
     private String name;
 
-    public Method(String name) {
+    public PaymentMethod(String name) {
         this.name = name;
     }
 
-    public Method() {
+    public PaymentMethod() {
     }
 
     public Long getId() {

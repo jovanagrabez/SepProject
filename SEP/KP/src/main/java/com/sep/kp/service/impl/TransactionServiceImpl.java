@@ -1,19 +1,39 @@
 package com.sep.kp.service.impl;
 
 
+import com.sep.kp.model.DTO.AvailablePaymentMethodsHtmlModel;
+import com.sep.kp.model.DTO.CreateTransactionDto;
+import com.sep.kp.model.PaymentMethod;
 import com.sep.kp.model.PaymentRequest;
+import com.sep.kp.model.Seller;
 import com.sep.kp.model.Transaction;
+import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
 import com.sep.kp.service.TransactionService;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
+    private static final Argon2 ARGON2 = Argon2Factory.create();
+
+    private static final int ITERATIONS = 2;
+    private static final int MEMORY= 65536;
+    private static final int PARALLELISM = 1;
+
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private SellerRepository sellerRepository;
 
     @Autowired
     private PaymentRequestService paymentRequestService;
@@ -38,5 +58,60 @@ public class TransactionServiceImpl implements TransactionService {
                 break;
         }
         return url;
+    }
+
+    @Override
+    public Transaction createTransaction(CreateTransactionDto createTransactionDto) {
+        Transaction transaction = new Transaction();
+        transaction.setProductId(createTransactionDto.getProductId());
+        transaction.setBuyerEmail(createTransactionDto.getUserEmail());
+        transaction.setAmount(createTransactionDto.getPrice());
+        transaction.setTypeOfProduct(createTransactionDto.getTypeOfProduct());
+
+        Seller seller = this.sellerRepository.findSellerByMagazineId(createTransactionDto.getProductId());  // TODO ako je naucni rad nece raditi jer poredi po id-u samo magazina, treba mozda uvek slati od magazina
+        transaction.setSellerId(seller.getId());
+
+        // generating hash value of id for url access to transaction
+        Transaction savedTransaction = this.transactionRepository.save(transaction);
+        final String hash = ARGON2.hash(ITERATIONS, MEMORY, PARALLELISM, savedTransaction.getId().toString());
+        savedTransaction.setIdHashValue(hash);
+
+        return this.transactionRepository.save(savedTransaction);
+    }
+
+    @Override
+    public Map<String, String> generateHtmlForAvailablePayments(String hashedId) {
+
+        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
+//        AvailablePaymentMethodsHtmlModel model = new AvailablePaymentMethodsHtmlModel();
+
+        Map<String, String> model = new HashMap<String, String>();
+        for (PaymentMethod method : seller.getPaymentMethods()) {
+            if (method.getName().equals("Bitcoin")) {
+                model.put("bitcoin", "true");
+                model.put("bitcoinToken", seller.getBitcoinToken());
+            } else if (method.getName().equals("PayPal")) {
+                model.put("paypal", "true");      // TODO postaviti potrebne parametre
+            } else if (method.getName().equals("Bank")) {
+                model.put("bank", "true");
+            }
+        }
+//        for (PaymentMethod method : seller.getPaymentMethods()) {
+//            if (method.getName().equals("Bitcoin")) {
+//                model.setBitcoin(true);
+//                model.setBitcoinToken(seller.getBitcoinToken());
+//            } else if (method.getName().equals("PayPal")) {
+//                model.setPaypal(true);      // TODO postaviti potrebne parametre
+//            } else if (method.getName().equals("Bank")) {
+//                model.setBank(true);
+//            }
+//        }
+
+
+        // TODO !!!!! na osnovu seller.paymentMethods generisati dinamicku formu
+
+
+        return model;
     }
 }
