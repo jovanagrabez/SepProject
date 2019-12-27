@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #880000">
+  <a class="navbar-brand" routerLink="home">
+    <div><img src="https://img.icons8.com/dusk/64/000000/book.png">Scientific center</div>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+    <ul id="user" class="navbar-nav ml-auto" style="margin-right: 5%">
+      <li *ngIf="userRole === ''" class="nav-item active" >
+        <a class="nav-link" routerLink="login" >Log In </a>
+      </li>
+      <li *ngIf="userRole === ''" class="nav-item active" >
+        <a class="nav-link" routerLink="register">Register </a>
+
+      </li>
+      <li *ngIf="userRole !== ''" class="nav-item active" >
+        <a class="nav-link"  (click)="logout()">Log out </a>
+      </li>
+
+
+      <li *ngIf="userRole === 'ROLE_SISTEM_ADMIN'" class="nav-item dropdown" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarFeaturesDropdownMenu" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Admin</a>
+        <div class="dropdown-menu dropdown-left-manual" aria-labelledby="navbarFeaturesDropdownMenu">
+          <a class="dropdown-item" routerLink="certificate/all">All certificates</a>
+          <a class="dropdown-item" routerLink="certificate/new">Add certificate</a>
+          <a class="dropdown-item" routerLink="certificate/self-signed/new">Add self-signed certificate</a>
+          <a class="dropdown-item" routerLink="keystore/generate" [routerLinkActive]="">Generate keystore</a>
+        </div>
+      </li>
+
+      <li *ngIf="userRole === 'ROLE_ADMIN'" class="nav-item dropdown" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarFeaturesDropdownMenu" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Admin</a>
+        <div class="dropdown-menu dropdown-left-manual" aria-labelledby="navbarFeaturesDropdownMenu">
+          <a class="dropdown-item" routerLink="additional-services">Additional services</a>
+          <a class="dropdown-item" routerLink="category-services">Accommodation category</a>
+          <a class="dropdown-item" routerLink="type-services">Accommodation type</a>
+          <a class="dropdown-item" routerLink="accommodation view">Accommodation view</a>
+          <a class="dropdown-item" routerLink="add-accommodation">Add accommodation</a>
+          <a class="dropdown-item" routerLink="users-management">Users management</a>
+          <a class="dropdown-item" routerLink="comments">Comments</a>
+
+
+
+
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>

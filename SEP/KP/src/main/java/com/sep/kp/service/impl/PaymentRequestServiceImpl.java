@@ -30,10 +30,12 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
         paymentRequest.setMerchantPassword(foundSeller.getClientPassword());
 
         Random random = new Random();
-        paymentRequest.setMerchantOrderId((long) 154848);
+        paymentRequest.setMerchantOrderId((long)random.nextInt());
         paymentRequest.setAmount(amount);
         paymentRequest.setMerchantTimestamp(new Date());
-
+        paymentRequest.setSuccessUrl("/success");
+        paymentRequest.setErrorUrl("/error");
+        paymentRequest.setFailedUrl("/fail");
         paymentRequestRepository.save(paymentRequest);
 
         return paymentRequest;

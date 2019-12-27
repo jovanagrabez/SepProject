@@ -1,10 +1,12 @@
 package com.sep.bank.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class TransactionDTO {
 
-
+    @JsonIgnore
     private Long id;
     private Long merchantOrderId;
     private Long paymentId;

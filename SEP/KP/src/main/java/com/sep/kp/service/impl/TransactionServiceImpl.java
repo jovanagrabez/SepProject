@@ -21,6 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public String endTransaction(Transaction transaction) {
 
+     //   transaction.setStatus("SUCCESS");
         transactionRepository.save(transaction);
         PaymentRequest paymentRequest = paymentRequestService.getPaymentRequest(transaction.getMerchantOrderId());
         String status = transaction.getStatus();

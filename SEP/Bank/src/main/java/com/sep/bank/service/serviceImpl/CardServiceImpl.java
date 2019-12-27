@@ -6,8 +6,6 @@ import com.sep.bank.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class CardServiceImpl implements CardService {
 
@@ -16,7 +14,7 @@ public class CardServiceImpl implements CardService {
 
 
     @Override
-    public Card find(String pan, int securityCode, String cardHolderName, Date validTo) {
-        return cardRepository.findByPanAndSecurityCodeAndCardholderNameAndValidTo(pan, securityCode,cardHolderName,validTo);
+    public Card find(String pan) {
+        return cardRepository.findByPan(pan);
     }
 }

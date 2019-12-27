@@ -1,0 +1,29 @@
+<div  id="magazines">
+  <h3>Magazines</h3>
+  <br><br>
+  <div *ngFor="let magazine of magazinesList">
+    <div>
+      <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <!--      <span class="mb-1 pull-right">-->
+        <!--        <a ><img src="https://img.icons8.com/carbon-copy/100/000000/delete.png" width="30" height="30" alt=""></a>-->
+        <!--      </span>-->
+        <div class="d-flex w-80 justify-content-between">
+          <h5 class="mb-2">{{magazine['name']}}</h5>
+
+        </div>
+        <span>
+          <span class="mb-2"> Scientific areas:</span>
+          <span *ngFor="let area of magazine['scientificAreas']">
+            {{area}}
+          </span>
+        </span>
+
+        <p class="mb-2">Payment type: {{magazine['paymentType']}}</p>
+        <p class="mb-2">ISSN number: {{magazine['issnnumber']}}</p>
+
+
+        <button class="btn btn-secondary" (click)="buyMagazine(magazine['id'])">Buy</button>
+      </div>
+    </div>
+  </div>
+</div>
