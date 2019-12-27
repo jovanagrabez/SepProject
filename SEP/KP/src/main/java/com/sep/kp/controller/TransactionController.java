@@ -39,15 +39,15 @@ public class TransactionController {
         return "https://localhost:8762/koncentrator_placanja/api/transaction/pay_method/" +this.transactionService.createTransaction(createTransactionDto).getIdHashValue();
     }
 
-    @GetMapping(value = "/pay_method/{hashed_id}")
+    @GetMapping(value = "/pay_method/{hashedId}")
     public ModelAndView selectionOfPayMethod(@PathVariable String hashedId) {
         Map<String, String> model = this.transactionService.generateHtmlForAvailablePayments(hashedId);
 
         return new ModelAndView("availablePaymentMethods", model);
     }
 
-    @GetMapping(value = "/bitcoin/{hashed_id}")
-    public ResponseEntity sendRedirectToBitcoin(@PathVariable String hashedId) {
+    @GetMapping(value = "/bitcoin/{hashedId}")
+    public RedirectView sendRedirectToBitcoin(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
@@ -63,9 +63,9 @@ public class TransactionController {
 
         HttpEntity requestEntity = new HttpEntity<>(bitcoinOrderDTO, requestHeaders);
 
-        ResponseEntity resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, RedirectView.class);
+        ResponseEntity<RedirectView> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, RedirectView.class);
 
-        return ResponseEntity.ok().build();
+        return resp.getBody();
     }
 
 

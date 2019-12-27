@@ -73,7 +73,13 @@ public class TransactionServiceImpl implements TransactionService {
         // generating hash value of id for url access to transaction
         Transaction savedTransaction = this.transactionRepository.save(transaction);
         final String hash = ARGON2.hash(ITERATIONS, MEMORY, PARALLELISM, savedTransaction.getId().toString());
-        savedTransaction.setIdHashValue(hash);
+        String finalHash = hash.replace("$", "");
+        finalHash = finalHash.replace("/", "");
+        finalHash = finalHash.replace(":", "");
+        finalHash = finalHash.replace("=", "");
+        finalHash = finalHash.replace(",", "");
+
+        savedTransaction.setIdHashValue(finalHash);
 
         return this.transactionRepository.save(savedTransaction);
     }

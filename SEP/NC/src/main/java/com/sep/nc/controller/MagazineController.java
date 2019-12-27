@@ -11,9 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/magazine")
@@ -36,8 +41,8 @@ public class MagazineController {
         return new ResponseEntity<>(magazineService.getAll(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/buy", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String buyMagazine(@RequestBody Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
+    @GetMapping(value = "/buy/{magazineId}")
+    public Map<String, String> buyMagazine(@PathVariable Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
 
         String email = UtilityService.getEmailFromToken(authorization);
         if (email == null) {
@@ -55,7 +60,13 @@ public class MagazineController {
 
         HttpEntity requestEntity = new HttpEntity<>(buyProductDto, requestHeaders);
 
+//        URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
         ResponseEntity<String> resp = restTemplate.postForEntity(KP_SERVICE_URI + "/transaction/generate_url",requestEntity, String.class);
-        return resp.getBody();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("url", resp.getBody());
+        return map;
+     //   return URLEncoder.encode(resp.getBody(), StandardCharsets.UTF_8.toString());
+//        return new RedirectView(resp.getBody());
     }
 }

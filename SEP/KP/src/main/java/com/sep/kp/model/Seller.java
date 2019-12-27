@@ -29,7 +29,7 @@ public class Seller implements Serializable {
     @Column
     private String clientPassword;
 
-    @OneToMany
+    @ManyToMany
     private List<PaymentMethod> paymentMethods;
 
     @Column
