@@ -16,5 +16,6 @@ public class PaymentRequest {
     private PaymentIntent paymentIntent;
     private PaymentMethod paymentMethod;
     private String description;
+    private String hashedMagazineId;
 
 }

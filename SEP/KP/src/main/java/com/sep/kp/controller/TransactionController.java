@@ -1,6 +1,6 @@
 package com.sep.kp.controller;
 
-import com.sep.kp.model.Currency;
+import com.sep.kp.model.*;
 import com.sep.kp.model.DTO.*;
 import com.sep.kp.model.PaymentRequest;
 import com.sep.kp.model.Seller;
@@ -36,10 +36,13 @@ public class TransactionController {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static final String Bitcoin_SERVICE_URI = "https://localhost:8762/bitcoin_service/api/order";
+    private static final String PayPal_SERVICE_URI = "https://localhost:8762/paypal_service/api/pay";
+    private static final String NC_SERVICE_URI = "https://localhost:8762/naucna_centrala/api/magazine/finish";
+    private static final String NC_FRONTEND = "https://localhost:4200";
     @Autowired
     private PaymentRequestService paymentRequestService;
 
-    private static final String Bitcoin_SERVICE_URI= "https://localhost:8762/bitcoin_service/api/order";
 
 
     @PostMapping("/generate_url")
@@ -59,8 +62,9 @@ public class TransactionController {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
-        CreateBitcoinOrderDTO bitcoinOrderDTO = new CreateBitcoinOrderDTO(transaction.getId(), transaction.getAmount(), Currency.EUR,
-                Currency.BTC, "Bitcoin transaction", "Bitcoin transaction id:" + transaction.getId(),
+        CreateBitcoinOrderDTO bitcoinOrderDTO = new CreateBitcoinOrderDTO(transaction.getId(), transaction.getIdHashValue(),
+                transaction.getAmount(), Currency.EUR, Currency.BTC, "Bitcoin transaction",
+                "Bitcoin transaction id:" + transaction.getId(),
                 null, null, null, null, seller.getBitcoinToken());
 
 
@@ -73,6 +77,60 @@ public class TransactionController {
         ResponseEntity<String> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, String.class);
 
         return new RedirectView(resp.getBody());
+    }
+
+    @GetMapping(value = "/paypal/{hashedId}")
+    public RedirectView sendRedirectToPayPal(@PathVariable String hashedId) {
+        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
+
+        CreatePayPalOrderDto createPayPalOrderDto = new CreatePayPalOrderDto();
+        createPayPalOrderDto.setPrice(transaction.getAmount());
+        createPayPalOrderDto.setCurrency("EUR");
+        createPayPalOrderDto.setNameOfJournal(transaction.getProductId().toString());
+        createPayPalOrderDto.setPaymentIntent(PayPalPaymentIntent.ORDER);
+        createPayPalOrderDto.setPaymentMethod(PayPalPaymentMethod.PAYPAL);
+        createPayPalOrderDto.setDescription("It`s OK");
+        createPayPalOrderDto.setHashedMagazineId(transaction.getIdHashValue());
+
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity requestEntity = new HttpEntity<>(createPayPalOrderDto, requestHeaders);
+
+        ResponseEntity<String> resp = restTemplate.postForEntity(PayPal_SERVICE_URI, requestEntity, String.class);
+
+        return new RedirectView(resp.getBody());
+    }
+
+    @GetMapping(value = "/success/{hashedOrderId}")
+    public RedirectView successOrder(@PathVariable String hashedOrderId) {
+        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
+        transaction.setStatus("SUCCESS");
+
+        FinishedMagazineOrderDto finishedMagazineOrderDto = new FinishedMagazineOrderDto();
+        finishedMagazineOrderDto.setEmail(transaction.getBuyerEmail());
+        finishedMagazineOrderDto.setMagazineId(transaction.getProductId());
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity requestEntity = new HttpEntity<>(finishedMagazineOrderDto, requestHeaders);
+
+        ResponseEntity<String> resp = restTemplate.postForEntity(NC_SERVICE_URI, requestEntity, String.class);
+        return new RedirectView(NC_FRONTEND);
+    }
+
+    @GetMapping(value = "/cancel/{hashedOrderId}")
+    public RedirectView cancelOrder(@PathVariable String hashedOrderId) {
+        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
+        transaction.setStatus("FAILED");
+
+        this.transactionRepository.save(transaction);
+        return new RedirectView(NC_FRONTEND);
     }
 
 

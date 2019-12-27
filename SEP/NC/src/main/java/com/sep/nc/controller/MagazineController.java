@@ -2,6 +2,7 @@ package com.sep.nc.controller;
 
 import com.sep.nc.entity.Magazine;
 import com.sep.nc.entity.dto.BuyProductDto;
+import com.sep.nc.entity.dto.FinishedMagazineOrderDto;
 import com.sep.nc.entity.enumeration.PaymentType;
 import com.sep.nc.entity.enumeration.TypeOfProduct;
 import com.sep.nc.service.MagazineService;
@@ -26,6 +27,7 @@ public class MagazineController {
 
     private final MagazineService magazineService;
     private final RestTemplate restTemplate;
+    private final UserService userService;
 
     private static final String KP_SERVICE_URI= "https://localhost:8762/koncentrator_placanja/api";
 
@@ -33,6 +35,7 @@ public class MagazineController {
     public MagazineController(MagazineService magazineService, RestTemplate restTemplate, UserService userService) {
         this.magazineService = magazineService;
         this.restTemplate = restTemplate;
+        this.userService = userService;
     }
 
 
@@ -68,5 +71,10 @@ public class MagazineController {
         return map;
      //   return URLEncoder.encode(resp.getBody(), StandardCharsets.UTF_8.toString());
 //        return new RedirectView(resp.getBody());
+    }
+
+    @PostMapping(value = "/finish")
+    public void successOrder(@RequestBody FinishedMagazineOrderDto finishedMagazineOrderDto) {
+        this.userService.addBoughtMagazine(finishedMagazineOrderDto.getEmail(), finishedMagazineOrderDto.getMagazineId());
     }
 }

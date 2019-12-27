@@ -35,8 +35,10 @@ export class LogInComponent implements OnInit {
       console.log(userFromToken.roles[0].authority);
 
       localStorage.setItem('loggedUser', JSON.stringify(userFromToken));
-      location.reload();
       this.router.navigate(['home']);
+      // @ts-ignore
+      location.replace(['home']);
+
     }, error2 => {
       console.log(error2);
       this.wrongUsernameOrPass = true;
