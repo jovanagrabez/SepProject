@@ -1,40 +1,32 @@
 package com.sep.bank.model.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 
-public class TransactionDTO {
-
-    @JsonIgnore
-    private Long id;
+public class TransactionResultCustomerDTO {
     private Long merchantOrderId;
-    private Long paymentId;
-    private String status;
     private Long acquirerOrderId;
     private Date acquirerTimestamp;
-    private double amount;
+    private Long paymentId;
     private String resultUrl;
+    private double amount;
+    private String status;
 
-
-
-    public TransactionDTO(Long merchantOrderId, Long paymentId, Long acquierOrderId, Date acquirerTimestamp, double ammount) {
+    public TransactionResultCustomerDTO(Long merchantOrderId, Long acquirerOrderId, Date acquirerTimestamp, Long paymentId, String resultUrl, double amount, String status) {
         this.merchantOrderId = merchantOrderId;
-        this.paymentId = paymentId;
-        this.acquirerOrderId = acquierOrderId;
+        this.acquirerOrderId = acquirerOrderId;
         this.acquirerTimestamp = acquirerTimestamp;
-        this.amount = ammount;
-    }
-    public TransactionDTO() {
-    }
-
-
-    public Long getId() {
-        return id;
+        this.paymentId = paymentId;
+        this.resultUrl = resultUrl;
+        this.amount = amount;
+        this.status = status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getResultUrl() {
+        return resultUrl;
+    }
+
+    public void setResultUrl(String resultUrl) {
+        this.resultUrl = resultUrl;
     }
 
     public Long getMerchantOrderId() {
@@ -43,22 +35,6 @@ public class TransactionDTO {
 
     public void setMerchantOrderId(Long merchantOrderId) {
         this.merchantOrderId = merchantOrderId;
-    }
-
-    public Long getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getAcquirerOrderId() {
@@ -77,6 +53,14 @@ public class TransactionDTO {
         this.acquirerTimestamp = acquirerTimestamp;
     }
 
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -85,11 +69,11 @@ public class TransactionDTO {
         this.amount = amount;
     }
 
-    public String getResultUrl() {
-        return resultUrl;
+    public String getStatus() {
+        return status;
     }
 
-    public void setResultUrl(String resultUrl) {
-        this.resultUrl = resultUrl;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

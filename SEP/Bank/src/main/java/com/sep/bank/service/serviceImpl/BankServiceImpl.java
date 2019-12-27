@@ -39,14 +39,15 @@ public class BankServiceImpl implements BankService {
             paymentDTO = new PaymentDTO(RandomStringUtils.randomAlphabetic(16), requestDTO.getAmount(),
                     RandomStringUtils.randomAlphabetic(16),  requestDTO.getMerchantOrderId());
         }
+
         return paymentDTO;
 
     }
 
     @Override
     public Transaction checkBankForCard(CardAmountDTO card) {
-        Card foundCard = cardService.find(card.getPan(), card.getSecurityCode(), card.getCardHolderName(),
-                card.getValidTo());
+        Card foundCard = cardService.find(card.getPan());
+
         Transaction transaction = new Transaction();
         transaction.setMerchantOrderId(card.getMerchantOrderId());
         transaction.setPaymentId(card.getPaymentId());
@@ -54,7 +55,9 @@ public class BankServiceImpl implements BankService {
 
         if (foundCard != null) {
             if (checkAmountOnAccount(foundCard, card.getAmount())) {
+
                 transaction.setStatus("SUCCESS");
+                System.out.println("LALALALALAL" + transaction.getStatus());
             } else
                 transaction.setStatus("FAILED");
         } else {
@@ -66,6 +69,8 @@ public class BankServiceImpl implements BankService {
     }
 
     private boolean checkAmountOnAccount(Card foundCard, double amount) {
+
+        System.out.println("BBBBBBBBBBBBBBBBBB"+foundCard.getAccount().getAmount());
         if (amount <= foundCard.getAccount().getAmount()) {
             foundCard.getAccount().setAmount(foundCard.getAccount().getAmount() - amount);
             accountService.saveAccount(foundCard.getAccount());
@@ -77,7 +82,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public String checkCard(AcquirerDTO acquirerDataDTO) {
         CardDTO card = acquirerDataDTO.getCard();
-        Card foundCard = cardService.find(card.getPan(), card.getSecurityCode(), card.getCardHolderName(), card.getValidTo());
+        Card foundCard = cardService.find(card.getPan());
 
         if (foundCard != null) {
             if (checkAmountOnAccount(foundCard, acquirerDataDTO.getAmount())) {
