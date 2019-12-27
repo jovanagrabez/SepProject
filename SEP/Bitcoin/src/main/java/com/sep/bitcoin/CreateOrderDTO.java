@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CreateOrderDTO {
 
-    private String orderId;
+    private Long orderId;
     private double priceAmount;
     private Currency priceCurrency;
     private Currency receiveCurrency;
@@ -15,5 +15,6 @@ public class CreateOrderDTO {
     private String cancelUrl;
     private String successUrl;
     private String token;
+    private String bitcoinToken;
 
 }

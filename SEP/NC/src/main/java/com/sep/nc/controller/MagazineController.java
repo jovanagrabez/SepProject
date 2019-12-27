@@ -36,8 +36,8 @@ public class MagazineController {
         return new ResponseEntity<>(magazineService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/buy/{magazineId}")
-    public String buyMagazine(@PathVariable Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
+    @PostMapping(value = "/buy", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String buyMagazine(@RequestBody Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
 
         String email = UtilityService.getEmailFromToken(authorization);
         if (email == null) {

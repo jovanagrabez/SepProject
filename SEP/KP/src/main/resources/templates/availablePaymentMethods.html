@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Available payment methods</title>
 </head>
 <body>
 
-Bank<img src="https://img.icons8.com/color/96/000000/bank-building.png">
-PayPal<img src="https://img.icons8.com/color/96/000000/paypal.png">
-Bitcoin<img src="https://img.icons8.com/office/80/000000/bitcoin.png">
+<h2>Choose a payment method</h2>
+
+<!--<span th:if="${teacher.gender == 'F'}">Female</span>-->
+<span th:if="${bank == 'true'}"><href link="https://localhost:8762/koncentrator_placanja/api/transaction/bitcoin/${hashedId}"> Bank<img src="https://img.icons8.com/color/96/000000/bank-building.png"></href></span>
+<span th:if="${paypal == 'true'}">PayPal<img src="https://img.icons8.com/color/96/000000/paypal.png"></span>
+<span th:if="${bitcoin == 'true'}">Bitcoin<img src="https://img.icons8.com/office/80/000000/bitcoin.png"></span>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

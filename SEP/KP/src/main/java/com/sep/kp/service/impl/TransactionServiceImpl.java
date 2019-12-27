@@ -86,6 +86,11 @@ public class TransactionServiceImpl implements TransactionService {
 //        AvailablePaymentMethodsHtmlModel model = new AvailablePaymentMethodsHtmlModel();
 
         Map<String, String> model = new HashMap<String, String>();
+        model.put("hashedId", transaction.getIdHashValue());
+        model.put("bitcoin", "false");
+        model.put("paypal", "false");
+        model.put("bank", "false");
+
         for (PaymentMethod method : seller.getPaymentMethods()) {
             if (method.getName().equals("Bitcoin")) {
                 model.put("bitcoin", "true");
