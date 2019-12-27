@@ -11,7 +11,7 @@
 <br/><br/>
 <!--<span th:if="${teacher.gender == 'F'}">Female</span>-->
 <div style="margin-left: 45%">
-    <div th:if="${bank == 'true'}"><a href="${'https://localhost:8762/koncentrator_placanja/api/transaction/bank/'+hashedId}"> Bank<img src="https://img.icons8.com/color/96/000000/bank-building.png"></a></div>
+    <div th:if="${bank == 'true'}"><a th:href="${'https://localhost:8762/koncentrator_placanja/api/transaction/bank/'+hashedId}"> Bank<img src="https://img.icons8.com/color/96/000000/bank-building.png"></a></div>
     <div th:if="${paypal == 'true'}"><a>PayPal<img src="https://img.icons8.com/color/96/000000/paypal.png"></a></div>
     <div th:if="${bitcoin == 'true'}"><a th:href="${'https://localhost:8762/koncentrator_placanja/api/transaction/bitcoin/'+hashedId}">Bitcoin<img src="https://img.icons8.com/office/80/000000/bitcoin.png"></a></div>
 
