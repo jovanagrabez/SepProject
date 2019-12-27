@@ -19,6 +19,6 @@ export class HomeComponent implements OnInit {
   }
 
   buyMagazine(magazineId: any) {
-    this.magazineService.buyMagazine(magazineId).subscribe(result => {});
+    this.magazineService.buyMagazine(magazineId);
   }
 }

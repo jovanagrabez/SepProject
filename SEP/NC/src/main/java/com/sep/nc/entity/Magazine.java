@@ -43,7 +43,8 @@ public class Magazine {
             inverseJoinColumns = @JoinColumn(name = "reviewer_id"))
     private List<User> reviewers;
 
-
+    @Column
+    private double price;
 
 
 }

@@ -1,13 +1,13 @@
 package com.sep.kp.repository;
 
 
-import com.sep.kp.model.Method;
+import com.sep.kp.model.PaymentMethod;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MethodRepository extends JpaRepository<Method, Long> {
+public interface MethodRepository extends JpaRepository<PaymentMethod, Long> {
 
-    Method findByName(String name);
+    PaymentMethod findByName(String name);
 
 }

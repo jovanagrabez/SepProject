@@ -1,8 +1,9 @@
 package com.sep.nc.controller;
 
 import com.sep.nc.entity.Magazine;
-import com.sep.nc.entity.User;
-import com.sep.nc.entity.dto.BuyMagazineDto;
+import com.sep.nc.entity.dto.BuyProductDto;
+import com.sep.nc.entity.enumeration.PaymentType;
+import com.sep.nc.entity.enumeration.TypeOfProduct;
 import com.sep.nc.service.MagazineService;
 import com.sep.nc.service.UserService;
 import com.sep.nc.service.impl.UtilityService;
@@ -20,7 +21,6 @@ public class MagazineController {
 
     private final MagazineService magazineService;
     private final RestTemplate restTemplate;
-    private final UserService userService;
 
     private static final String KP_SERVICE_URI= "https://localhost:8762/koncentrator_placanja/api";
 
@@ -28,7 +28,6 @@ public class MagazineController {
     public MagazineController(MagazineService magazineService, RestTemplate restTemplate, UserService userService) {
         this.magazineService = magazineService;
         this.restTemplate = restTemplate;
-        this.userService = userService;
     }
 
 
@@ -38,26 +37,25 @@ public class MagazineController {
     }
 
     @GetMapping(value = "/buy/{magazineId}")
-    public ResponseEntity buyMagazine(@PathVariable Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
+    public String buyMagazine(@PathVariable Long magazineId, @RequestHeader(value = "Authorization") String authorization) throws Exception {
 
         String email = UtilityService.getEmailFromToken(authorization);
         if (email == null) {
             throw new Exception("Jwt error");
         }
         Magazine magazine = this.magazineService.getById(magazineId);
-        User user = this.userService.getUserByEmail(email);
 
-        BuyMagazineDto buyMagazineDto = new BuyMagazineDto(magazineId, magazine.getName(), user.getId(), email);
+        BuyProductDto buyProductDto = new BuyProductDto(magazineId, magazine.getName(), email, magazine.getPrice(), TypeOfProduct.magazine);
 
-        // TODO contact KP to get redirectUrl
+        //TODO contact KP to get redirectUrl
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-        HttpEntity requestEntity = new HttpEntity<>(buyMagazineDto, requestHeaders);
+        HttpEntity requestEntity = new HttpEntity<>(buyProductDto, requestHeaders);
 
-        ResponseEntity resp = restTemplate.exchange(KP_SERVICE_URI + "/generate_url", HttpMethod.POST,requestEntity, String.class);
-        return resp;
+        ResponseEntity<String> resp = restTemplate.postForEntity(KP_SERVICE_URI + "/transaction/generate_url",requestEntity, String.class);
+        return resp.getBody();
     }
 }

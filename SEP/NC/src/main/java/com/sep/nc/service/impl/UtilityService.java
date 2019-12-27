@@ -10,7 +10,7 @@ import org.springframework.web.client.HttpClientErrorException;
 @UtilityClass
 public class UtilityService {
 
-    public static final String SECRET = "somesecret";
+    public static final String SECRET = "pM0p1r2uGzRz3DCJBFvrQWm4";
 
     private static final String PREFIX = "Bearer ";
 

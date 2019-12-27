@@ -14,6 +14,8 @@ export class MagazineService {
   }
 
   buyMagazine(magazineId): any {
-    return this.http.get('https://localhost:8762/naucna_centrala/api/magazine/buy/'.concat(magazineId));
+    const url =  this.http.get('https://localhost:8762/naucna_centrala/api/magazine/buy/'.concat(magazineId));
+    // @ts-ignore
+    this.http.get(url);
 }
 }
