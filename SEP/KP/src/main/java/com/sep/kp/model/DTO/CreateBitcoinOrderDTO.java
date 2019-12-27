@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class CreateBitcoinOrderDTO {
     private Long orderId;
+    private String hashedOrderId;
     private double priceAmount;
     private Currency priceCurrency;
     private Currency receiveCurrency;
@@ -17,10 +18,12 @@ public class CreateBitcoinOrderDTO {
     private String token;
     private String bitcoinToken;
 
-    public CreateBitcoinOrderDTO(Long orderId, double priceAmount, Currency priceCurrency, Currency receiveCurrency,
+    public CreateBitcoinOrderDTO(Long orderId, String hashedOrderId,
+                                 double priceAmount, Currency priceCurrency, Currency receiveCurrency,
                                  String title, String description, String callbackUrl, String cancelUrl,
                                  String successUrl, String token, String bitcoinToken) {
         this.orderId = orderId;
+        this.hashedOrderId = hashedOrderId;
         this.priceAmount = priceAmount;
         this.priceCurrency = priceCurrency;
         this.receiveCurrency = receiveCurrency;

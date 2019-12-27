@@ -9,6 +9,7 @@ import lombok.Data;
 public class Order {
 
     private Long order_id;
+    private String hashedOrderId;
     private double price_amount;
     private Currency price_currency;
     private Currency receive_currency;
@@ -20,9 +21,10 @@ public class Order {
     private String token;
 
     public Order() {}
-    public Order(Long order_id, double price_amount, Currency price_currency, Currency receive_currency,
+    public Order(Long order_id, String hashedOrderId, double price_amount, Currency price_currency, Currency receive_currency,
                  String title, String description, String callback_url, String cancel_url, String success_url, String token) {
         this.order_id = order_id;
+        this.hashedOrderId = hashedOrderId;
         this.price_amount = price_amount;
         this.price_currency = price_currency;
         this.receive_currency = receive_currency;

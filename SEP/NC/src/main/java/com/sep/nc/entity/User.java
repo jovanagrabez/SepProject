@@ -41,6 +41,9 @@ public class User implements Serializable, UserDetails {
     @Column
     private String country;
 
+    @ManyToMany
+    private List<Magazine> payedMagazines;
+
     @Column
     @Enumerated
     @ElementCollection(targetClass = ScientificArea.class)
@@ -174,5 +177,21 @@ public class User implements Serializable, UserDetails {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<Magazine> getPayedMagazines() {
+        return payedMagazines;
+    }
+
+    public void setPayedMagazines(List<Magazine> payedMagazines) {
+        this.payedMagazines = payedMagazines;
+    }
+
+    public List<ScientificArea> getScientificAreasOfInterest() {
+        return scientificAreasOfInterest;
+    }
+
+    public void setScientificAreasOfInterest(List<ScientificArea> scientificAreasOfInterest) {
+        this.scientificAreasOfInterest = scientificAreasOfInterest;
     }
 }

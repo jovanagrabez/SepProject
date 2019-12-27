@@ -90,7 +90,6 @@ public class TransactionServiceImpl implements TransactionService {
 
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
-//        AvailablePaymentMethodsHtmlModel model = new AvailablePaymentMethodsHtmlModel();
 
         Map<String, String> model = new HashMap<String, String>();
         model.put("hashedId", transaction.getIdHashValue());
@@ -108,20 +107,6 @@ public class TransactionServiceImpl implements TransactionService {
                 model.put("bank", "true");
             }
         }
-//        for (PaymentMethod method : seller.getPaymentMethods()) {
-//            if (method.getName().equals("Bitcoin")) {
-//                model.setBitcoin(true);
-//                model.setBitcoinToken(seller.getBitcoinToken());
-//            } else if (method.getName().equals("PayPal")) {
-//                model.setPaypal(true);      // TODO postaviti potrebne parametre
-//            } else if (method.getName().equals("Bank")) {
-//                model.setBank(true);
-//            }
-//        }
-
-
-        // TODO !!!!! na osnovu seller.paymentMethods generisati dinamicku formu
-
 
         return model;
     }

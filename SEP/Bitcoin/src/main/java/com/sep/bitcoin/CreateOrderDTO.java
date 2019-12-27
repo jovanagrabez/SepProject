@@ -6,6 +6,7 @@ import lombok.Data;
 public class CreateOrderDTO {
 
     private Long orderId;
+    private String hashedOrderId;
     private double priceAmount;
     private Currency priceCurrency;
     private Currency receiveCurrency;

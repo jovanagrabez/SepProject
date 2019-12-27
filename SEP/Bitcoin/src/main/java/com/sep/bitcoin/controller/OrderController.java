@@ -16,12 +16,16 @@ public class OrderController {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static final String SUCCESS_URL = "https://localhost:8762/koncentrator_placanja/api/transaction/success/";
+    private static final String CANCEL_URL = "https://localhost:8762/koncentrator_placanja/api/transaction/cancel/";
+
 
     @PostMapping
     public String createOrder(@RequestBody CreateOrderDTO orderDTO) {
 
-        Order order = new Order(orderDTO.getOrderId(), orderDTO.getPriceAmount(), orderDTO.getPriceCurrency(), orderDTO.getReceiveCurrency(),
-                orderDTO.getTitle(), orderDTO.getDescription(), orderDTO.getCallbackUrl(), orderDTO.getCancelUrl(), orderDTO.getSuccessUrl(), orderDTO.getToken());
+        Order order = new Order(orderDTO.getOrderId(), orderDTO.getHashedOrderId(), orderDTO.getPriceAmount(), orderDTO.getPriceCurrency(), orderDTO.getReceiveCurrency(),
+                orderDTO.getTitle(), orderDTO.getDescription(), orderDTO.getCallbackUrl(), CANCEL_URL+orderDTO.getHashedOrderId(),
+                SUCCESS_URL+orderDTO.getHashedOrderId(), orderDTO.getToken());
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Content-Type", "application/json" );
@@ -34,4 +38,5 @@ public class OrderController {
         return url;
 
     }
+
 }
