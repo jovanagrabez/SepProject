@@ -22,7 +22,7 @@
         <p class="mb-2">ISSN number: {{magazine['issnnumber']}}</p>
 
 
-        <button class="btn btn-secondary" (click)="buyMagazine(magazine['id'])">Buy</button>
+        <button *ngIf="userLogged" class="btn btn-secondary" (click)="buyMagazine(magazine['id'])">Buy</button>
       </div>
     </div>
   </div>
