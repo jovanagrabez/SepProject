@@ -54,7 +54,6 @@ public class TransactionController {
         CreateBitcoinOrderDTO bitcoinOrderDTO = new CreateBitcoinOrderDTO(transaction.getId(), transaction.getAmount(), Currency.EUR,
                 Currency.BTC, "Bitcoin transaction", "Bitcoin transaction id:" + transaction.getId(),
                 null, null, null, null, seller.getBitcoinToken());
-        // TODO poslati podatke i prebaciti na drugu stranicu
 
 
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -63,9 +62,9 @@ public class TransactionController {
 
         HttpEntity requestEntity = new HttpEntity<>(bitcoinOrderDTO, requestHeaders);
 
-        ResponseEntity<RedirectView> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, RedirectView.class);
+        ResponseEntity<String> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, String.class);
 
-        return resp.getBody();
+        return new RedirectView(resp.getBody());
     }
 
 

@@ -18,7 +18,7 @@ public class OrderController {
 
 
     @PostMapping
-    public RedirectView createOrder(@RequestBody CreateOrderDTO orderDTO) {
+    public String createOrder(@RequestBody CreateOrderDTO orderDTO) {
 
         Order order = new Order(orderDTO.getOrderId(), orderDTO.getPriceAmount(), orderDTO.getPriceCurrency(), orderDTO.getReceiveCurrency(),
                 orderDTO.getTitle(), orderDTO.getDescription(), orderDTO.getCallbackUrl(), orderDTO.getCancelUrl(), orderDTO.getSuccessUrl(), orderDTO.getToken());
@@ -31,7 +31,7 @@ public class OrderController {
 
         ResponseEntity<CreateOrderResponse> resp = restTemplate.postForEntity("https://api-sandbox.coingate.com/v2/orders",requestEntity, CreateOrderResponse.class);
         String url = resp.getBody().getPayment_url();
-        return new RedirectView(url);
+        return url;
 
     }
 }
