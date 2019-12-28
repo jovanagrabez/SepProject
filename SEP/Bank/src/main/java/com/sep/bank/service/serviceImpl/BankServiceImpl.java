@@ -5,6 +5,7 @@ import com.sep.bank.model.Account;
 import com.sep.bank.model.Card;
 import com.sep.bank.model.DTO.*;
 import com.sep.bank.model.Transaction;
+import com.sep.bank.repository.AccountRepository;
 import com.sep.bank.repository.BankRepository;
 import com.sep.bank.repository.TransactionRepository;
 import com.sep.bank.service.AccountService;
@@ -31,6 +32,8 @@ public class BankServiceImpl implements BankService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private CardService cardService;
@@ -72,6 +75,7 @@ public class BankServiceImpl implements BankService {
         Card foundCard = cardService.find(card.getPan());
 
         Transaction transaction = new Transaction();
+        transaction.setSellerId(card.getSellerId());
         transaction.setHashedOrderId(card.getHashedId());
         transaction.setMerchantOrderId(card.getMerchantOrderId());
         transaction.setPaymentId(card.getPaymentId());
@@ -79,7 +83,9 @@ public class BankServiceImpl implements BankService {
 
         if (foundCard != null) {
             if (checkAmountOnAccount(foundCard, card.getAmount())) {
-
+                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                a.setAmount(a.getAmount()+card.getAmount());
+                this.accountRepository.save(a);
                 transaction.setStatus("SUCCESS");
                 LOGGER.info("Transaction status: " + transaction.getStatus());
 

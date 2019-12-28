@@ -12,11 +12,12 @@ public class CardAmountDTO {
     private Date validTo;
     private double amount;
     private String hashedId;
+    private Long sellerId;
 
     public CardAmountDTO() {
     }
 
-    public CardAmountDTO(Long merchantOrderId, Long paymentId, String pan, int securityCode, String cardHolderName, Date validTo, double amount) {
+    public CardAmountDTO(Long sellerId,Long merchantOrderId, Long paymentId, String pan, int securityCode, String cardHolderName, Date validTo, double amount) {
         this.merchantOrderId = merchantOrderId;
         this.paymentId = paymentId;
         this.pan = pan;
@@ -24,8 +25,16 @@ public class CardAmountDTO {
         this.cardHolderName = cardHolderName;
         this.validTo = validTo;
         this.amount = amount;
+        this.sellerId = sellerId;
     }
 
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
 
     public Long getMerchantOrderId() {
         return merchantOrderId;
