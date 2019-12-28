@@ -9,6 +9,7 @@ import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
 import com.sep.kp.service.TransactionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/transaction")
 @CrossOrigin("https://localhost:5000")
@@ -47,6 +49,7 @@ public class TransactionController {
 
     @PostMapping("/generate_url")
     public String createTransaction(@RequestBody CreateTransactionDto createTransactionDto) {
+        log.info("Created url for redirect to payment concentrator, for product id: "+createTransactionDto.getProductId() + "name= "+createTransactionDto.getProductName());
         return "https://localhost:8762/koncentrator_placanja/api/transaction/pay_method/" +this.transactionService.createTransaction(createTransactionDto).getIdHashValue();
     }
 
@@ -54,6 +57,7 @@ public class TransactionController {
     public ModelAndView selectionOfPayMethod(@PathVariable String hashedId) {
         Map<String, String> model = this.transactionService.generateHtmlForAvailablePayments(hashedId);
 
+        log.info("Generated payment concentrator page");
         return new ModelAndView("availablePaymentMethods", model);
     }
 
@@ -62,6 +66,7 @@ public class TransactionController {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
+        log.info("Selected bitcoin payment service for transaction id: "+ transaction.getId());
         CreateBitcoinOrderDTO bitcoinOrderDTO = new CreateBitcoinOrderDTO(transaction.getId(), transaction.getIdHashValue(),
                 transaction.getAmount(), Currency.EUR, Currency.BTC, "Bitcoin transaction",
                 "Bitcoin transaction id:" + transaction.getId(),
@@ -75,7 +80,7 @@ public class TransactionController {
         HttpEntity requestEntity = new HttpEntity<>(bitcoinOrderDTO, requestHeaders);
 
         ResponseEntity<String> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, String.class);
-
+        log.info("Redirect to bitcoin api page");
         return new RedirectView(resp.getBody());
     }
 
@@ -83,6 +88,7 @@ public class TransactionController {
     public RedirectView sendRedirectToPayPal(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
+        log.info("Selected PayPal payment service for transaction id: "+ transaction.getId());
 
         CreatePayPalOrderDto createPayPalOrderDto = new CreatePayPalOrderDto();
         createPayPalOrderDto.setPrice(transaction.getAmount());
@@ -102,12 +108,15 @@ public class TransactionController {
 
         ResponseEntity<String> resp = restTemplate.postForEntity(PayPal_SERVICE_URI, requestEntity, String.class);
 
+        log.info("Redirect to PayPal api page");
         return new RedirectView(resp.getBody());
     }
 
     @GetMapping(value = "/success/{hashedOrderId}")
     public RedirectView successOrder(@PathVariable String hashedOrderId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
+        log.info("Transaction id: "+transaction.getId()+" successfully finished.");
+
         transaction.setStatus("SUCCESS");
 
         FinishedMagazineOrderDto finishedMagazineOrderDto = new FinishedMagazineOrderDto();
@@ -128,6 +137,7 @@ public class TransactionController {
     public RedirectView cancelOrder(@PathVariable String hashedOrderId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
         transaction.setStatus("FAILED");
+        log.warn("Transaction id: "+transaction.getId()+" cancelled or has an error.");
 
         this.transactionRepository.save(transaction);
         return new RedirectView(NC_FRONTEND);
