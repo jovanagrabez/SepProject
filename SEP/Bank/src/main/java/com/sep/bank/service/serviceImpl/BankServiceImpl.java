@@ -11,11 +11,16 @@ import com.sep.bank.service.AccountService;
 import com.sep.bank.service.BankService;
 import com.sep.bank.service.CardService;
 import org.apache.commons.lang.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BankServiceImpl implements BankService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(BankServiceImpl.class);
+
 
     @Autowired
     private BankRepository bankRepository;
@@ -33,11 +38,27 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public PaymentDTO getPaymentUrl(RequestDTO requestDTO) {
+        LOGGER.info("Processing KP request: " + requestDTO);
+
         Account account = accountService.checkMerchantData(requestDTO.getMerchantId(), requestDTO.getMerchantPassword());
+        LOGGER.info("Returning account: " + account);
+
+
         PaymentDTO paymentDTO = new PaymentDTO();
         if (account != null) {
+            LOGGER.info("Account exists " );
+
             paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getAmount(),
                     "https://localhost:5000/home",  requestDTO.getMerchantOrderId());
+
+            LOGGER.info("Generating paymentId " + paymentDTO.getPaymentId());
+            LOGGER.info("Generating paymentURL: " + paymentDTO.getPaymentUrl());
+            LOGGER.info("Price of magazine: " + paymentDTO.getAmount());
+            LOGGER.info("Order id: " + requestDTO.getMerchantOrderId());
+
+
+
+
         }
 
         return paymentDTO;
@@ -46,6 +67,8 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Transaction checkBankForCard(CardAmountDTO card) {
+        LOGGER.info("Finding card: " + card);
+
         Card foundCard = cardService.find(card.getPan());
 
         Transaction transaction = new Transaction();
@@ -58,14 +81,24 @@ public class BankServiceImpl implements BankService {
             if (checkAmountOnAccount(foundCard, card.getAmount())) {
 
                 transaction.setStatus("SUCCESS");
+                LOGGER.info("Transaction status: " + transaction.getStatus());
+
                 System.out.println("LALALALALAL" + transaction.getStatus());
             } else
+
                 transaction.setStatus("FAILED");
+            LOGGER.info("Transaction status: " + transaction.getStatus());
+
         } else {
+            LOGGER.error("Card not found , car with pan: " + card.getPan() );
+
             transaction.setStatus("FAILED");
             // TODO Kada se implementira pcc ako su razliciti treba dopuniti metodu
 
         }
+
+        LOGGER.info("Saving this transaction: " + transaction);
+
         transactionRepository.save(transaction);
         return transaction;
     }
@@ -75,6 +108,8 @@ public class BankServiceImpl implements BankService {
         System.out.println("BBBBBBBBBBBBBBBBBB"+foundCard.getAccount().getAmount());
         if (amount <= foundCard.getAccount().getAmount()) {
             foundCard.getAccount().setAmount(foundCard.getAccount().getAmount() - amount);
+            LOGGER.info("Amount after paying: " + foundCard.getAccount().getAmount());
+
             accountService.saveAccount(foundCard.getAccount());
             return true;
         }

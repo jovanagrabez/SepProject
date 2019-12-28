@@ -6,6 +6,8 @@ import com.sep.kp.model.Seller;
 import com.sep.kp.repository.PaymentRequestRepository;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.service.PaymentRequestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.Random;
 @Service
 public class PaymentRequestServiceImpl implements PaymentRequestService {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(PaymentRequestServiceImpl.class);
+
     @Autowired
     private PaymentRequestRepository paymentRequestRepository;
 
@@ -23,6 +27,8 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
 
     @Override
     public PaymentRequest createPaymentRequest(String clientID, double amount) {
+        LOGGER.info("Finding seller: " );
+
         Seller foundSeller = sellerRepository.findByClientId(clientID);
 
         PaymentRequest paymentRequest = new PaymentRequest();
@@ -36,6 +42,9 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
         paymentRequest.setSuccessUrl("/success");
         paymentRequest.setErrorUrl("/error");
         paymentRequest.setFailedUrl("/fail");
+
+        LOGGER.info("Created paymentRequest: " + paymentRequest);
+
         paymentRequestRepository.save(paymentRequest);
 
         return paymentRequest;
