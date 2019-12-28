@@ -11,6 +11,7 @@ public class CardAmountDTO {
     private String cardHolderName;
     private Date validTo;
     private double amount;
+    private String hashedId;
 
     public CardAmountDTO() {
     }
@@ -80,5 +81,13 @@ public class CardAmountDTO {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getHashedId() {
+        return hashedId;
+    }
+
+    public void setHashedId(String hashedId) {
+        this.hashedId = hashedId;
     }
 }

@@ -3,7 +3,7 @@ insert into payment_method (id, name) values (2, 'PayPal');
 insert into payment_method (id, name) values (3, 'Bitcoin');
 
 insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token) values (1, '1','1','123','magazin', 1, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8');
-insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token) values (2, '2','2','123','magazin 1', 2, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8');
+insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token) values (2, '2','2','123','magazin 1', 2, '9gLpd_BuuCxxzqp25ZCKMPfkkRSgXfXyYGzMLTL_');
 insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token) values (3, '3','3','123','magazin 2', 3, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8');
 
 

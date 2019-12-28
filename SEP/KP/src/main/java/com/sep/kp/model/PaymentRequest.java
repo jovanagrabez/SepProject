@@ -33,6 +33,9 @@ public class PaymentRequest {
     @Column
     private String errorUrl;
 
+    @Column
+    private String hashedOrderId;
+
     public PaymentRequest() {
     }
 
@@ -106,5 +109,13 @@ public class PaymentRequest {
 
     public void setErrorUrl(String errorUrl) {
         this.errorUrl = errorUrl;
+    }
+
+    public String getHashedOrderId() {
+        return hashedOrderId;
+    }
+
+    public void setHashedOrderId(String hashedOrderId) {
+        this.hashedOrderId = hashedOrderId;
     }
 }

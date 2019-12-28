@@ -49,6 +49,7 @@ public class BankServiceImpl implements BankService {
         Card foundCard = cardService.find(card.getPan());
 
         Transaction transaction = new Transaction();
+        transaction.setHashedOrderId(card.getHashedId());
         transaction.setMerchantOrderId(card.getMerchantOrderId());
         transaction.setPaymentId(card.getPaymentId());
         transaction.setAmount(card.getAmount());
@@ -61,7 +62,8 @@ public class BankServiceImpl implements BankService {
             } else
                 transaction.setStatus("FAILED");
         } else {
-            // Kada se implementira pcc ako su razliciti treba dopuniti metodu
+            transaction.setStatus("FAILED");
+            // TODO Kada se implementira pcc ako su razliciti treba dopuniti metodu
 
         }
         transactionRepository.save(transaction);

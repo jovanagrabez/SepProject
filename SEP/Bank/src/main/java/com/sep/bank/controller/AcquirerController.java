@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -31,7 +35,7 @@ public class AcquirerController {
     }
 
     @PostMapping("/pay-by-card")
-    public void payByCard(@RequestBody CardAmountDTO cardAmountDTO) {
+    public Map<String, String> payByCard(@RequestBody CardAmountDTO cardAmountDTO) {
         Transaction transaction = bankService.checkBankForCard(cardAmountDTO);
 
         TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
@@ -39,6 +43,8 @@ public class AcquirerController {
         System.out.println(transactionDTO.getAmount());
         System.out.println(transactionDTO.getMerchantOrderId());
         System.out.println(transactionDTO.getPaymentId());
+
+//        transactionDTO.setStatus();
 
 
 
@@ -53,8 +59,12 @@ public class AcquirerController {
         transactionDTO.setId(transaction.getId());
 */
         // final step - send transaction information to the payment concentrator
-        restTemplate.postForObject("https://localhost:8762/koncentrator_placanja/api/transaction/finish-transaction", transactionDTO, TransactionDTO.class);
+        String resp = restTemplate.postForObject("https://localhost:8762/koncentrator_placanja/api/transaction/finish-transaction", transactionDTO, String.class);
 
+        Map<String, String> map = new HashMap<>();
+        map.put("url", resp);
+        map.put("status", transaction.getStatus());
+        return map;
     }
 
 }

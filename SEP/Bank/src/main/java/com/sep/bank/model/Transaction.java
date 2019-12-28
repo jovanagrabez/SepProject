@@ -33,6 +33,9 @@ public class Transaction {
     @Column
     private String status;
 
+    @Column
+    private String hashedOrderId;
+
     public String getStatus() {
         return status;
     }
@@ -41,7 +44,7 @@ public class Transaction {
         this.status = status;
     }
 
-    public Transaction(Long acquirerOrderId, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status) {
+    public Transaction(Long acquirerOrderId, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status, String hashedOrderId) {
         this.acquirerOrderId = acquirerOrderId;
         this.merchantOrderId = merchantOrderId;
         this.paymentId = paymentId;
@@ -49,6 +52,7 @@ public class Transaction {
         this.amount = amount;
         this.resultUrl = resultUrl;
         this.status = status;
+        this.hashedOrderId = hashedOrderId;
     }
 
     public Transaction() {
@@ -108,5 +112,13 @@ public class Transaction {
 
     public void setResultUrl(String resultUrl) {
         this.resultUrl = resultUrl;
+    }
+
+    public String getHashedOrderId() {
+        return hashedOrderId;
+    }
+
+    public void setHashedOrderId(String hashedOrderId) {
+        this.hashedOrderId = hashedOrderId;
     }
 }
