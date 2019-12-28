@@ -140,7 +140,7 @@ public class TransactionController {
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
         PaymentRequest paymentRequest = paymentRequestService.createPaymentRequest(transaction.getProductId().toString(), transaction.getAmount());
-
+        paymentRequest.setHashedOrderId(hashedId);
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -163,7 +163,7 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/finish-transaction")
-    public ResponseEntity<TransactionResultCustomerDTO> finishTransaction(@RequestBody TransactionResultDTO transactionDTO) {
+    public String finishTransaction(@RequestBody TransactionResultDTO transactionDTO) {
 
 
         Transaction transaction = this.transactionRepository.findByMerchantOrderId( transactionDTO.getMerchantOrderId());
@@ -181,7 +181,7 @@ public class TransactionController {
                 transaction.getAcquirerOrderId(), transaction.getTimestamp(),
                 transaction.getPaymentId(), resultUrl, transaction.getAmount(), transaction.getStatus());
 
-        return ResponseEntity.ok().body(transactionCustomer);
+        return "https://localhost:4200";
     }
 
 }

@@ -46,17 +46,26 @@ public class TransactionServiceImpl implements TransactionService {
         PaymentRequest paymentRequest = paymentRequestService.getPaymentRequest(transaction.getMerchantOrderId());
         String status = transaction.getStatus();
         String url;
-        switch (status) {
-            case "SUCCESS":
-                url = paymentRequest.getSuccessUrl();
-                break;
-            case "FAILED":
-                url = paymentRequest.getFailedUrl();
-                break;
-            default:
-                url = paymentRequest.getErrorUrl();
-                break;
+        if (status == null){
+            url = paymentRequest.getErrorUrl();
+        } else if (status.equals("SUCCESS")) {
+            url = paymentRequest.getSuccessUrl();
+        } else if (status.equals("FAILED")) {
+            url = paymentRequest.getFailedUrl();
+        } else {
+            url = paymentRequest.getErrorUrl();
         }
+//        switch (status) {
+//            case "SUCCESS":
+//                url = paymentRequest.getSuccessUrl();
+//                break;
+//            case "FAILED":
+//                url = paymentRequest.getFailedUrl();
+//                break;
+//            default:
+//                url = paymentRequest.getErrorUrl();
+//                break;
+//        }
         return url;
     }
 

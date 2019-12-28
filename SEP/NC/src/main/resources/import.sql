@@ -6,9 +6,6 @@ insert into user (id, email, enabled, last_name, name, password, country, city) 
 insert into user (id, email, enabled, last_name, name, password, country, city) VALUES (6, 'editor2@yahoo.com', true, 'Peric', 'Pera', '$argon2i$v=19$m=65536,t=2,p=1$zhnA1rxWP8VawiICutflhQ$evRAwV+uGTn8hjnfref5cVEoql0l4Gld6a+EzTRXd1E', 'Serbia', 'Novi Sad');
 insert into user (id, email, enabled, last_name, name, password, country, city) VALUES (7, 'editor3@yahoo.com', true, 'Peric', 'Pera', '$argon2i$v=19$m=65536,t=2,p=1$zhnA1rxWP8VawiICutflhQ$evRAwV+uGTn8hjnfref5cVEoql0l4Gld6a+EzTRXd1E', 'Serbia', 'Novi Sad');
 
-
-
-
 insert into role(id, name) values (1, 'USER');
 insert into role(id, name) values (2, 'AUTHOR');
 insert into role(id, name) values (3, 'REVIEWER');

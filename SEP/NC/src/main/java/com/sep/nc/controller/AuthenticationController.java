@@ -66,7 +66,7 @@ public class AuthenticationController {
             headers.setBearerAuth(jwt);
             headers.add("access-control-expose-headers", "Authorization");
 
-                //headers.add("Authorization: Bearer", jwt);
+//            headers.add("Authorization: Bearer", jwt);
 
 
             return ResponseEntity.ok().headers(headers).build();

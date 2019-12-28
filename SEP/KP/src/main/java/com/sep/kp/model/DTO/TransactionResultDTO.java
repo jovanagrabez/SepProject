@@ -9,6 +9,7 @@ public class TransactionResultDTO {
     private Long acquirerOrderId;
     private Date acquirerTimestamp;
     private double amount;
+    private String hashedOrderId;
 
     public Long getMerchantOrderId() {
         return merchantOrderId;
@@ -56,5 +57,13 @@ public class TransactionResultDTO {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getHashedOrderId() {
+        return hashedOrderId;
+    }
+
+    public void setHashedOrderId(String hashedOrderId) {
+        this.hashedOrderId = hashedOrderId;
     }
 }

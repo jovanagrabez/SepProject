@@ -15,6 +15,7 @@ public class TransactionDTO {
     private Date acquirerTimestamp;
     private double amount;
     private String resultUrl;
+    private String hashedOrderId;
 
 
 
@@ -91,5 +92,13 @@ public class TransactionDTO {
 
     public void setResultUrl(String resultUrl) {
         this.resultUrl = resultUrl;
+    }
+
+    public String getHashedOrderId() {
+        return hashedOrderId;
+    }
+
+    public void setHashedOrderId(String hashedOrderId) {
+        this.hashedOrderId = hashedOrderId;
     }
 }

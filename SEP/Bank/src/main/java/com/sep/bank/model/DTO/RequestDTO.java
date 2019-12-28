@@ -12,12 +12,14 @@ public class RequestDTO {
     private String successUrl;
     private String failedUrl;
     private String errorUrl;
+    private String hashedOrderId;
 
 
     public RequestDTO() {
     }
 
-    public RequestDTO(Long merchantOrderId, Date merchantTimestamp, String merchantId, String merchantPassword, double amount, String successUrl, String failedUrl, String errorUrl) {
+    public RequestDTO(Long merchantOrderId, Date merchantTimestamp, String merchantId, String merchantPassword,
+                      double amount, String successUrl, String failedUrl, String errorUrl, String hashedOrderId) {
         this.merchantOrderId = merchantOrderId;
         this.merchantTimestamp = merchantTimestamp;
         this.merchantId = merchantId;
@@ -26,6 +28,7 @@ public class RequestDTO {
         this.successUrl = successUrl;
         this.failedUrl = failedUrl;
         this.errorUrl = errorUrl;
+        this.hashedOrderId = hashedOrderId;
     }
 
 
@@ -91,5 +94,13 @@ public class RequestDTO {
 
     public void setErrorUrl(String errorUrl) {
         this.errorUrl = errorUrl;
+    }
+
+    public String getHashedOrderId() {
+        return hashedOrderId;
+    }
+
+    public void setHashedOrderId(String hashedOrderId) {
+        this.hashedOrderId = hashedOrderId;
     }
 }
