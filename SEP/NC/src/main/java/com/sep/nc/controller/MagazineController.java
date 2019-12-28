@@ -8,6 +8,7 @@ import com.sep.nc.entity.enumeration.TypeOfProduct;
 import com.sep.nc.service.MagazineService;
 import com.sep.nc.service.UserService;
 import com.sep.nc.service.impl.UtilityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "api/magazine")
 public class MagazineController {
@@ -55,8 +57,6 @@ public class MagazineController {
 
         BuyProductDto buyProductDto = new BuyProductDto(magazineId, magazine.getName(), email, magazine.getPrice(), TypeOfProduct.magazine);
 
-        //TODO contact KP to get redirectUrl
-
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -69,12 +69,11 @@ public class MagazineController {
         HashMap<String, String> map = new HashMap<>();
         map.put("url", resp.getBody());
         return map;
-     //   return URLEncoder.encode(resp.getBody(), StandardCharsets.UTF_8.toString());
-//        return new RedirectView(resp.getBody());
     }
 
     @PostMapping(value = "/finish")
     public void successOrder(@RequestBody FinishedMagazineOrderDto finishedMagazineOrderDto) {
+        log.info("Magazine access allowed for user: "+finishedMagazineOrderDto.getEmail() +" and magazine id: "+finishedMagazineOrderDto.getMagazineId());
         this.userService.addBoughtMagazine(finishedMagazineOrderDto.getEmail(), finishedMagazineOrderDto.getMagazineId());
     }
 }

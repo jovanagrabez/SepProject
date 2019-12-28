@@ -1,6 +1,8 @@
 package com.sep.bitcoin.controller;
 
 import com.sep.bitcoin.*;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/order", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
@@ -67,7 +70,7 @@ public class OrderController {
                 if (resp.getBody().getStatus().equals("paid")) {
 
                     ResponseEntity<String> resp1 = restTemplate.getForEntity(SUCCESS_URL + order.getHashedOrderId(), String.class);
-
+                    log.info("Successful bitcoin transaction id: "+order.getOrder_id());
                     timer.cancel();
                     timer.purge();
 
@@ -75,6 +78,7 @@ public class OrderController {
                         || resp.getBody().getStatus().equals("canceled") || resp.getBody().getStatus().equals("refunded")) {
 
                     ResponseEntity<String> resp2 = restTemplate.getForEntity(CANCEL_URL + order.getHashedOrderId(), String.class);
+                    log.error("Error in bitcoin transaction id: "+order.getOrder_id());
 
                     timer.cancel();
                     timer.purge();

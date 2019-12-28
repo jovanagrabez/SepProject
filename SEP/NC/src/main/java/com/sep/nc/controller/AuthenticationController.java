@@ -6,6 +6,7 @@ import com.sep.nc.repository.UserRepository;
 import com.sep.nc.security.TokenUtils;
 import com.sep.nc.security.auth.JwtAuthenticationRequest;
 import com.sep.nc.service.impl.CustomUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 //@CrossOrigin(value = "https://localhost:4200")
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
@@ -68,7 +70,7 @@ public class AuthenticationController {
 
 //            headers.add("Authorization: Bearer", jwt);
 
-
+            log.info("User successfully logged in!");
             return ResponseEntity.ok().headers(headers).build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
