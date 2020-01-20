@@ -42,13 +42,6 @@ public class UserServiceImpl implements UserService {
         magazinePurchase.setStatus(purchaseStatus);
 
         magazinePurchasesRepository.save(magazinePurchase);
-//        User user = this.userRepository.findUserByEmail(email);
-//        if (user.getMagazinePurchases().isEmpty()) {
-//            // TODO proveriti da li se dodaje status payed i kada se ova metoda poziva
-//            user.setMagazinePurchases(new ArrayList<>());
-//        }
-//        user.getMagazinePurchases().add(magazine);
-//
-//        return this.userRepository.save(user);
+
     }
 }

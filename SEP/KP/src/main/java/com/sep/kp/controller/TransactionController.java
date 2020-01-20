@@ -138,7 +138,6 @@ public class TransactionController {
     @GetMapping(value = "/cancel/{hashedOrderId}")
     public RedirectView cancelOrder(@PathVariable String hashedOrderId) {
 
-        // TODO call naucna centrala i set status na canceled il tako nes
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
         transaction.setStatus("FAILED");
         log.warn("Transaction id: "+transaction.getId()+" cancelled or has an error.");
