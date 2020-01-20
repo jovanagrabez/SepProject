@@ -118,10 +118,12 @@ public class TransactionController {
         log.info("Transaction id: "+transaction.getId()+" successfully finished.");
 
         transaction.setStatus("SUCCESS");
+        transactionRepository.save(transaction);
 
         FinishedMagazineOrderDto finishedMagazineOrderDto = new FinishedMagazineOrderDto();
         finishedMagazineOrderDto.setEmail(transaction.getBuyerEmail());
-        finishedMagazineOrderDto.setMagazineId(transaction.getProductId());
+        finishedMagazineOrderDto.setPurchaseStatus(PurchaseStatus.Payed);
+        finishedMagazineOrderDto.setPurchaseId(transaction.getScientificCenterPurchaseId());
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -135,12 +137,29 @@ public class TransactionController {
 
     @GetMapping(value = "/cancel/{hashedOrderId}")
     public RedirectView cancelOrder(@PathVariable String hashedOrderId) {
+
+        // TODO call naucna centrala i set status na canceled il tako nes
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
         transaction.setStatus("FAILED");
         log.warn("Transaction id: "+transaction.getId()+" cancelled or has an error.");
 
         this.transactionRepository.save(transaction);
+
+        FinishedMagazineOrderDto finishedMagazineOrderDto = new FinishedMagazineOrderDto();
+        finishedMagazineOrderDto.setEmail(transaction.getBuyerEmail());
+        finishedMagazineOrderDto.setPurchaseStatus(PurchaseStatus.Cancelled);
+        finishedMagazineOrderDto.setPurchaseId(transaction.getScientificCenterPurchaseId());
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity requestEntity = new HttpEntity<>(finishedMagazineOrderDto, requestHeaders);
+
+        ResponseEntity<String> resp = restTemplate.postForEntity(NC_SERVICE_URI, requestEntity, String.class);
         return new RedirectView(NC_FRONTEND);
+
+//        return new RedirectView(NC_FRONTEND);
     }
 
 

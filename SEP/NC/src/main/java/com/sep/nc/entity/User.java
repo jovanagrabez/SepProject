@@ -8,10 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Table
 @Entity
@@ -42,7 +39,7 @@ public class User implements Serializable, UserDetails {
     private String country;
 
     @ManyToMany
-    private List<Magazine> payedMagazines;
+    private List<MagazinePurchase> magazinePurchases;
 
     @Column
     @Enumerated
@@ -63,6 +60,7 @@ public class User implements Serializable, UserDetails {
     private boolean enabled;
 
     public User() {
+        magazinePurchases = new ArrayList<>();
     }
 
     @Override
@@ -179,12 +177,12 @@ public class User implements Serializable, UserDetails {
         this.country = country;
     }
 
-    public List<Magazine> getPayedMagazines() {
-        return payedMagazines;
+    public List<MagazinePurchase> getMagazinePurchases() {
+        return magazinePurchases;
     }
 
-    public void setPayedMagazines(List<Magazine> payedMagazines) {
-        this.payedMagazines = payedMagazines;
+    public void setMagazinePurchases(List<MagazinePurchase> magazinePurchases) {
+        this.magazinePurchases = magazinePurchases;
     }
 
     public List<ScientificArea> getScientificAreasOfInterest() {

@@ -76,6 +76,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setBuyerEmail(createTransactionDto.getUserEmail());
         transaction.setAmount(createTransactionDto.getPrice());
         transaction.setTypeOfProduct(createTransactionDto.getTypeOfProduct());
+        transaction.setScientificCenterPurchaseId(createTransactionDto.getPurchaseId());
 
         Seller seller = this.sellerRepository.findSellerByMagazineId(createTransactionDto.getProductId());  // TODO ako je naucni rad nece raditi jer poredi po id-u samo magazina, treba mozda uvek slati od magazina
         transaction.setSellerId(seller.getId());
@@ -83,6 +84,8 @@ public class TransactionServiceImpl implements TransactionService {
         // generating hash value of id for url access to transaction
         Transaction savedTransaction = this.transactionRepository.save(transaction);
         final String hash = ARGON2.hash(ITERATIONS, MEMORY, PARALLELISM, savedTransaction.getId().toString());
+
+        // posto url ne funkcionise sa tim parametrima
         String finalHash = hash.replace("$", "");
         finalHash = finalHash.replace("/", "");
         finalHash = finalHash.replace(":", "");

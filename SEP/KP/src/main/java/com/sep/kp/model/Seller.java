@@ -18,7 +18,7 @@ public class Seller implements Serializable {
     private String client;    // seller's token(id) from scientific centre
 
     @Column
-    private String magazine;
+    private String magazine;        // TODO promeniti u listu magazina
 
     @Column
     private Long magazineId;

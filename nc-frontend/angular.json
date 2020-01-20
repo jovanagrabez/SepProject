@@ -63,7 +63,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "sslKey": "nc_frontend.pkcs",
+            "sslKey": "nc_frontend.pkcs8",
             "sslCert": "nc_frontend.cer",
             "ssl": true,
             "browserTarget": "nc-frontend:build"

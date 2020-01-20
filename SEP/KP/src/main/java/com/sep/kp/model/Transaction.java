@@ -51,6 +51,9 @@ public class Transaction {
     @Column
     private String status;
 
+    @Column
+    private Long scientificCenterPurchaseId;
+
     public String getStatus() {
         return status;
     }
@@ -59,7 +62,7 @@ public class Transaction {
         this.status = status;
     }
 
-    public Transaction(Long acquirerOrderId, Long sellerId, String buyerEmail, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status) {
+    public Transaction(Long acquirerOrderId, Long sellerId, String buyerEmail, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status, Long scientificCenterPurchaseId) {
         this.acquirerOrderId = acquirerOrderId;
         this.merchantOrderId = merchantOrderId;
         this.sellerId = sellerId;
@@ -69,6 +72,7 @@ public class Transaction {
         this.amount = amount;
         this.resultUrl = resultUrl;
         this.status = status;
+        this.scientificCenterPurchaseId = scientificCenterPurchaseId;
     }
 
     public Transaction() {

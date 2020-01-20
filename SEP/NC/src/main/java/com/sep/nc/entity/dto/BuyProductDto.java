@@ -11,12 +11,14 @@ public class BuyProductDto {
     private String userEmail;
     private double price;
     private TypeOfProduct typeOfProduct;
+    private Long purchaseId;
 
-    public BuyProductDto(Long productId, String productName, String userEmail, double price, TypeOfProduct typeOfProduct) {
+    public BuyProductDto(Long productId, String productName, String userEmail, double price, TypeOfProduct typeOfProduct, Long purchaseId) {
         this.productId = productId;
         this.productName = productName;
         this.userEmail = userEmail;
         this.price = price;
         this.typeOfProduct = typeOfProduct;
+        this.purchaseId = purchaseId;
     }
 }
