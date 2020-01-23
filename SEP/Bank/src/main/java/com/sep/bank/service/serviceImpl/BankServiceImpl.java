@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Date;
+import java.util.Random;
 
 @Service
 public class BankServiceImpl implements BankService {
@@ -37,6 +41,9 @@ public class BankServiceImpl implements BankService {
 
     @Autowired
     private CardService cardService;
+
+    @Autowired
+    RestTemplate restTemplate;
 
 
     @Override
@@ -96,9 +103,11 @@ public class BankServiceImpl implements BankService {
             LOGGER.info("Transaction status: " + transaction.getStatus());
 
         } else {
-            LOGGER.error("Card not found , car with pan: " + card.getPan() );
+            LOGGER.error("Card not found , card with pan: " + card.getPan() );
 
-            transaction.setStatus("FAILED");
+            transaction = forwardToPcc(card, transaction);
+
+      //      transaction.setStatus("FAILED");
             // TODO Kada se implementira pcc ako su razliciti treba dopuniti metodu
 
         }
@@ -111,7 +120,6 @@ public class BankServiceImpl implements BankService {
 
     private boolean checkAmountOnAccount(Card foundCard, double amount) {
 
-        System.out.println("BBBBBBBBBBBBBBBBBB"+foundCard.getAccount().getAmount());
         if (amount <= foundCard.getAccount().getAmount()) {
             foundCard.getAccount().setAmount(foundCard.getAccount().getAmount() - amount);
             LOGGER.info("Amount after paying: " + foundCard.getAccount().getAmount());
@@ -135,4 +143,26 @@ public class BankServiceImpl implements BankService {
         }
         return null;
     }
+
+    private Transaction forwardToPcc(CardAmountDTO cardAmountDTO, Transaction transaction) {
+        Random random = new Random();
+        CardDTO cardDTO = new CardDTO(cardAmountDTO.getPan(), cardAmountDTO.getSecurityCode(),
+                cardAmountDTO.getCardHolderName(), cardAmountDTO.getValidTo());
+
+        AcquirerDTO acquirerDataDTO = new AcquirerDTO(random.nextLong(), new Date(), transaction.getAmount(), cardDTO);
+        transaction.setTimestamp(acquirerDataDTO.getAcquirerTimestamp());
+        transaction.setAcquirerOrderId(acquirerDataDTO.getAcquirerOrderId());
+
+        // poziva PCC koji prosledjuje podatke banci kupca i vraca status
+        PaymentResultDTO paymentResultDTO = restTemplate.postForObject("https://localhost:8762/pcc/forward-to-bank",
+                acquirerDataDTO, PaymentResultDTO.class);
+
+        if (paymentResultDTO != null) {
+            transaction.setStatus(paymentResultDTO.getStatus());
+        }
+        return transaction;
+    }
+
+
+
 }
