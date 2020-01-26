@@ -3,11 +3,16 @@ package com.sep.paypal.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.sep.paypal.model.CreatePlanRequest;
 import com.sep.paypal.model.PaymentRequest;
+import com.sep.paypal.model.SubscribeDto;
 import com.sep.paypal.service.PaypalService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URL;
 
 @Log4j2
 @RestController
@@ -62,6 +67,25 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return paymentId;
+        return  "redirect:/";
+    }
+
+
+    @PostMapping(value = "/plan/createPlan")
+    public ResponseEntity createPlanForSubscription(@RequestBody CreatePlanRequest requestCreatePlan) {
+        paypalService.createPlanForSubscription(requestCreatePlan);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/plan/subscribe")
+    public ResponseEntity subscribeToPlan(@RequestBody SubscribeDto subscribeDto) {
+        URL url = paypalService.subscribeToPlan(subscribeDto.getNameOfJournal());
+        return ResponseEntity.ok(url);
+    }
+
+    @GetMapping(value = "/plan/finishSubscription")
+    public ResponseEntity finishSubscription(@RequestParam("token") String token){
+        paypalService.finishSubscription(token);
+        return ResponseEntity.ok("Subscription finished");
     }
 }
