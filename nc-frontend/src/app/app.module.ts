@@ -13,6 +13,7 @@ import {CanActivateService} from './service/security/can-activate.service';
 import {TokenInterceptorService} from './service/security/token-interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ng6-toastr-notifications';
+import { AllPurchasesComponent } from './component/all-purchases/all-purchases.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {ToastrModule} from 'ng6-toastr-notifications';
     HomeComponent,
     NavbarComponent,
     LogInComponent,
-    RegisterComponent
+    RegisterComponent,
+    AllPurchasesComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,9 @@ package com.sep.paypal.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.sep.paypal.TransactionRepository;
 import com.sep.paypal.model.PaymentRequest;
+import com.sep.paypal.model.Transaction;
 import com.sep.paypal.service.PaypalService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class PaypalController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     private static final String SUCCESS_URL = "/pay/success";
     private static final String CANCEL_URL = "/pay/cancel";
     private static final String SUCCESS_URL_REDIRECT = "https://localhost:8762/koncentrator_placanja/api/transaction/success/";
@@ -47,6 +52,12 @@ public class PaypalController {
                     request.getDescription(),
                     cancelUrl,
                     successUrl);
+
+            Transaction transactionForDatabase = new Transaction();
+            transactionForDatabase.setPaymentId(payment.getId());
+            transactionForDatabase.setHashedTransactionId(request.getHashedMagazineId());
+            transactionRepository.save(transactionForDatabase);
+
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {
                     return links.getHref();
@@ -77,6 +88,7 @@ public class PaypalController {
         try {
 //            hashedId = hashedId.substring(0, hashedId.length()-2);
             Payment payment = paypalService.executePayment(paymentId, payerId);
+
             //System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
                 HttpHeaders requestHeaders = new HttpHeaders();
@@ -92,5 +104,19 @@ public class PaypalController {
         return new RedirectView("https://localhost:4200");
 
     }
+
+    @GetMapping(value = "/status/{hashedId}")
+    public ResponseEntity getUpdatedTransactionStatus(@PathVariable String hashedId) throws PayPalRESTException {
+        Transaction transaction = transactionRepository.findTransactionByHashedTransactionId(hashedId);
+        Payment payment = paypalService.getPayment(transaction.getPaymentId());
+
+        switch (payment.getState()){
+//            case "CREATED":
+            case "APPROVED": return ResponseEntity.ok("Paid");
+            case "FAILED": return ResponseEntity.ok("Cancelled");
+            default: return ResponseEntity.ok("New");
+        }
+    }
+
 
 }

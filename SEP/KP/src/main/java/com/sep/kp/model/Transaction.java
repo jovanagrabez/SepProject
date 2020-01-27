@@ -49,20 +49,23 @@ public class Transaction {
 
 
     @Column
-    private String status;
+    private TransactionStatus status;
 
     @Column
     private Long scientificCenterPurchaseId;
 
-    public String getStatus() {
+    @Column
+    private String selectedPaymentMethodURI;
+
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
-    public Transaction(Long acquirerOrderId, Long sellerId, String buyerEmail, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, String status, Long scientificCenterPurchaseId) {
+    public Transaction(Long acquirerOrderId, Long sellerId, String buyerEmail, Long merchantOrderId, Long paymentId, Date timestamp, double amount, String resultUrl, TransactionStatus status, Long scientificCenterPurchaseId) {
         this.acquirerOrderId = acquirerOrderId;
         this.merchantOrderId = merchantOrderId;
         this.sellerId = sellerId;

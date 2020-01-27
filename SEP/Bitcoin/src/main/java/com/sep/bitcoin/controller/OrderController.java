@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -52,6 +49,20 @@ public class OrderController {
 
     }
 
+    @GetMapping(value = "/status/{hashedId}")
+    public ResponseEntity<String> getUpdateAboutOrderStatus(@PathVariable String hashedId) {
+        Order order = orderRepository.getOrderByHashedOrderId(hashedId);
+        String status = checkStatusOnBitcoinAPI(order);
+
+        if (status.equals("paid")) {
+            return ResponseEntity.ok("Paid");
+        } else if (status.equals("invalid") || status.equals("expired")
+                || status.equals("canceled") || status.equals("refunded")) {
+            return ResponseEntity.ok("Cancelled");
+        } else {
+            return ResponseEntity.ok("New");
+        }
+    }
 
     public void checkOrderStatus(Order order) {
 
@@ -59,23 +70,16 @@ public class OrderController {
         TimerTask repeatedTask = new TimerTask() {
 
             public void run() {
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.add("Content-Type", "application/json");
-                requestHeaders.setBearerAuth(order.getToken());
-
-                HttpEntity<Long> requestEntity = new HttpEntity(null, requestHeaders);
-
-                ResponseEntity<CheckOrderStatusDto> resp = restTemplate.exchange("https://api-sandbox.coingate.com/v2/orders/" + order.getOrder_id(), HttpMethod.GET, requestEntity, CheckOrderStatusDto.class);
-
-                if (resp.getBody().getStatus().equals("paid")) {
+                String status = checkStatusOnBitcoinAPI(order);
+                if (status.equals("paid")) {
 
                     ResponseEntity<String> resp1 = restTemplate.getForEntity(SUCCESS_URL + order.getHashedOrderId(), String.class);
                     log.info("Successful bitcoin transaction id: "+order.getOrder_id());
                     timer.cancel();
                     timer.purge();
 
-                } else if (resp.getBody().getStatus().equals("invalid") || resp.getBody().getStatus().equals("expired")
-                        || resp.getBody().getStatus().equals("canceled") || resp.getBody().getStatus().equals("refunded")) {
+                } else if (status.equals("invalid") || status.equals("expired")
+                        || status.equals("canceled") || status.equals("refunded")) {
 
                     ResponseEntity<String> resp2 = restTemplate.getForEntity(CANCEL_URL + order.getHashedOrderId(), String.class);
                     log.error("Error in bitcoin transaction id: "+order.getOrder_id());
@@ -90,6 +94,18 @@ public class OrderController {
         long delay = 60000L;
         long period = 60000L;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
+    private String checkStatusOnBitcoinAPI(Order order) {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.add("Content-Type", "application/json");
+        requestHeaders.setBearerAuth(order.getToken());
+
+        HttpEntity<Long> requestEntity = new HttpEntity(null, requestHeaders);
+
+        ResponseEntity<CheckOrderStatusDto> resp = restTemplate.exchange("https://api-sandbox.coingate.com/v2/orders/" + order.getOrder_id(), HttpMethod.GET, requestEntity, CheckOrderStatusDto.class);
+
+        return resp.getBody().getStatus();
     }
 
 }

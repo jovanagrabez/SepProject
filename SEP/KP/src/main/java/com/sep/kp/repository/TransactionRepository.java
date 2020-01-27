@@ -9,4 +9,5 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 
     Transaction findTransactionByIdHashValue(String hashedId);
     Transaction findByMerchantOrderId(Long merchantOrderId);
+    Transaction findTransactionByScientificCenterPurchaseId(Long id);
 }

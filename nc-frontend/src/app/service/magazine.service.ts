@@ -26,5 +26,9 @@ export class MagazineService {
         console.log('success');
       });
     });
-}
+  }
+
+  getAllPurchases(): any {
+    return this.http.get('https://localhost:8762/naucna_centrala/api/purchase');
+  }
 }

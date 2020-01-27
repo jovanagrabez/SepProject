@@ -1,12 +1,8 @@
 package com.sep.kp.service.impl;
 
 
-import com.sep.kp.model.DTO.AvailablePaymentMethodsHtmlModel;
+import com.sep.kp.model.*;
 import com.sep.kp.model.DTO.CreateTransactionDto;
-import com.sep.kp.model.PaymentMethod;
-import com.sep.kp.model.PaymentRequest;
-import com.sep.kp.model.Seller;
-import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
@@ -17,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -44,13 +39,13 @@ public class TransactionServiceImpl implements TransactionService {
      //   transaction.setStatus("SUCCESS");
         transactionRepository.save(transaction);
         PaymentRequest paymentRequest = paymentRequestService.getPaymentRequest(transaction.getMerchantOrderId());
-        String status = transaction.getStatus();
+        TransactionStatus status = transaction.getStatus();
         String url;
         if (status == null){
             url = paymentRequest.getErrorUrl();
-        } else if (status.equals("SUCCESS")) {
+        } else if (status.equals(TransactionStatus.Paid)) {
             url = paymentRequest.getSuccessUrl();
-        } else if (status.equals("FAILED")) {
+        } else if (status.equals(TransactionStatus.Cancelled)) {
             url = paymentRequest.getFailedUrl();
         } else {
             url = paymentRequest.getErrorUrl();
@@ -76,6 +71,8 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setBuyerEmail(createTransactionDto.getUserEmail());
         transaction.setAmount(createTransactionDto.getPrice());
         transaction.setTypeOfProduct(createTransactionDto.getTypeOfProduct());
+        transaction.setScientificCenterPurchaseId(createTransactionDto.getPurchaseId());
+        transaction.setStatus(TransactionStatus.New);
         transaction.setScientificCenterPurchaseId(createTransactionDto.getPurchaseId());
 
         Seller seller = this.sellerRepository.findSellerByMagazineId(createTransactionDto.getProductId());  // TODO ako je naucni rad nece raditi jer poredi po id-u samo magazina, treba mozda uvek slati od magazina
@@ -121,5 +118,11 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return model;
+    }
+
+    @Override
+    public Transaction getTransactionByMagazinePurchaseId(Long id) {
+
+        return this.transactionRepository.findTransactionByScientificCenterPurchaseId(id);
     }
 }

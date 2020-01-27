@@ -40,6 +40,9 @@ public class TransactionController {
 
     private static final String Bitcoin_SERVICE_URI = "https://localhost:8762/bitcoin_service/api/order";
     private static final String PayPal_SERVICE_URI = "https://localhost:8762/paypal_service/api/pay";
+
+    private static final String Bitcoin_SERVICE_URI_status = "https://localhost:8762/bitcoin_service/api/order/status";
+    private static final String PayPal_SERVICE_URI_status = "https://localhost:8762/paypal_service/api/status";
     private static final String NC_SERVICE_URI = "https://localhost:8762/naucna_centrala/api/magazine/finish";
     private static final String NC_FRONTEND = "https://localhost:4200";
     @Autowired
@@ -64,6 +67,8 @@ public class TransactionController {
     @GetMapping(value = "/bitcoin/{hashedId}")
     public RedirectView sendRedirectToBitcoin(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        transaction.setSelectedPaymentMethodURI(Bitcoin_SERVICE_URI_status);
+        transaction = transactionRepository.save(transaction);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
         log.info("Selected bitcoin payment service for transaction id: "+ transaction.getId());
@@ -87,6 +92,8 @@ public class TransactionController {
     @GetMapping(value = "/paypal/{hashedId}")
     public RedirectView sendRedirectToPayPal(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        transaction.setSelectedPaymentMethodURI(PayPal_SERVICE_URI_status);
+        transaction = transactionRepository.save(transaction);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
         log.info("Selected PayPal payment service for transaction id: "+ transaction.getId());
 
@@ -117,12 +124,12 @@ public class TransactionController {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
         log.info("Transaction id: "+transaction.getId()+" successfully finished.");
 
-        transaction.setStatus("SUCCESS");
+        transaction.setStatus(TransactionStatus.Paid);
         transactionRepository.save(transaction);
 
         FinishedMagazineOrderDto finishedMagazineOrderDto = new FinishedMagazineOrderDto();
         finishedMagazineOrderDto.setEmail(transaction.getBuyerEmail());
-        finishedMagazineOrderDto.setPurchaseStatus(PurchaseStatus.Payed);
+        finishedMagazineOrderDto.setPurchaseStatus(PurchaseStatus.Paid);
         finishedMagazineOrderDto.setPurchaseId(transaction.getScientificCenterPurchaseId());
 
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -139,7 +146,7 @@ public class TransactionController {
     public RedirectView cancelOrder(@PathVariable String hashedOrderId) {
 
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedOrderId);
-        transaction.setStatus("FAILED");
+        transaction.setStatus(TransactionStatus.Cancelled);
         log.warn("Transaction id: "+transaction.getId()+" cancelled or has an error.");
 
         this.transactionRepository.save(transaction);
@@ -165,6 +172,8 @@ public class TransactionController {
     @GetMapping(value = "/bank/{hashedId}")
     public RedirectView sendRedirectToBank(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        transaction.setSelectedPaymentMethodURI("https://localhost:8762/bank_service/api/status");
+        transaction = transactionRepository.save(transaction);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
         PaymentRequest paymentRequest = paymentRequestService.createPaymentRequest(transaction.getProductId().toString(), transaction.getAmount());
@@ -200,16 +209,47 @@ public class TransactionController {
 
         transaction.setMerchantOrderId(transactionDTO.getMerchantOrderId());
         transaction.setPaymentId(transactionDTO.getPaymentId());*/
-        transaction.setStatus(transactionDTO.getStatus());
+//        transaction.setStatus(transactionDTO.getStatus());
         transaction.setTimestamp(transactionDTO.getAcquirerTimestamp());
         this.transactionRepository.save(transaction);
         String resultUrl = transactionService.endTransaction(transaction);
 
-        TransactionResultCustomerDTO transactionCustomer = new TransactionResultCustomerDTO(transaction.getMerchantOrderId(),
-                transaction.getAcquirerOrderId(), transaction.getTimestamp(),
-                transaction.getPaymentId(), resultUrl, transaction.getAmount(), transaction.getStatus());
+//        TransactionResultCustomerDTO transactionCustomer = new TransactionResultCustomerDTO(transaction.getMerchantOrderId(),
+//                transaction.getAcquirerOrderId(), transaction.getTimestamp(),
+//                transaction.getPaymentId(), resultUrl, transaction.getAmount(), TransactionStatus.Payed);
 
         return "https://localhost:4200";
+    }
+
+    @GetMapping(value = "purchase-status/{purchaseId}")
+    public ResponseEntity<TransactionStatus> checkPurchaseStatus(@PathVariable Long purchaseId) {
+        Transaction transaction = this.transactionService.getTransactionByMagazinePurchaseId(purchaseId);
+
+        if(transaction != null) {
+            if (transaction.getStatus().equals(TransactionStatus.Paid) || transaction.getStatus().equals(TransactionStatus.Cancelled)) {
+                return ResponseEntity.ok(transaction.getStatus());
+            }
+        } else {
+            return ResponseEntity.ok(TransactionStatus.New);
+        }
+
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity requestEntity = new HttpEntity<>(requestHeaders);
+
+        ResponseEntity<String> resp = restTemplate.getForEntity(transaction.getSelectedPaymentMethodURI()+"/"+transaction.getIdHashValue(), String.class, requestEntity);
+
+        switch (resp.getBody()){
+            case "Paid": return ResponseEntity.ok(TransactionStatus.Paid);
+            case "Cancelled": return ResponseEntity.ok(TransactionStatus.Cancelled);
+            case "New": return ResponseEntity.ok(TransactionStatus.New);
+        }
+
+
+        return ResponseEntity.ok(transaction.getStatus());
     }
 
 }

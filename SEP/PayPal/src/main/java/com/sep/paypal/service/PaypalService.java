@@ -3,6 +3,7 @@ package com.sep.paypal.service;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import com.sep.paypal.TransactionRepository;
 import com.sep.paypal.model.enumeration.PaymentIntent;
 import com.sep.paypal.model.enumeration.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,11 @@ public class PaypalService {
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId(payerId);
         return payment.execute(apiContext, paymentExecute);
+    }
+
+    public Payment getPayment(String paymentId) throws PayPalRESTException {
+
+        return Payment.get(apiContext, paymentId);
     }
 
 }

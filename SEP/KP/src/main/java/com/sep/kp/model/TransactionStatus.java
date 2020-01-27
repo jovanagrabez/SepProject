@@ -1,7 +1,6 @@
 package com.sep.kp.model;
 
-public enum PurchaseStatus {
-
+public enum TransactionStatus {
     New,
     Paid,
     Cancelled
