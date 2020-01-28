@@ -28,7 +28,7 @@ spring:
 
 eureka:
   instance:
-    hostname: bank-peer1
+    hostname: bank1-peer1
     appname: bank1
   client:
     register-with-eureka: true
@@ -41,6 +41,15 @@ eureka:
 
 server:
   port: ${tpd.peer1Port}
+  ssl:
+    key-store-type: JKS
+    key-store: sepKeystore.jks
+    key-store-password: sep
+    key-alias: kp
+    trust-store: truststore.jks
+    trust-store-password: sep
+    enabled-protocols: TLSv1.2
+    client-auth: want
 
 ---
 
@@ -65,9 +74,18 @@ spring:
 
 server:
   port: 8088
+  ssl:
+    key-store-type: JKS
+    key-store: sepKeystore.jks
+    key-store-password: sep
+    key-alias: kp
+    trust-store: truststore.jks
+    trust-store-password: sep
+    enabled-protocols: TLSv1.2
+    client-auth: want
 eureka:
   instance:
-    hostname: bank-peer2
+    hostname: bank2-peer2
     appname: bank2
   client:
     register-with-eureka: true
@@ -79,4 +97,3 @@ eureka:
 #    enable-self-preservation: false
 
 
-#-----------------------DATABASE--------------------------------------

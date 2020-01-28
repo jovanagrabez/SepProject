@@ -20,7 +20,7 @@ import java.security.cert.X509Certificate;
 
 @Slf4j
 @EnableEurekaClient
-@RibbonClient(name = "bank_service")
+@RibbonClient(name = "bank2")
 @SpringBootApplication
 public class BankApplication {
 

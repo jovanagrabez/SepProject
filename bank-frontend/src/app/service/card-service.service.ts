@@ -11,7 +11,7 @@ export class CardServiceService {
   constructor(private http: HttpClient, private router: Router) { }
 
   submitData(cardData) {
-    return this.http.post('https://localhost:8762/bank_service/api/pay-by-card', cardData);
+    return this.http.post('https://localhost:8762/bank2/api/pay-by-card', cardData);
   }
 
   getData(id) {

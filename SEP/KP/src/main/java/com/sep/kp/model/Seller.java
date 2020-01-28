@@ -35,4 +35,7 @@ public class Seller implements Serializable {
     @Column
     private String bitcoinToken;
 
+    @Column
+    private String bankName;
+
 }

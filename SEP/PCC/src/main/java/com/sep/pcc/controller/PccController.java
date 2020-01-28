@@ -9,10 +9,12 @@ import com.sep.pcc.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
+@RequestMapping(value = "/api")
 public class PccController {
 
     @Autowired
@@ -34,6 +36,6 @@ public class PccController {
         String bankUrl = HOST + PORT + bank.getBankName() + PATH;
 
         // vraca banci prodavca acqOrderId acqTimestamp, issuerOrderId, issuerTimestap i status transakcije
-        return restTemplate.postForObject("https://localhost:".concat(bank.getBankName()+"/pay-by-card-forwarded"), acquirerDataDTO, PaymentResultDTO.class);
+        return restTemplate.postForObject("https://localhost:".concat(bank.getBankName()+"/api/issuer/pay-by-card-forwarded"), acquirerDataDTO, PaymentResultDTO.class);
     }
 }

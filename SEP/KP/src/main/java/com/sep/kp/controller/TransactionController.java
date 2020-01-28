@@ -176,7 +176,7 @@ public class TransactionController {
 
         HttpEntity requestEntity = new HttpEntity<>(paymentRequest, requestHeaders);
 
-        ResponseEntity<PaymentDTO> resp = restTemplate.postForEntity("https://localhost:8762/bank_service/api/get-payment-url", requestEntity, PaymentDTO.class);
+        ResponseEntity<PaymentDTO> resp = restTemplate.postForEntity("https://localhost:8762/bank2/api/get-payment-url", requestEntity, PaymentDTO.class);
         transaction.setTimestamp(new Date());
         transaction.setMerchantOrderId((long)resp.getBody().getMerchantOrderId());
         transaction.setPaymentId(Long.parseLong(resp.getBody().getPaymentId()));

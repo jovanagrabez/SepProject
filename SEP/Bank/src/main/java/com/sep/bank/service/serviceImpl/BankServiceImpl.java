@@ -154,7 +154,7 @@ public class BankServiceImpl implements BankService {
         transaction.setAcquirerOrderId(acquirerDataDTO.getAcquirerOrderId());
 
         // poziva PCC koji prosledjuje podatke banci kupca i vraca status
-        PaymentResultDTO paymentResultDTO = restTemplate.postForObject("https://localhost:8762/pcc/forward-to-bank",
+        PaymentResultDTO paymentResultDTO = restTemplate.postForObject("https://localhost:8762/pcc/api/forward-to-bank",
                 acquirerDataDTO, PaymentResultDTO.class);
 
         if (paymentResultDTO != null) {
