@@ -4,9 +4,9 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.Plan;
 import com.paypal.base.rest.PayPalRESTException;
-import com.sep.paypal.model.CreatePlanRequest;
+//import com.sep.paypal.model.CreatePlanRequest;
 import com.sep.paypal.model.PaymentRequest;
-import com.sep.paypal.model.SubscribeDto;
+//import com.sep.paypal.model.SubscribeDto;
 import com.sep.paypal.service.PaypalService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class PaypalController {
     }
 
 
-    @PostMapping(value = "/plan/createPlan")
+    /*@PostMapping(value = "/plan/createPlan")
     public ResponseEntity createPlanForSubscription(@RequestBody CreatePlanRequest requestCreatePlan) {
         Plan plan = paypalService.createPlanForSubscription(requestCreatePlan);
         return ResponseEntity.ok().build();
@@ -88,5 +88,5 @@ public class PaypalController {
     public ResponseEntity finishSubscription(@RequestParam("token") String token){
         paypalService.finishSubscription(token);
         return ResponseEntity.ok("Subscription finished");
-    }
+    }*/
 }
