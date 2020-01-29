@@ -1,7 +1,10 @@
 package com.sep.bank.controller;
 
 
-import com.sep.bank.model.DTO.*;
+import com.sep.bank.model.DTO.CardAmountDTO;
+import com.sep.bank.model.DTO.PaymentDTO;
+import com.sep.bank.model.DTO.RequestDTO;
+import com.sep.bank.model.DTO.TransactionDTO;
 import com.sep.bank.model.Transaction;
 import com.sep.bank.service.BankService;
 import org.modelmapper.ModelMapper;
@@ -9,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +31,15 @@ public class AcquirerController {
     @PostMapping("/get-payment-url")
     public ResponseEntity<PaymentDTO> getPaymentUrl(@RequestBody RequestDTO request) {
 
-
+         System.out.println("ULAZIIIIIIIIIIII");
         PaymentDTO paymentData = bankService.getPaymentUrl(request);
         return ResponseEntity.ok(paymentData);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testiraj(){
+        String str = "LALALA";
+        return ResponseEntity.ok(str);
     }
 
     @PostMapping("/pay-by-card")
