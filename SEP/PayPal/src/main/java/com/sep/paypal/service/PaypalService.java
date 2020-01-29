@@ -71,7 +71,7 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecute);
     }
 
-    public void createPlanForSubscription(CreatePlanRequest request){
+    public Plan createPlanForSubscription(CreatePlanRequest request){
         //Build plan object
         Plan plan = new Plan();
         plan.setName(request.getNameOfJournal());
@@ -107,14 +107,16 @@ public class PaypalService {
         merchantPreferences.setInitialFailAmountAction("CONTINUE");
         plan.setMerchantPreferences(merchantPreferences);
 
-        activatePlan(plan, request.getNameOfJournal());
+        Plan activated = activatePlan(plan, request.getNameOfJournal());
+        return activated;
     }
 
-    private void activatePlan(Plan plan, String nameOfJournal) {
+    private Plan activatePlan(Plan plan, String nameOfJournal) {
         try {
             Plan createdPlan = plan.create(apiContext);
             log.info("Created plan with id = {}", createdPlan.getId());
             log.info("Plan state = {}", createdPlan.getState());
+
             // Set up plan activate PATCH request
             List<Patch> patchRequestList = new ArrayList<>();
             Map<String, String> value = new HashMap<>();
@@ -132,9 +134,11 @@ public class PaypalService {
             JournalPlan journalPlan;
             journalPlan = JournalPlan.builder().journal(nameOfJournal).planId(createdPlan.getId()).build();
             journalPlanRepository.save(journalPlan);
+            return createdPlan;
 
         } catch (PayPalRESTException e) {
             log.error(e.getDetails().getMessage());
+            return null;
         }
     }
 
