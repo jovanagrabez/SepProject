@@ -13,6 +13,7 @@ export class CardComponentComponent implements OnInit {
 
 
   private Id;
+  private bank;
   private data;
   private nesto;
 
@@ -24,6 +25,7 @@ export class CardComponentComponent implements OnInit {
 
   ngOnInit() {
     this.Id = this.route.snapshot.paramMap.get('id');
+    this.bank = this.route.snapshot.paramMap.get('bank');
     this.cardService.getData(this.Id).subscribe(res => {
       this.data = res;
 
@@ -39,12 +41,12 @@ export class CardComponentComponent implements OnInit {
     this.cardElements.hashedId = this.Id;
     this.cardElements.sellerId = this.data.sellerId;
 
-    this.cardService.submitData(this.cardElements).subscribe(res => {
-      if (res.status === 'SUCCESS') {
-        this.toastr.successToastr('Successful transaction!');
-      } else {
+    this.cardService.submitData(this.cardElements, this.bank).subscribe(res => {
+     // if (res.status === 'SUCCESS') {
+      this.toastr.successToastr('Successful transaction!');
+   /*   } else {
         this.toastr.warningToastr('Error in transaction!');
-      }
+      }*/
       this.nesto = res;
       // @ts-ignore
       this.document.location.href = res.url;

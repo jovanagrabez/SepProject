@@ -12,30 +12,32 @@ spring:
     name: bank1
   profiles: peer1
   datasource:
-    url: jdbc:mysql://localhost:3306/sep_bank?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/sep_b?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
     username: root
     password: 2001jovana
-    jpa:
+ #   data: classpath:import1.sql
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: create
-      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-      show-sql: true
-      properties:
-        hibernate:
-          hbm2ddl:
-            import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+        hbm2ddl:
+          import_files: classpath:import1.sql
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
 
-
-eureka:
-  instance:
-    hostname: bank1-peer1
-    appname: bank1
-  client:
-    register-with-eureka: true
-    fetch-registry: false
-    service-url:
+      #eureka:
+#  instance:
+#    hostname: bank2-peer1
+#    appname: bank2
+ # client:
+ #   register-with-eureka: true
+#  fetch-registry: false
+ #   service-url:
       #defaultZone: http://eureka-peer2:${tpd.peer2Port}/eureka
-      defaultZone: http://localhost:8761/eureka
+
+  #     defaultZone: http://localhost:8760/eureka
 #  server:
 #    enable-self-preservation: false
 
@@ -58,12 +60,12 @@ spring:
     name: bank2
   profiles: peer2
   datasource:
-    url: jdbc:mysql://localhost:3306/sep_bank2?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/sep_b2?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
     username: root
     password: 2001jovana
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     properties:
@@ -83,17 +85,4 @@ server:
     trust-store-password: sep
     enabled-protocols: TLSv1.2
     client-auth: want
-eureka:
-  instance:
-    hostname: bank2-peer2
-    appname: bank2
-  client:
-    register-with-eureka: true
-    fetch-registry: false
-    service-url:
-      #defaultZone: http://eureka-peer1:${tpd.peer1Port}/eureka
-      defaultZone: http://localhost:8761/eureka
-#  server:
-#    enable-self-preservation: false
-
 

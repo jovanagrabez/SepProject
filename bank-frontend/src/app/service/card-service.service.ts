@@ -10,8 +10,8 @@ export class CardServiceService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  submitData(cardData) {
-    return this.http.post('https://localhost:8762/bank2/api/pay-by-card', cardData);
+  submitData(cardData, bank) {
+    return this.http.post('https://localhost:8762/'.concat(bank) + '/api/pay-by-card', cardData);
   }
 
   getData(id) {

@@ -7,10 +7,8 @@ import com.sep.pcc.model.DTO.CardDTO;
 import com.sep.pcc.model.DTO.PaymentResultDTO;
 import com.sep.pcc.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -29,13 +27,22 @@ public class PccController {
 
     @PostMapping("/forward-to-bank")
     public PaymentResultDTO forwardToBank(@RequestBody AcquirerDataDTO acquirerDataDTO) {
+      System.out.println("USAOOOOOO");
+
         CardDTO cardDTO = acquirerDataDTO.getCard();
 
         Bank bank = bankService.findBank(cardDTO.getPan());
 
-        String bankUrl = HOST + PORT + bank.getBankName() + PATH;
+      //  String bankUrl = HOST + PORT + bank.getBankName() + PATH;
 
         // vraca banci prodavca acqOrderId acqTimestamp, issuerOrderId, issuerTimestap i status transakcije
-        return restTemplate.postForObject("https://localhost:".concat(bank.getBankName()+"/api/issuer/pay-by-card-forwarded"), acquirerDataDTO, PaymentResultDTO.class);
+        return restTemplate.postForObject("https://localhost:8762/".concat(bank.getBankName()+"/api/issuer/pay-by-card-forwarded"), acquirerDataDTO, PaymentResultDTO.class);
+    }
+
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testiraj(){
+        String str = "LALALA";
+        return ResponseEntity.ok(str);
     }
 }

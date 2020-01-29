@@ -6,7 +6,7 @@ import {CardComponentComponent} from './component/home/card-component/card-compo
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home/:id', component: CardComponentComponent}
+  {path: 'home/:bank/:id', component: CardComponentComponent}
   ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -9,7 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -20,13 +19,13 @@ import java.security.cert.X509Certificate;
 
 @Slf4j
 @EnableEurekaClient
-@RibbonClient(name = "bank2")
 @SpringBootApplication
 public class BankApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BankApplication.class, args);
     }
+
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) throws Exception{

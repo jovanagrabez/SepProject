@@ -106,9 +106,15 @@ public class BankServiceImpl implements BankService {
             LOGGER.error("Card not found , card with pan: " + card.getPan() );
 
             transaction = forwardToPcc(card, transaction);
+            if(transaction.getStatus().equals("SUCCESS")){
+                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                a.setAmount(a.getAmount()+card.getAmount());
+                this.accountRepository.save(a);
+
+            }
 
       //      transaction.setStatus("FAILED");
-            // TODO Kada se implementira pcc ako su razliciti treba dopuniti metodu
+            // TODO dodati novac na racun
 
         }
 
