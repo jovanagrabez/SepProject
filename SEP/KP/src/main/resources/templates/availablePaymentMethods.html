@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Available payment methods</title>
+</head>
+<body>
+
+<h2  style="margin-left: 40%">Choose a payment method</h2>
+<br/><br/>
+<!--<span th:if="${teacher.gender == 'F'}">Female</span>-->
+<div style="margin-left: 45%">
+    <div th:if="${bank == 'true'}"><a th:href="${'https://localhost:8762/koncentrator_placanja/api/transaction/bank/'+hashedId}"> Bank<img src="https://img.icons8.com/color/96/000000/bank-building.png"></a></div>
+    <div th:if="${paypal == 'true'}"><a th:href="${'https://localhost:8762/koncentrator_placanja/api/transaction/paypal/'+hashedId}" >PayPal<img src="https://img.icons8.com/color/96/000000/paypal.png"></a></div>
+    <div th:if="${bitcoin == 'true'}"><a th:href="${'https://localhost:8762/koncentrator_placanja/api/transaction/bitcoin/'+hashedId}">Bitcoin<img src="https://img.icons8.com/office/80/000000/bitcoin.png"></a></div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

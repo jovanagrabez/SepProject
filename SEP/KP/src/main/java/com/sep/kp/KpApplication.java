@@ -49,4 +49,9 @@ public class KpApplication {
 
         return restTemplate;
     }
+
+  //  @Bean
+  /*  public RestTemplate restTemplatee() {
+        return new RestTemplate();
+    }*/
 }
