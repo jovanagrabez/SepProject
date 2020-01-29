@@ -172,9 +172,10 @@ public class TransactionController {
     @GetMapping(value = "/bank/{hashedId}")
     public RedirectView sendRedirectToBank(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
-        transaction.setSelectedPaymentMethodURI("https://localhost:8762/bank_service/api/status");
-        transaction = transactionRepository.save(transaction);
+
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
+        transaction.setSelectedPaymentMethodURI("https://localhost:8762/".concat(seller.getBankName())+"/api/status");
+        transaction = transactionRepository.save(transaction);
 
         PaymentRequest paymentRequest = paymentRequestService.createPaymentRequest(transaction.getProductId().toString(), transaction.getAmount());
         paymentRequest.setHashedOrderId(hashedId);
@@ -204,19 +205,10 @@ public class TransactionController {
 
 
         Transaction transaction = this.transactionRepository.findByMerchantOrderId( transactionDTO.getMerchantOrderId());
-      /*  transaction.setAcquirerOrderId(transactionDTO.getAcquirerOrderId());
-        transaction.setAmount(transactionDTO.getAmount());
 
-        transaction.setMerchantOrderId(transactionDTO.getMerchantOrderId());
-        transaction.setPaymentId(transactionDTO.getPaymentId());*/
-//        transaction.setStatus(transactionDTO.getStatus());
         transaction.setTimestamp(transactionDTO.getAcquirerTimestamp());
         this.transactionRepository.save(transaction);
         String resultUrl = transactionService.endTransaction(transaction);
-
-//        TransactionResultCustomerDTO transactionCustomer = new TransactionResultCustomerDTO(transaction.getMerchantOrderId(),
-//                transaction.getAcquirerOrderId(), transaction.getTimestamp(),
-//                transaction.getPaymentId(), resultUrl, transaction.getAmount(), TransactionStatus.Payed);
 
         return "https://localhost:4200";
     }

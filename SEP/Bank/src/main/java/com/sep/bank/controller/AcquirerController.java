@@ -6,6 +6,7 @@ import com.sep.bank.model.DTO.PaymentDTO;
 import com.sep.bank.model.DTO.RequestDTO;
 import com.sep.bank.model.DTO.TransactionDTO;
 import com.sep.bank.model.Transaction;
+import com.sep.bank.repository.TransactionRepository;
 import com.sep.bank.service.BankService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class AcquirerController {
 
     @Autowired
     private BankService bankService;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
     @PostMapping("/get-payment-url")
@@ -48,24 +52,8 @@ public class AcquirerController {
 
         TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
 
-        System.out.println(transactionDTO.getAmount());
-        System.out.println(transactionDTO.getMerchantOrderId());
-        System.out.println(transactionDTO.getPaymentId());
-
-//        transactionDTO.setStatus();
 
 
-
- /*       TransactionDTO transactionDTO = new TransactionDTO();
-        transactionDTO.setAcquirerOrderId(transaction.getAcquirerOrderId());
-        transactionDTO.setAcquirerTimestamp(transaction.getTimestamp());
-        transactionDTO.setAmount(transaction.getAmount());
-        transactionDTO.setMerchantOrderId(transaction.getMerchantOrderId());
-        transactionDTO.setPaymentId(transaction.getPaymentId());
-        transactionDTO.setResultUrl(transaction.getResultUrl());
-        transactionDTO.setStatus(transaction.getStatus());
-        transactionDTO.setId(transaction.getId());
-*/
         // final step - send transaction information to the payment concentrator
         String resp = restTemplate.postForObject("https://localhost:8762/koncentrator_placanja/api/transaction/finish-transaction", transactionDTO, String.class);
 
@@ -73,6 +61,20 @@ public class AcquirerController {
         map.put("url", resp);
         map.put("status", transaction.getStatus());
         return map;
+    }
+
+
+    @GetMapping(value = "/status/{hashedId}")
+    public ResponseEntity<String> getUpdateAboutOrderStatus(@PathVariable String hashedId) {
+        Transaction transaction = transactionRepository.findTransactionByHashedOrderId(hashedId);
+
+        if (transaction.getStatus().equals("SUCCESS")) {
+            return ResponseEntity.ok("Paid");
+        } else if (transaction.getStatus().equals("FAILED")) {
+            return ResponseEntity.ok("Cancelled");
+        } else {
+            return ResponseEntity.ok("New");
+        }
     }
 
 }
