@@ -6,7 +6,6 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.sep.paypal.model.CreatePlanRequest;
 import com.sep.paypal.model.JournalPlan;
-import com.sep.paypal.TransactionRepository;
 import com.sep.paypal.model.enumeration.PaymentIntent;
 import com.sep.paypal.model.enumeration.PaymentMethod;
 import com.sep.paypal.repository.JournalPlanRepository;
@@ -72,12 +71,7 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecute);
     }
 
-    public Payment getPayment(String paymentId) throws PayPalRESTException {
-
-        return Payment.get(apiContext, paymentId);
-    }
-
-    public Plan createPlanForSubscription(CreatePlanRequest request){
+    public void createPlanForSubscription(CreatePlanRequest request){
         //Build plan object
         Plan plan = new Plan();
         plan.setName(request.getNameOfJournal());
@@ -113,16 +107,14 @@ public class PaypalService {
         merchantPreferences.setInitialFailAmountAction("CONTINUE");
         plan.setMerchantPreferences(merchantPreferences);
 
-        Plan activated = activatePlan(plan, request.getNameOfJournal());
-        return activated;
+        activatePlan(plan, request.getNameOfJournal());
     }
 
-    private Plan activatePlan(Plan plan, String nameOfJournal) {
+    private void activatePlan(Plan plan, String nameOfJournal) {
         try {
             Plan createdPlan = plan.create(apiContext);
             log.info("Created plan with id = {}", createdPlan.getId());
             log.info("Plan state = {}", createdPlan.getState());
-
             // Set up plan activate PATCH request
             List<Patch> patchRequestList = new ArrayList<>();
             Map<String, String> value = new HashMap<>();
@@ -140,26 +132,23 @@ public class PaypalService {
             JournalPlan journalPlan;
             journalPlan = JournalPlan.builder().journal(nameOfJournal).planId(createdPlan.getId()).build();
             journalPlanRepository.save(journalPlan);
-            return createdPlan;
 
         } catch (PayPalRESTException e) {
             log.error(e.getDetails().getMessage());
-            return null;
         }
     }
 
-    public URL subscribeToPlan(String nameOfJournal) {
+    public String subscribeToPlan(Long journalId) {
         Agreement agreement = new Agreement();
-        agreement.setName(String.format("Subscription for %s", nameOfJournal));
+        agreement.setName(String.format("Subscription for magazin no %s", journalId));
         agreement.setDescription("Basic Agreement");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-
         // Add 30 seconds to make sure Paypal accept the agreement date
         Date rightNow = new Date(new Date().getTime() + 30000);
         agreement.setStartDate(df.format(rightNow));
 
         Plan plan = new Plan();
-        plan.setId(journalPlanRepository.findJournalPlanByJournal(nameOfJournal).getPlanId());
+        plan.setId(journalPlanRepository.findJournalPlanById(journalId).getPlanId());
         agreement.setPlan(plan);
 
         Payer payer = new Payer();
@@ -171,7 +160,7 @@ public class PaypalService {
 
             for (Links links : agreement.getLinks()) {
                 if ("approval_url".equals(links.getRel())) {
-                    return new URL(links.getHref());
+                    return links.getHref();
                     //REDIRECT USER TO url
                 }
             }
@@ -192,6 +181,11 @@ public class PaypalService {
         } catch (PayPalRESTException e) {
             log.error(e.getDetails().getMessage());
         }
+    }
+
+    public Payment getPayment(String paymentId) throws PayPalRESTException {
+
+        return Payment.get(apiContext, paymentId);
     }
 
 }

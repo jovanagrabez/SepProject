@@ -12,6 +12,5 @@ import java.io.Serializable;
 @Data
 @Builder
 public class SubscribeDto implements Serializable {
-    private String nameOfJournal;
-    private String payer;
+    private Long journalId;
 }

@@ -3,9 +3,11 @@ package com.sep.paypal.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.sep.paypal.TransactionRepository;
 import com.sep.paypal.model.CreatePlanRequest;
 import com.sep.paypal.model.PaymentRequest;
 import com.sep.paypal.model.SubscribeDto;
+import com.sep.paypal.model.Transaction;
 import com.sep.paypal.service.PaypalService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class PaypalController {
 
     @Autowired
     private PaypalService paypalService;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     private static final String SUCCESS_URL = "/pay/success";
     private static final String CANCEL_URL = "/pay/cancel";
@@ -79,7 +84,7 @@ public class PaypalController {
 
     @PostMapping(value = "/plan/subscribe")
     public ResponseEntity subscribeToPlan(@RequestBody SubscribeDto subscribeDto) {
-        URL url = paypalService.subscribeToPlan(subscribeDto.getNameOfJournal());
+        String url = paypalService.subscribeToPlan(subscribeDto.getJournalId());
         return ResponseEntity.ok(url);
     }
 
@@ -87,5 +92,18 @@ public class PaypalController {
     public ResponseEntity finishSubscription(@RequestParam("token") String token){
         paypalService.finishSubscription(token);
         return ResponseEntity.ok("Subscription finished");
+    }
+
+    @GetMapping(value = "/status/{hashedId}")
+    public ResponseEntity getUpdatedTransactionStatus(@PathVariable String hashedId) throws PayPalRESTException {
+        Transaction transaction = transactionRepository.findTransactionByHashedTransactionId(hashedId);
+        Payment payment = paypalService.getPayment(transaction.getPaymentId());
+
+        switch (payment.getState()){
+//            case "CREATED":
+            case "APPROVED": return ResponseEntity.ok("Paid");
+            case "FAILED": return ResponseEntity.ok("Cancelled");
+            default: return ResponseEntity.ok("New");
+        }
     }
 }

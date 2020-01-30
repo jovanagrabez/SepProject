@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JournalPlanRepository extends JpaRepository<JournalPlan, Long> {
     JournalPlan findJournalPlanByJournal(String name);
+    JournalPlan findJournalPlanById(Long id);
 }
