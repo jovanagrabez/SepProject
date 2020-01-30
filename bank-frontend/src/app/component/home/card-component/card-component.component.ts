@@ -16,10 +16,10 @@ export class CardComponentComponent implements OnInit {
   private bank;
   private data;
   private nesto;
-
+  private seller;
   cardElements = {sellerId: 0, pan: '', securityCode: 0, cardHolderName: '', validTo: null, paymentId: 0,
     amount: 0,
-    merchantOrderId: 0, hashedId: 0};
+    merchantOrderId: 0, hashedId: 0, merchantId: 0};
   constructor(private router: Router, private route: ActivatedRoute, private cardService: CardServiceService,
               @Inject(DOCUMENT) private document: Document, private toastr: ToastrManager) { }
 
@@ -28,6 +28,9 @@ export class CardComponentComponent implements OnInit {
     this.bank = this.route.snapshot.paramMap.get('bank');
     this.cardService.getData(this.Id).subscribe(res => {
       this.data = res;
+      this.cardService.getSeller(this.Id).subscribe( result  => {
+        this.seller = result;
+      });
 
     });
     console.log(this.data);
@@ -40,13 +43,14 @@ export class CardComponentComponent implements OnInit {
     this.cardElements.paymentId = this.data.paymentId;
     this.cardElements.hashedId = this.Id;
     this.cardElements.sellerId = this.data.sellerId;
+    this.cardElements.merchantId = this.seller.merchantId;
 
     this.cardService.submitData(this.cardElements, this.bank).subscribe(res => {
-     // if (res.status === 'SUCCESS') {
+      if (res['status'] === 'SUCCESS') {
       this.toastr.successToastr('Successful transaction!');
-   /*   } else {
+      } else {
         this.toastr.warningToastr('Error in transaction!');
-      }*/
+      }
       this.nesto = res;
       // @ts-ignore
       this.document.location.href = res.url;
