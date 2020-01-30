@@ -11,5 +11,6 @@ public interface SellerService {
 
     List<Seller> getAllMethods(String client);
     boolean newSellerPaymentMethods(CreateSellerDto createSellerDto);
+    Seller getSellerByHashedTransactionId(String hashedId);
 
 }

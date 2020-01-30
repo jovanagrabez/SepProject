@@ -8,6 +8,7 @@ import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
+import com.sep.kp.service.SellerService;
 import com.sep.kp.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class TransactionController {
     private SellerRepository sellerRepository;
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private SellerService sellerService;
 
     private static final String Bitcoin_SERVICE_URI = "https://localhost:8762/bitcoin_service/api/order";
     private static final String PayPal_SERVICE_URI = "https://localhost:8762/paypal_service/api/pay";
@@ -171,9 +175,10 @@ public class TransactionController {
     @GetMapping(value = "/bank/{hashedId}")
     public RedirectView sendRedirectToBank(@PathVariable String hashedId) {
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
-        transaction.setSelectedPaymentMethodURI("https://localhost:8762/bank_service/api/status");
-        transaction = transactionRepository.save(transaction);
+
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
+        transaction.setSelectedPaymentMethodURI("https://localhost:8762/".concat(seller.getBankName())+"/api/status");
+        transaction = transactionRepository.save(transaction);
 
         PaymentRequest paymentRequest = paymentRequestService.createPaymentRequest(transaction.getProductId().toString(), transaction.getAmount());
         paymentRequest.setHashedOrderId(hashedId);
@@ -203,19 +208,10 @@ public class TransactionController {
 
 
         Transaction transaction = this.transactionRepository.findByMerchantOrderId( transactionDTO.getMerchantOrderId());
-      /*  transaction.setAcquirerOrderId(transactionDTO.getAcquirerOrderId());
-        transaction.setAmount(transactionDTO.getAmount());
 
-        transaction.setMerchantOrderId(transactionDTO.getMerchantOrderId());
-        transaction.setPaymentId(transactionDTO.getPaymentId());*/
-//        transaction.setStatus(transactionDTO.getStatus());
         transaction.setTimestamp(transactionDTO.getAcquirerTimestamp());
         this.transactionRepository.save(transaction);
         String resultUrl = transactionService.endTransaction(transaction);
-
-//        TransactionResultCustomerDTO transactionCustomer = new TransactionResultCustomerDTO(transaction.getMerchantOrderId(),
-//                transaction.getAcquirerOrderId(), transaction.getTimestamp(),
-//                transaction.getPaymentId(), resultUrl, transaction.getAmount(), TransactionStatus.Payed);
 
         return "https://localhost:4200";
     }
@@ -249,6 +245,14 @@ public class TransactionController {
 
 
         return ResponseEntity.ok(transaction.getStatus());
+    }
+
+
+    @GetMapping(value = "/getSeller/{hashedId}")
+    public Seller getSeller (@PathVariable String hashedId){
+
+    return this.sellerService.getSellerByHashedTransactionId(hashedId);
+
     }
 
 }

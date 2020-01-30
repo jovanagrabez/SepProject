@@ -13,6 +13,7 @@ public class CardAmountDTO {
     private double amount;
     private String hashedId;
     private Long sellerId;
+    private String merchantId;
 
     public CardAmountDTO() {
     }
@@ -26,6 +27,15 @@ public class CardAmountDTO {
         this.validTo = validTo;
         this.amount = amount;
         this.sellerId = sellerId;
+    }
+
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public Long getSellerId() {

@@ -32,7 +32,7 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
         Seller foundSeller = sellerRepository.findByClientId(clientID);
 
         PaymentRequest paymentRequest = new PaymentRequest();
-        paymentRequest.setMerchantId(foundSeller.getClientId());
+        paymentRequest.setMerchantId(foundSeller.getMerchantId());
         paymentRequest.setMerchantPassword(foundSeller.getClientPassword());
 
         Random random = new Random();

@@ -2,9 +2,9 @@ insert into payment_method (id, name) values (1, 'Bank');
 insert into payment_method (id, name) values (2, 'PayPal');
 insert into payment_method (id, name) values (3, 'Bitcoin');
 
-insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (1, '1','1','123','magazin', 1, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8', 'bank2');
-insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (2, '2','2','123','magazin 1', 2, '9gLpd_BuuCxxzqp25ZCKMPfkkRSgXfXyYGzMLTL_', 'bank1');
-insert into seller (id, client, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (3, '3','3','123','magazin 2', 3, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8', 'bank1');
+insert into seller (id, client,merchant_id, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (1, '1','12345','1','123','magazin', 1, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8', 'bank2');
+insert into seller (id, client,merchant_id, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (2, '2','98765','2','123','magazin 1', 2, '9gLpd_BuuCxxzqp25ZCKMPfkkRSgXfXyYGzMLTL_', 'bank1');
+insert into seller (id, client,merchant_id, client_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (3, '3',null,'3','123','magazin 2', 3, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8', 'bank1');
 
 
 insert into seller_payment_methods(seller_id, payment_methods_id) VALUES (1, 1);

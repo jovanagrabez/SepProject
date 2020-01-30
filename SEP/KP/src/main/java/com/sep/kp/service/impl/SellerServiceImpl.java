@@ -5,7 +5,9 @@ import com.sep.kp.model.DTO.CreateSellerDto;
 import com.sep.kp.model.PaymentMethod;
 import com.sep.kp.model.Seller;
 import com.sep.kp.repository.PaymentMethodRepository;
+import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.SellerRepository;
+import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class SellerServiceImpl implements SellerService {
     private SellerRepository sellerRepository;
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<Seller> getAllMethods(String client) {
@@ -55,5 +60,12 @@ public class SellerServiceImpl implements SellerService {
         this.sellerRepository.save(seller);
 
         return true;
+    }
+
+    @Override
+    public Seller getSellerByHashedTransactionId(String hashedId) {
+        Transaction t = this.transactionRepository.findTransactionByIdHashValue(hashedId);
+        Seller seller = this.sellerRepository.findSellerById(t.getSellerId());
+        return seller;
     }
 }

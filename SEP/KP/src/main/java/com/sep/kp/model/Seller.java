@@ -41,4 +41,7 @@ public class Seller implements Serializable {
     @Column
     private Long userId;
 
+    @Column(nullable = true)
+    private String merchantId;
+
 }
