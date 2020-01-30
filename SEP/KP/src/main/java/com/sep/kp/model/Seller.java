@@ -38,4 +38,7 @@ public class Seller implements Serializable {
     @Column
     private String bankName;
 
+    @Column
+    private Long userId;
+
 }

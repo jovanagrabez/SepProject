@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class CreateSellerDto implements Serializable {
+    private String userId;
     private String merchantId;
     private String bankName;
     private String clientId;

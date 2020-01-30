@@ -15,4 +15,5 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
     Seller findByClientId(String client);
     Seller findSellerByMagazineId(Long magazineId);
     Seller findSellerById(Long id);
+    Seller findSellerByUserId(Long userId);
 }

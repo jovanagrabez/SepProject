@@ -11,6 +11,7 @@
 
 <div style="margin-left: 35%">
     <form th:action="@{/koncentrator_placanja/api/seller}" th:object="${someBean}" method="POST">
+        <input type="text" id="userId" name="userId" th:field="*{userId}" style="visibility: hidden">
         <div class="col-md-6"><img src="https://img.icons8.com/color/96/000000/bank-building.png">
             <h3><i><b>Bank</b></i></h3>
             <div>
