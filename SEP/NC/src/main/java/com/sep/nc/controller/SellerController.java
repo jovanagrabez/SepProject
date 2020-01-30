@@ -3,6 +3,7 @@ package com.sep.nc.controller;
 import com.sep.nc.entity.Magazine;
 import com.sep.nc.entity.MagazinePurchase;
 import com.sep.nc.entity.User;
+import com.sep.nc.entity.dto.UserDto;
 import com.sep.nc.entity.enumeration.PurchaseStatus;
 import com.sep.nc.service.UserService;
 import com.sep.nc.service.impl.UtilityService;
@@ -37,7 +38,7 @@ public class SellerController {
             throw new Exception("Jwt error");
         }
 
-        User seller = userService.getUserByEmail(email);
+        UserDto seller = userService.getUserByEmail(email);
         return ResponseEntity.ok("https://localhost:8762/koncentrator_placanja/api/seller/" + seller.getId());
     }
 }

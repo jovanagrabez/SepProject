@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
   magazinesList: any;
   userLogged: boolean;
 
-  constructor(private magazineService: MagazineService, private userService: UserService) { }
+  constructor(private magazineService: MagazineService, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.magazineService.getAll().subscribe(magazines => {

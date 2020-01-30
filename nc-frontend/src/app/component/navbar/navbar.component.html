@@ -16,38 +16,14 @@
         <a class="nav-link" routerLink="register">Register </a>
 
       </li>
+      <li *ngIf="userRole !== '' && userRole !== 'USER'" class="nav-item active" >
+        <a class="nav-link" (click)="registerPaymentMethods()">Register payment methods</a>
+      </li>
+      <li *ngIf="userRole === 'USER'" class="nav-item active" >
+        <a class="nav-link" routerLink="all-purchases">Purchased magazines </a>
+      </li>
       <li *ngIf="userRole !== ''" class="nav-item active" >
         <a class="nav-link"  (click)="logout()">Log out </a>
-      </li>
-
-
-      <li *ngIf="userRole === 'ROLE_SISTEM_ADMIN'" class="nav-item dropdown" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarFeaturesDropdownMenu" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Admin</a>
-        <div class="dropdown-menu dropdown-left-manual" aria-labelledby="navbarFeaturesDropdownMenu">
-          <a class="dropdown-item" routerLink="certificate/all">All certificates</a>
-          <a class="dropdown-item" routerLink="certificate/new">Add certificate</a>
-          <a class="dropdown-item" routerLink="certificate/self-signed/new">Add self-signed certificate</a>
-          <a class="dropdown-item" routerLink="keystore/generate" [routerLinkActive]="">Generate keystore</a>
-        </div>
-      </li>
-
-      <li *ngIf="userRole === 'ROLE_ADMIN'" class="nav-item dropdown" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarFeaturesDropdownMenu" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Admin</a>
-        <div class="dropdown-menu dropdown-left-manual" aria-labelledby="navbarFeaturesDropdownMenu">
-          <a class="dropdown-item" routerLink="additional-services">Additional services</a>
-          <a class="dropdown-item" routerLink="category-services">Accommodation category</a>
-          <a class="dropdown-item" routerLink="type-services">Accommodation type</a>
-          <a class="dropdown-item" routerLink="accommodation view">Accommodation view</a>
-          <a class="dropdown-item" routerLink="add-accommodation">Add accommodation</a>
-          <a class="dropdown-item" routerLink="users-management">Users management</a>
-          <a class="dropdown-item" routerLink="comments">Comments</a>
-
-
-
-
-        </div>
       </li>
 
     </ul>

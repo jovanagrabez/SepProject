@@ -15,16 +15,13 @@ public class Seller implements Serializable {
     private Long id;
 
     @Column
-    private String client;    // seller's token(id) from scientific centre
+    private Long clientId;    // seller's token(id) from scientific centre
 
     @Column
     private String magazine;        // TODO promeniti u listu magazina
 
     @Column
     private Long magazineId;
-
-    @Column
-    private String clientId;
 
     @Column
     private String clientPassword;
@@ -44,4 +41,9 @@ public class Seller implements Serializable {
     @Column(nullable = true)
     private String merchantId;
 
+    @Column
+    private String paypalClientId;
+
+    @Column
+    private String paypalClientSecret;
 }

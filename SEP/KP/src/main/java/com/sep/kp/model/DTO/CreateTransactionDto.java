@@ -21,4 +21,6 @@ public class CreateTransactionDto {
         this.typeOfProduct = typeOfProduct;
         this.purchaseId = purchaseId;
     }
+
+    public CreateTransactionDto() {}
 }

@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface SellerRepository extends JpaRepository<Seller,Long> {
 
-    Seller findByClientAndPaymentMethodsContaining(String client, String paymentMethod);
-    List<Seller> findByClient(String client);
+    Seller findByClientIdAndPaymentMethodsContaining(Long client, String paymentMethod);
+    List<Seller> findByClientId(Long client);
     Seller findByClientId(String client);
     Seller findSellerByMagazineId(Long magazineId);
     Seller findSellerById(Long id);

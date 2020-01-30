@@ -5,9 +5,12 @@ import com.sep.nc.entity.MagazinePurchase;
 import com.sep.nc.entity.User;
 import com.sep.nc.entity.dto.BuyProductDto;
 import com.sep.nc.entity.dto.FinishedMagazineOrderDto;
+import com.sep.nc.entity.dto.ShowMagazinesDto;
+import com.sep.nc.entity.dto.UserDto;
 import com.sep.nc.entity.enumeration.PurchaseStatus;
 import com.sep.nc.entity.enumeration.TypeOfProduct;
 import com.sep.nc.repository.MagazinePurchasesRepository;
+import com.sep.nc.repository.UserRepository;
 import com.sep.nc.service.MagazineService;
 import com.sep.nc.service.UserService;
 import com.sep.nc.service.impl.UtilityService;
@@ -31,20 +34,22 @@ public class MagazineController {
     private final RestTemplate restTemplate;
     private final UserService userService;
     private final MagazinePurchasesRepository magazinePurchasesRepository;
+    private final UserRepository userRepository;
 
     private static final String KP_SERVICE_URI= "https://localhost:8762/koncentrator_placanja/api";
 
     @Autowired
-    public MagazineController(MagazineService magazineService, RestTemplate restTemplate, UserService userService, MagazinePurchasesRepository magazinePurchasesRepository) {
+    public MagazineController(MagazineService magazineService, RestTemplate restTemplate, UserService userService, MagazinePurchasesRepository magazinePurchasesRepository, UserRepository userRepository) {
         this.magazineService = magazineService;
         this.restTemplate = restTemplate;
         this.userService = userService;
         this.magazinePurchasesRepository = magazinePurchasesRepository;
+        this.userRepository = userRepository;
     }
 
 
     @GetMapping
-    public ResponseEntity<List<Magazine>> getAllMagazines() {
+    public ResponseEntity<List<ShowMagazinesDto>> getAllMagazines() {
         return new ResponseEntity<>(magazineService.getAll(), HttpStatus.OK);
     }
 
@@ -58,7 +63,7 @@ public class MagazineController {
         Magazine magazine = this.magazineService.getById(magazineId);
 
         MagazinePurchase magazinePurchase = this.magazinePurchasesRepository.save(new MagazinePurchase(magazine, PurchaseStatus.New));
-        User user = userService.getUserByEmail(email);
+        User user = userRepository.findUserByEmail(email);
         user.getMagazinePurchases().add(magazinePurchase);
         userService.saveUser(user);
 

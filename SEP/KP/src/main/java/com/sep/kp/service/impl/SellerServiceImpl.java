@@ -28,7 +28,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public List<Seller> getAllMethods(String client) {
-        return sellerRepository.findByClient(client);
+        return sellerRepository.findByClientId(Long.parseLong(client));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SellerServiceImpl implements SellerService {
         Seller seller = this.sellerRepository.findSellerByUserId(Long.parseLong(createSellerDto.getUserId()));
         if (seller == null) {
             seller = new Seller();
-            seller.setUserId(Long.parseLong(createSellerDto.getUserId()));
+            seller.setClientId(Long.parseLong(createSellerDto.getUserId()));
         }
 
         if (seller.getPaymentMethods() == null) {
@@ -46,15 +46,25 @@ public class SellerServiceImpl implements SellerService {
 
         if (!createSellerDto.getBankName().isEmpty() && !createSellerDto.getMerchantId().isEmpty()) {
             PaymentMethod paymentMethod = paymentMethodRepository.findByName("Bank");
-            seller.getPaymentMethods().add(paymentMethod);
+            if (!seller.getPaymentMethods().contains(paymentMethod)) {
+                seller.getPaymentMethods().add(paymentMethod);
+            }
+            seller.setBankName(createSellerDto.getBankName());
+            seller.setMerchantId(createSellerDto.getMerchantId());
         }
         if (!createSellerDto.getClientId().isEmpty() && !createSellerDto.getClientSecret().isEmpty()) {
             PaymentMethod paymentMethod = paymentMethodRepository.findByName("PayPal");
-            seller.getPaymentMethods().add(paymentMethod);
+            if (!seller.getPaymentMethods().contains(paymentMethod)) {
+                seller.getPaymentMethods().add(paymentMethod);
+            }
+            seller.setPaypalClientId(createSellerDto.getClientId());
+            seller.setPaypalClientSecret(createSellerDto.getClientSecret());
         }
         if (!createSellerDto.getBitcoinToken().isEmpty()) {
             PaymentMethod paymentMethod = paymentMethodRepository.findByName("Bitcoin");
-            seller.getPaymentMethods().add(paymentMethod);
+            if (!seller.getPaymentMethods().contains(paymentMethod)) {
+                seller.getPaymentMethods().add(paymentMethod);
+            }
             seller.setBitcoinToken(createSellerDto.getBitcoinToken());
         }
         this.sellerRepository.save(seller);

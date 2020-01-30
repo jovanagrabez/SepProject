@@ -1,6 +1,8 @@
 package com.sep.nc.controller;
 
 import com.sep.nc.entity.MagazinePurchase;
+import com.sep.nc.entity.dto.MagazinePurchaseDto;
+import com.sep.nc.entity.dto.ShowMagazinesDto;
 import com.sep.nc.entity.enumeration.PurchaseStatus;
 import com.sep.nc.repository.MagazinePurchasesRepository;
 import com.sep.nc.service.impl.UtilityService;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +28,7 @@ public class MagazinePurchaseController {
     private static final String KP_SERVICE_URI= "https://localhost:8762/koncentrator_placanja/api/transaction/purchase-status/";
 
     @GetMapping
-    public ResponseEntity<List<MagazinePurchase>> getAllPurchases(@RequestHeader(value = "Authorization") String authorization) throws Exception {
+    public ResponseEntity<List<MagazinePurchaseDto>> getAllPurchases(@RequestHeader(value = "Authorization") String authorization) throws Exception {
 
         String email = UtilityService.getEmailFromToken(authorization);
         if (email == null) {
@@ -44,21 +47,18 @@ public class MagazinePurchaseController {
                 HttpEntity requestEntity = new HttpEntity<>(requestHeaders);
 
                 ResponseEntity resp = restTemplate.getForEntity(KP_SERVICE_URI+magazinePurchases.get(i).getId(), String.class, requestEntity);
-
                 magazinePurchases.get(i).setStatus((PurchaseStatus) resp.getBody());
-//                return new ResponseEntity(resp.getBody(), HttpStatus.OK);
+
             }
         }
 
-//        HttpHeaders requestHeaders = new HttpHeaders();
-//        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-//        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//
-//        HttpEntity requestEntity = new HttpEntity<>(message, requestHeaders);
-//
-//        ResponseEntity resp = restTemplate.exchange(KP_SERVICE_URI, HttpMethod.POST,requestEntity, String.class);
-//
-//        return new ResponseEntity(resp.getBody(), HttpStatus.OK);
-        return ResponseEntity.ok(magazinePurchases);
+        List<MagazinePurchaseDto> magazinePurchaseDtos = new ArrayList<>();
+        for(MagazinePurchase purchase : magazinePurchases) {
+            magazinePurchaseDtos.add(new MagazinePurchaseDto(new ShowMagazinesDto(purchase.getMagazine().getId(),
+                    purchase.getMagazine().getName(), purchase.getMagazine().getISSNNumber(),
+                    purchase.getMagazine().getScientificAreas(), purchase.getMagazine().getPaymentType(),
+                    purchase.getMagazine().getPrice()), purchase.getStatus()));
+        }
+        return ResponseEntity.ok(magazinePurchaseDtos);
     }
 }
