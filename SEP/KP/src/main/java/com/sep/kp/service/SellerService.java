@@ -9,5 +9,6 @@ import java.util.List;
 public interface SellerService {
 
     List<Seller> getAllMethods(String client);
+    Seller getSellerByHashedTransactionId(String hashedId);
 
 }

@@ -8,6 +8,7 @@ import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
+import com.sep.kp.service.SellerService;
 import com.sep.kp.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class TransactionController {
     private SellerRepository sellerRepository;
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private SellerService sellerService;
 
     private static final String Bitcoin_SERVICE_URI = "https://localhost:8762/bitcoin_service/api/order";
     private static final String PayPal_SERVICE_URI = "https://localhost:8762/paypal_service/api/pay";
@@ -242,6 +246,14 @@ public class TransactionController {
 
 
         return ResponseEntity.ok(transaction.getStatus());
+    }
+
+
+    @GetMapping(value = "/getSeller/{hashedId}")
+    public Seller getSeller (@PathVariable String hashedId){
+
+    return this.sellerService.getSellerByHashedTransactionId(hashedId);
+
     }
 
 }

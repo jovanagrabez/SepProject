@@ -78,6 +78,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public Transaction checkBankForCard(CardAmountDTO card) {
         LOGGER.info("Finding card: " + card);
+        LOGGER.info("Merchant id: " + card.getMerchantId());
 
         Card foundCard = cardService.find(card.getPan());
 
@@ -90,7 +91,7 @@ public class BankServiceImpl implements BankService {
 
         if (foundCard != null) {
             if (checkAmountOnAccount(foundCard, card.getAmount())) {
-                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                Account a = this.accountRepository.findByMerchantId(card.getMerchantId());
                 a.setAmount(a.getAmount()+card.getAmount());
                 this.accountRepository.save(a);
                 transaction.setStatus("SUCCESS");
@@ -106,15 +107,12 @@ public class BankServiceImpl implements BankService {
             LOGGER.error("Card not found , card with pan: " + card.getPan() );
 
             transaction = forwardToPcc(card, transaction);
-            if(transaction.getStatus().equals("SUCCESS")){
-                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                Account a = this.accountRepository.findByMerchantId(card.getMerchantId());
                 a.setAmount(a.getAmount()+card.getAmount());
                 this.accountRepository.save(a);
 
-            }
 
-      //      transaction.setStatus("FAILED");
-            // TODO dodati novac na racun
+
 
         }
 

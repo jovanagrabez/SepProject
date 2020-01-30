@@ -1,8 +1,8 @@
 INSERT INTO client (id, first_name,last_name) VALUES (1, 'Jovana', 'Grabez');
 INSERT INTO client (id, first_name,last_name) VALUES (2, 'Andjela', 'Trninic');
 
-INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (1, 5000, 1, '1', '123');
-INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (2, 100, 2, '2', '123');
+INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (1, 5000, 1, '12345', '123');
+INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (2, 100, 2, '98765', '123');
 INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (3, 200, 2, '3', '123');
 INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (4, 0, 2, '4', '123');
 
