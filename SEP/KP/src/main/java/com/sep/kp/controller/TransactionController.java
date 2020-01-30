@@ -165,7 +165,6 @@ public class TransactionController {
         ResponseEntity<String> resp = restTemplate.postForEntity(NC_SERVICE_URI, requestEntity, String.class);
         return new RedirectView(NC_FRONTEND);
 
-//        return new RedirectView(NC_FRONTEND);
     }
 
 
