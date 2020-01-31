@@ -38,7 +38,6 @@ public class MagazinePurchaseController {
 
         for (int i = 0; i < magazinePurchases.size(); i++) {
             if (magazinePurchases.get(i).getStatus().equals(PurchaseStatus.New)) {
-                // TODO pozvati kp za proveru statusa
 
                 HttpHeaders requestHeaders = new HttpHeaders();
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -47,7 +46,7 @@ public class MagazinePurchaseController {
                 HttpEntity requestEntity = new HttpEntity<>(requestHeaders);
 
                 ResponseEntity resp = restTemplate.getForEntity(KP_SERVICE_URI+magazinePurchases.get(i).getId(), String.class, requestEntity);
-                magazinePurchases.get(i).setStatus((PurchaseStatus) resp.getBody());
+                magazinePurchases.get(i).setStatus(PurchaseStatus.valueOf((String) resp.getBody()));
 
             }
         }

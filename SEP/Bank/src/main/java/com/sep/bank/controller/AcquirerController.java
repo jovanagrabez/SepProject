@@ -68,6 +68,9 @@ public class AcquirerController {
     public ResponseEntity<String> getUpdateAboutOrderStatus(@PathVariable String hashedId) {
         Transaction transaction = transactionRepository.findTransactionByHashedOrderId(hashedId);
 
+        if (transaction == null) {
+            return ResponseEntity.ok("Cancelled");
+        }
         if (transaction.getStatus().equals("SUCCESS")) {
             return ResponseEntity.ok("Paid");
         } else if (transaction.getStatus().equals("FAILED")) {

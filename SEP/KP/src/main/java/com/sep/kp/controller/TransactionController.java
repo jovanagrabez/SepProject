@@ -217,17 +217,20 @@ public class TransactionController {
     }
 
     @GetMapping(value = "purchase-status/{purchaseId}")
-    public ResponseEntity<TransactionStatus> checkPurchaseStatus(@PathVariable Long purchaseId) {
+    public ResponseEntity<String> checkPurchaseStatus(@PathVariable Long purchaseId) {
         Transaction transaction = this.transactionService.getTransactionByMagazinePurchaseId(purchaseId);
 
-        if(transaction != null) {
-            if (transaction.getStatus().equals(TransactionStatus.Paid) || transaction.getStatus().equals(TransactionStatus.Cancelled)) {
-                return ResponseEntity.ok(transaction.getStatus());
-            }
-        } else {
-            return ResponseEntity.ok(TransactionStatus.New);
-        }
+//        if(transaction != null) {
+//            if (transaction.getStatus().equals(TransactionStatus.Paid) || transaction.getStatus().equals(TransactionStatus.Cancelled)) {
+//                return ResponseEntity.ok(transaction.getStatus());
+//            }
+//        } else {
+//            return ResponseEntity.ok(TransactionStatus.New);
+//        }
 
+        if (transaction == null || transaction.getResultUrl() == null) {
+            return ResponseEntity.ok(TransactionStatus.Cancelled.toString());
+        }
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -238,13 +241,12 @@ public class TransactionController {
         ResponseEntity<String> resp = restTemplate.getForEntity(transaction.getSelectedPaymentMethodURI()+"/"+transaction.getIdHashValue(), String.class, requestEntity);
 
         switch (resp.getBody()){
-            case "Paid": return ResponseEntity.ok(TransactionStatus.Paid);
-            case "Cancelled": return ResponseEntity.ok(TransactionStatus.Cancelled);
-            case "New": return ResponseEntity.ok(TransactionStatus.New);
+            case "Paid": return ResponseEntity.ok(TransactionStatus.Paid.toString());
+            case "Cancelled": return ResponseEntity.ok(TransactionStatus.Cancelled.toString());
+            case "New": return ResponseEntity.ok(TransactionStatus.New.toString());
         }
 
-
-        return ResponseEntity.ok(transaction.getStatus());
+        return ResponseEntity.ok(transaction.getStatus().toString());
     }
 
 
