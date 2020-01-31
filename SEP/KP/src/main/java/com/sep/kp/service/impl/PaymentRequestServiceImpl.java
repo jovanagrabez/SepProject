@@ -28,12 +28,14 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
     @Override
     public PaymentRequest createPaymentRequest(String clientID, double amount) {
         LOGGER.info("Finding seller: " );
+        LOGGER.info("CLIENT ID: " );
 
-        Seller foundSeller = sellerRepository.findByClientId(clientID);
+
+        Seller foundSeller = sellerRepository.findSellerById(Long.parseLong(clientID));
 
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setMerchantId(foundSeller.getMerchantId());
-        paymentRequest.setMerchantPassword(foundSeller.getClientPassword());
+        paymentRequest.setMerchantPassword("123");
 
         Random random = new Random();
         paymentRequest.setMerchantOrderId((long)random.nextInt());

@@ -5,6 +5,7 @@ INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALU
 INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (2, 100, 2, '98765', '123');
 INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (3, 200, 2, '3', '123');
 INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (4, 0, 2, '4', '123');
+INSERT INTO account (id, amount, client_id, merchant_id, merchant_password) VALUES (5, 2000, 1, '45612', '123');
 
 INSERT INTO card(id,cardholder_name, pan, security_code,valid_to,account_id) values (1,'Jovana Grabez','9876543210',123,'2019-03-02 01:00:00',1);
 INSERT INTO card(id,cardholder_name, pan, security_code,valid_to,account_id) values (2,'Jovana Grabez','9876540000',123,'2019-03-02 01:00:00',2);
