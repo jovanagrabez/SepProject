@@ -18,9 +18,9 @@ export class MagazineService {
     this.http.get('https://localhost:8762/naucna_centrala/api/magazine/buy/'.concat(magazineId)).subscribe(url => {
       // @ts-ignore
       this.document.location.href = url['url'];
-      // this.http.get(url['url']).subscribe(ret =>{
-      //   console.log('success');
-      // });
+       this.http.get(url['url']).subscribe(ret =>{
+         console.log('success');
+       });
     }, error => {
       this.http.get(error).subscribe(value => {
         console.log('success');

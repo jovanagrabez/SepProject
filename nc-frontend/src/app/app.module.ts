@@ -14,6 +14,7 @@ import {TokenInterceptorService} from './service/security/token-interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ng6-toastr-notifications';
 import { AllPurchasesComponent } from './component/all-purchases/all-purchases.component';
+import { CreateSubscriptionComponent } from './component/create-subscription/create-subscription.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AllPurchasesComponent } from './component/all-purchases/all-purchases.c
     NavbarComponent,
     LogInComponent,
     RegisterComponent,
-    AllPurchasesComponent
+    AllPurchasesComponent,
+    CreateSubscriptionComponent
   ],
   imports: [
     BrowserModule,

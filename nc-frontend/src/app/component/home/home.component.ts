@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MagazineService} from '../../service/magazine.service';
 import {UserService} from '../../service/user.service';
+import { SubscribeService } from 'src/app/service/subscribe.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ export class HomeComponent implements OnInit {
   magazinesList: any;
   userLogged: boolean;
 
-  constructor(private magazineService: MagazineService, private userService: UserService) { }
+  constructor(private magazineService: MagazineService, private userService: UserService, 
+    private subscribeService: SubscribeService) { }
 
   ngOnInit() {
     this.magazineService.getAll().subscribe(magazines => {
@@ -23,5 +25,8 @@ export class HomeComponent implements OnInit {
 
   buyMagazine(magazineId: any) {
     this.magazineService.buyMagazine(magazineId);
+  }
+  subscribeToMagazine(magazineId: any) {
+    this.subscribeService.subscribe(magazineId);
   }
 }
