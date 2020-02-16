@@ -103,7 +103,6 @@ public class TransactionController {
         createOrderDto.setMerchantOrderId((long)random.nextInt());
         createOrderDto.setMerchantTimestamp(new Date());
         // TODO prebaciti success error i failed url da se setuje u banci
-        // TODO promeniti amount u priceAmount
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
