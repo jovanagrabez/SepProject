@@ -58,8 +58,8 @@ public class BankServiceImpl implements BankService {
         if (account != null) {
             LOGGER.info("Account exists " );
 
-            paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getAmount(),
-                    "https://localhost:5000/home",  requestDTO.getMerchantOrderId());
+            paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getPriceAmount(),
+                    "https://localhost:5000/home".concat("/"+requestDTO.getBankName()+"/" + requestDTO.getHashedOrderId()),  requestDTO.getMerchantOrderId());
 
             LOGGER.info("Generating paymentId " + paymentDTO.getPaymentId());
             LOGGER.info("Generating paymentURL: " + paymentDTO.getPaymentUrl());

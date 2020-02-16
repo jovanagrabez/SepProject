@@ -5,6 +5,7 @@ import com.sep.kp.model.DTO.*;
 import com.sep.kp.model.PaymentRequest;
 import com.sep.kp.model.Seller;
 import com.sep.kp.model.Transaction;
+import com.sep.kp.repository.PaymentMethodRepository;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -41,6 +43,8 @@ public class TransactionController {
 
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
 
     private static final String Bitcoin_SERVICE_URI = "https://localhost:8762/bitcoin_service/api/order";
     private static final String PayPal_SERVICE_URI = "https://localhost:8762/paypal_service/api/pay";
@@ -68,58 +72,51 @@ public class TransactionController {
         return new ModelAndView("availablePaymentMethods", model);
     }
 
-    @GetMapping(value = "/bitcoin/{hashedId}")
-    public RedirectView sendRedirectToBitcoin(@PathVariable String hashedId) {
+    @GetMapping(value = "/{paymentMethodId}/{hashedId}")
+    public RedirectView sendRedirectToPayService(@PathVariable Long paymentMethodId, @PathVariable String hashedId) {
+        PaymentMethod paymentMethod = this.paymentMethodRepository.getOne(paymentMethodId);
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
-        transaction.setSelectedPaymentMethodURI(Bitcoin_SERVICE_URI_status);
-        transaction = transactionRepository.save(transaction);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
-        log.info("Selected bitcoin payment service for transaction id: "+ transaction.getId());
-        CreateBitcoinOrderDTO bitcoinOrderDTO = new CreateBitcoinOrderDTO(transaction.getId(), transaction.getIdHashValue(),
-                transaction.getAmount(), Currency.EUR, Currency.BTC, "Bitcoin transaction",
-                "Bitcoin transaction id:" + transaction.getId(),
-                null, null, null, null, seller.getBitcoinToken());
+        if (paymentMethod.isBank()) {
+            transaction.setSelectedPaymentMethodURI("https://localhost:8762/".concat(seller.getBankName())+"/api/status");
+        } else {
+            transaction.setSelectedPaymentMethodURI(paymentMethod.getCheckStatusURI());
+        }
+        transaction = transactionRepository.save(transaction);
+        log.info("Selected "+paymentMethod.getName()+" payment service for transaction id: "+ transaction.getId());
 
+        CreateOrderDto createOrderDto = new CreateOrderDto();
+        createOrderDto.setPriceAmount(transaction.getAmount());
+        createOrderDto.setPriceCurrency(Currency.EUR);
+        createOrderDto.setReceiveCurrency(Currency.BTC);
+        createOrderDto.setBitcoinToken(seller.getBitcoinToken());
+        createOrderDto.setPaymentIntent(PayPalPaymentIntent.ORDER);
+        createOrderDto.setPaymentMethod(PayPalPaymentMethod.PAYPAL);
+        createOrderDto.setDescription("Transaction id: " + transaction.getId());
+        createOrderDto.setHashedOrderId(transaction.getIdHashValue());
+        createOrderDto.setOrderId(transaction.getId());
+        createOrderDto.setTitle("New transaction");
+        createOrderDto.setMerchantId(seller.getId());
+        createOrderDto.setMerchantPassword("123");
+        Random random = new Random();
+        createOrderDto.setMerchantOrderId((long)random.nextInt());
+        createOrderDto.setMerchantTimestamp(new Date());
+        // TODO prebaciti success error i failed url da se setuje u banci
+        // TODO promeniti amount u priceAmount
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-        HttpEntity requestEntity = new HttpEntity<>(bitcoinOrderDTO, requestHeaders);
+        HttpEntity requestEntity = new HttpEntity<>(createOrderDto, requestHeaders);
 
-        ResponseEntity<String> resp = restTemplate.postForEntity(Bitcoin_SERVICE_URI, requestEntity, String.class);
-        log.info("Redirect to bitcoin api page");
-        return new RedirectView(resp.getBody());
-    }
+        if (paymentMethod.isBank()) {
+            paymentMethod.setCreateTransactionURI("https://localhost:8762/".concat(seller.getBankName())+"/api/get-payment-url");
+        }
+        ResponseEntity<String> resp = restTemplate.postForEntity(paymentMethod.getCreateTransactionURI(), requestEntity, String.class);
 
-    @GetMapping(value = "/paypal/{hashedId}")
-    public RedirectView sendRedirectToPayPal(@PathVariable String hashedId) {
-        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
-        transaction.setSelectedPaymentMethodURI(PayPal_SERVICE_URI_status);
-        transaction = transactionRepository.save(transaction);
-        Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
-        log.info("Selected PayPal payment service for transaction id: "+ transaction.getId());
-
-        CreatePayPalOrderDto createPayPalOrderDto = new CreatePayPalOrderDto();
-        createPayPalOrderDto.setPrice(transaction.getAmount());
-        createPayPalOrderDto.setCurrency("EUR");
-        createPayPalOrderDto.setNameOfJournal(transaction.getProductId().toString());
-        createPayPalOrderDto.setPaymentIntent(PayPalPaymentIntent.ORDER);
-        createPayPalOrderDto.setPaymentMethod(PayPalPaymentMethod.PAYPAL);
-        createPayPalOrderDto.setDescription("It`s OK");
-        createPayPalOrderDto.setHashedMagazineId(transaction.getIdHashValue());
-
-
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
-        HttpEntity requestEntity = new HttpEntity<>(createPayPalOrderDto, requestHeaders);
-
-        ResponseEntity<String> resp = restTemplate.postForEntity(PayPal_SERVICE_URI, requestEntity, String.class);
-
-        log.info("Redirect to PayPal api page");
+        log.info("Redirect to "+ paymentMethod.getName() +" api page");
         return new RedirectView(resp.getBody());
     }
 

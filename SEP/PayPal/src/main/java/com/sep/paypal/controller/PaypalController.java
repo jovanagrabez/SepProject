@@ -44,12 +44,12 @@ public class PaypalController {
     public String pay(@RequestBody PaymentRequest request) {
         String cancelUrl = "";
         String successUrl = "";
-        successUrl = "https://localhost:8762/paypal_service/api" + SUCCESS_URL+"/"+request.getHashedMagazineId();
-        cancelUrl = "https://localhost:8762/paypal_service/api" + CANCEL_URL+"/"+request.getHashedMagazineId();
+        successUrl = "https://localhost:8762/paypal_service/api" + SUCCESS_URL+"/"+request.getHashedOrderId();
+        cancelUrl = "https://localhost:8762/paypal_service/api" + CANCEL_URL+"/"+request.getHashedOrderId();
         try {
             Payment payment = paypalService.createPayment(
-                    request.getPrice(),
-                    request.getCurrency(),
+                    request.getPriceAmount(),
+                    request.getPriceCurrency(),
                     request.getPaymentMethod(),
                     request.getPaymentIntent(),
                     request.getDescription(),
@@ -58,7 +58,7 @@ public class PaypalController {
 
             Transaction transactionForDatabase = new Transaction();
             transactionForDatabase.setPaymentId(payment.getId());
-            transactionForDatabase.setHashedTransactionId(request.getHashedMagazineId());
+            transactionForDatabase.setHashedTransactionId(request.getHashedOrderId());
             transactionRepository.save(transactionForDatabase);
 
             for (Links links : payment.getLinks()) {

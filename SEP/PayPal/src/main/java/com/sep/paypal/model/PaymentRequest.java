@@ -10,12 +10,11 @@ import lombok.*;
 @RequiredArgsConstructor
 public class PaymentRequest {
 
-    private Double price;
-    private String currency;
-    private String nameOfJournal;
+    private Double priceAmount;
+    private String priceCurrency;
     private PaymentIntent paymentIntent;
     private PaymentMethod paymentMethod;
     private String description;
-    private String hashedMagazineId;
+    private String hashedOrderId;
 
 }

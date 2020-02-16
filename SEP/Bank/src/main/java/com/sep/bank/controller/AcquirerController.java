@@ -33,11 +33,11 @@ public class AcquirerController {
 
     private ModelMapper modelMapper = new ModelMapper();
     @PostMapping("/get-payment-url")
-    public ResponseEntity<PaymentDTO> getPaymentUrl(@RequestBody RequestDTO request) {
+    public ResponseEntity<String> getPaymentUrl(@RequestBody RequestDTO request) {
 
          System.out.println("ULAZIIIIIIIIIIII");
         PaymentDTO paymentData = bankService.getPaymentUrl(request);
-        return ResponseEntity.ok(paymentData);
+        return ResponseEntity.ok(paymentData.getPaymentUrl());
     }
 
     @GetMapping("/test")

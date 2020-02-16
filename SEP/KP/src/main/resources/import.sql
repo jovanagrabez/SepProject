@@ -1,6 +1,6 @@
-insert into payment_method (id, name) values (1, 'Bank');
-insert into payment_method (id, name) values (2, 'PayPal');
-insert into payment_method (id, name) values (3, 'Bitcoin');
+insert into payment_method (id, name, create_transactionuri, check_statusuri, is_bank) values (1, 'Bank', null, null, true);
+insert into payment_method (id, name, create_transactionuri, check_statusuri, is_bank) values (2, 'PayPal', 'https://localhost:8762/paypal_service/api/pay', 'https://localhost:8762/paypal_service/api/status', false);
+insert into payment_method (id, name, create_transactionuri, check_statusuri, is_bank) values (3, 'Bitcoin', 'https://localhost:8762/bitcoin_service/api/order', 'https://localhost:8762/bitcoin_service/api/order/status', false);
 
 insert into seller (id, client_id, merchant_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (1, 1,'12345','123','magazin', 1, 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8', 'bank2');
 insert into seller (id, client_id, merchant_id, client_password, magazine, magazine_id, bitcoin_token, bank_name) values (2, 2,'98765','123','magazin 1', 2, '9gLpd_BuuCxxzqp25ZCKMPfkkRSgXfXyYGzMLTL_', 'bank1');
