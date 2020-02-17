@@ -6,6 +6,7 @@ import com.sep.kp.model.PayPalPaymentMethod;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 @Data
 public class CreateOrderDto {
@@ -17,14 +18,17 @@ public class CreateOrderDto {
     private Currency receiveCurrency;
     private String title;
     private String description;
-    private String bitcoinToken;
 
-    private PayPalPaymentIntent paymentIntent;
-    private PayPalPaymentMethod paymentMethod;
-
-    private Long merchantId;
-    private String merchantPassword;
-    private Long merchantOrderId;
-    private Date merchantTimestamp;
-    private String bankName;
+    private Map<String, String> params;     // params specific for each payment service
+//
+//    private String bitcoinToken;
+//
+//    private PayPalPaymentIntent paymentIntent;
+//    private PayPalPaymentMethod paymentMethod;
+//
+//    private Long merchantId;
+//    private String merchantPassword;
+//    private Long merchantOrderId;
+//    private Date merchantTimestamp;
+//    private String bankName;
 }

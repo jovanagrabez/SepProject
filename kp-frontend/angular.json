@@ -63,6 +63,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "sslKey": "kp_frontend.pkcs8",
+            "sslCert": "kp_frontend.cer",
+            "ssl": true,
             "browserTarget": "kp-frontend:build"
           },
           "configurations": {

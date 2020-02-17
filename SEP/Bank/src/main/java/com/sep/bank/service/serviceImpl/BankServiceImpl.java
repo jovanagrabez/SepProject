@@ -50,7 +50,7 @@ public class BankServiceImpl implements BankService {
     public PaymentDTO getPaymentUrl(RequestDTO requestDTO) {
         LOGGER.info("Processing KP request: " + requestDTO);
 
-        Account account = accountService.checkMerchantData(requestDTO.getMerchantId(), requestDTO.getMerchantPassword());
+        Account account = accountService.checkMerchantData(requestDTO.getParams().get("merchantId"), requestDTO.getParams().get("merchantPassword"));
         LOGGER.info("Returning account: " + account);
 
 
@@ -59,7 +59,7 @@ public class BankServiceImpl implements BankService {
             LOGGER.info("Account exists " );
 
             paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getPriceAmount(),
-                    "https://localhost:5000/home".concat("/"+requestDTO.getBankName()+"/" + requestDTO.getHashedOrderId()),  requestDTO.getMerchantOrderId());
+                    "https://localhost:5000/home".concat("/"+requestDTO.getParams().get("bankName")+"/" + requestDTO.getHashedOrderId()),  requestDTO.getMerchantOrderId());
 
             LOGGER.info("Generating paymentId " + paymentDTO.getPaymentId());
             LOGGER.info("Generating paymentURL: " + paymentDTO.getPaymentUrl());

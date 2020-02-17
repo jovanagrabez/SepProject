@@ -1,11 +1,9 @@
 package com.sep.kp.service.impl;
 
 
-import com.sep.kp.model.DTO.CreateSellerDto;
-import com.sep.kp.model.PaymentMethod;
-import com.sep.kp.model.Seller;
+import com.sep.kp.model.*;
+import com.sep.kp.repository.PaymentDataRepository;
 import com.sep.kp.repository.PaymentMethodRepository;
-import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.SellerService;
@@ -25,6 +23,8 @@ public class SellerServiceImpl implements SellerService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private PaymentDataRepository paymentDataRepository;
 
     @Override
     public List<Seller> getAllMethods(String client) {
@@ -32,41 +32,41 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public boolean newSellerPaymentMethods(CreateSellerDto createSellerDto) {
+    public boolean newSellerPaymentMethods(List<PaymentMethod> paymentMethods, Long userId) {
 
-        Seller seller = this.sellerRepository.findSellerByUserId(Long.parseLong(createSellerDto.getUserId()));
+        Seller seller = this.sellerRepository.findSellerByUserId(userId);
         if (seller == null) {
             seller = new Seller();
-            seller.setClientId(Long.parseLong(createSellerDto.getUserId()));
+            seller.setClientId(userId);
         }
 
         if (seller.getPaymentMethods() == null) {
             seller.setPaymentMethods(new ArrayList<>());
         }
+        if (seller.getPaymentsData() == null) {
+            seller.setPaymentsData(new ArrayList<>());
+        }
 
-        if (!createSellerDto.getBankName().isEmpty() && !createSellerDto.getMerchantId().isEmpty()) {
-            PaymentMethod paymentMethod = paymentMethodRepository.findByName("Bank");
-            if (!seller.getPaymentMethods().contains(paymentMethod)) {
-                seller.getPaymentMethods().add(paymentMethod);
+        for (PaymentMethod paymentMethod : paymentMethods) {
+            List<PaymentData> paymentsData = new ArrayList<>();
+            boolean valid = true;
+            for (FormData formData : paymentMethod.getRequiredFormData()) {
+                if (formData.getValue() != null && !formData.getValue().equals("")) {
+                    paymentsData.add(new PaymentData(formData.getCode(), formData.getValue()));
+                } else {
+                    valid = false;
+                }
             }
-            seller.setBankName(createSellerDto.getBankName());
-            seller.setMerchantId(createSellerDto.getMerchantId());
-        }
-        if (!createSellerDto.getClientId().isEmpty() && !createSellerDto.getClientSecret().isEmpty()) {
-            PaymentMethod paymentMethod = paymentMethodRepository.findByName("PayPal");
-            if (!seller.getPaymentMethods().contains(paymentMethod)) {
+            if (paymentsData.size() != 0 && valid == true) {
                 seller.getPaymentMethods().add(paymentMethod);
+                seller.getPaymentsData().addAll(paymentsData);      // doda sva polja potrebna za banku npr
             }
-            seller.setPaypalClientId(createSellerDto.getClientId());
-            seller.setPaypalClientSecret(createSellerDto.getClientSecret());
         }
-        if (!createSellerDto.getBitcoinToken().isEmpty()) {
-            PaymentMethod paymentMethod = paymentMethodRepository.findByName("Bitcoin");
-            if (!seller.getPaymentMethods().contains(paymentMethod)) {
-                seller.getPaymentMethods().add(paymentMethod);
-            }
-            seller.setBitcoinToken(createSellerDto.getBitcoinToken());
+
+        for (PaymentData paymentData : seller.getPaymentsData()) {
+            this.paymentDataRepository.save(paymentData);
         }
+
         this.sellerRepository.save(seller);
 
         return true;

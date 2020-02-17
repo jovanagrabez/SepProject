@@ -30,20 +30,22 @@ public class Seller implements Serializable {
     private List<PaymentMethod> paymentMethods;
 
     @Column
-    private String bitcoinToken;
-
-    @Column
-    private String bankName;
-
-    @Column
     private Long userId;
 
-    @Column(nullable = true)
-    private String merchantId;
+    @OneToMany
+    private List<PaymentData> paymentsData;
+//    @Column(nullable = true)
+//    private String merchantId;
+//
+//    @Column
+//    private String bankName;
+//
+//    @Column
+//    private String paypalClientId;
+//
+//    @Column
+//    private String paypalClientSecret;
+//    @Column
+//    private String bitcoinToken;
 
-    @Column
-    private String paypalClientId;
-
-    @Column
-    private String paypalClientSecret;
 }

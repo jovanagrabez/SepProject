@@ -29,13 +29,14 @@ public class OrderController {
     @PostMapping
     public String createOrder(@RequestBody CreateOrderDTO orderDTO) {
 
+
         Order order = new Order(0L, orderDTO.getHashedOrderId(), orderDTO.getPriceAmount(), orderDTO.getPriceCurrency(), orderDTO.getReceiveCurrency(),
                 orderDTO.getTitle(), orderDTO.getDescription(), orderDTO.getCallbackUrl(), CANCEL_URL + orderDTO.getHashedOrderId(),
-                SUCCESS_URL + orderDTO.getHashedOrderId(), orderDTO.getBitcoinToken(), "new");
+                SUCCESS_URL + orderDTO.getHashedOrderId(), orderDTO.getParams().get("bitcoinToken"), "new");
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Content-Type", "application/json");
-        requestHeaders.setBearerAuth(orderDTO.getBitcoinToken());
+        requestHeaders.setBearerAuth(orderDTO.getParams().get("bitcoinToken"));
 
         HttpEntity<Order> requestEntity = new HttpEntity<>(order, requestHeaders);
 

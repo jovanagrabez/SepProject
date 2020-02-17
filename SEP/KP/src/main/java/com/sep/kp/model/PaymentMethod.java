@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +22,9 @@ public class PaymentMethod implements Serializable {
     private String checkStatusURI;
     @Column
     private boolean isBank;
+    @Column
+    private String imageAssociated;
+    @OneToMany
+    private List<FormData> requiredFormData;
 
 }

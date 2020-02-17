@@ -2,6 +2,7 @@ package com.sep.kp.service.impl;
 
 
 import com.sep.kp.model.*;
+import com.sep.kp.model.DTO.AvailablePaymentMethodsDto;
 import com.sep.kp.model.DTO.CreateTransactionDto;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
@@ -12,7 +13,9 @@ import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -95,29 +98,17 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Map<String, String> generateHtmlForAvailablePayments(String hashedId) {
+    public List<AvailablePaymentMethodsDto> getAvailablePayments(String hashedId) {
 
         Transaction transaction = this.transactionRepository.findTransactionByIdHashValue(hashedId);
         Seller seller = this.sellerRepository.findSellerById(transaction.getSellerId());
 
-        Map<String, String> model = new HashMap<String, String>();
-        model.put("hashedId", transaction.getIdHashValue());
-        model.put("bitcoin", "false");
-        model.put("paypal", "false");
-        model.put("bank", "false");
-
+        List<AvailablePaymentMethodsDto> availablePaymentMethods = new ArrayList<>();
         for (PaymentMethod method : seller.getPaymentMethods()) {
-            if (method.getName().equals("Bitcoin")) {
-                model.put("bitcoin", "true");
-                model.put("bitcoinToken", seller.getBitcoinToken());
-            } else if (method.getName().equals("PayPal")) {
-                model.put("paypal", "true");      // TODO postaviti potrebne parametre
-            } else if (method.getName().equals("Bank")) {
-                model.put("bank", "true");
-            }
+            availablePaymentMethods.add(new AvailablePaymentMethodsDto(method.getId(), method.getName(), method.getImageAssociated(),
+                    "https://localhost:8762/koncentrator_placanja/api/transaction/".concat(method.getId().toString()).concat("/").concat(hashedId)));
         }
-
-        return model;
+        return availablePaymentMethods;
     }
 
     @Override

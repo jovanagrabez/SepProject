@@ -1,36 +1,38 @@
 package com.sep.bank.model.DTO;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestDTO {
 
     private Long merchantOrderId;
     private Date merchantTimestamp;
-    private String merchantId;
-    private String merchantPassword;
+//    private String merchantId;
+//    private String merchantPassword;
     private double priceAmount;
     private String successUrl;
     private String failedUrl;
     private String errorUrl;
     private String hashedOrderId;
-    private String bankName;
+    private Map<String, String> params;
+//    private String bankName;
 
 
     public RequestDTO() {
+        params = new HashMap<>();
     }
 
-    public RequestDTO(Long merchantOrderId, Date merchantTimestamp, String merchantId, String merchantPassword,
-                      double priceAmount, String successUrl, String failedUrl, String errorUrl, String hashedOrderId, String bankName) {
+    public RequestDTO(Long merchantOrderId, Date merchantTimestamp, double priceAmount, String successUrl,
+                      String failedUrl, String errorUrl, String hashedOrderId, Map<String, String> params) {
         this.merchantOrderId = merchantOrderId;
         this.merchantTimestamp = merchantTimestamp;
-        this.merchantId = merchantId;
-        this.merchantPassword = merchantPassword;
         this.priceAmount = priceAmount;
         this.successUrl = successUrl;
         this.failedUrl = failedUrl;
         this.errorUrl = errorUrl;
         this.hashedOrderId = hashedOrderId;
-        this.bankName = bankName;
+        this.params = params;
     }
 
 
@@ -48,22 +50,6 @@ public class RequestDTO {
 
     public void setMerchantTimestamp(Date merchantTimestamp) {
         this.merchantTimestamp = merchantTimestamp;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getMerchantPassword() {
-        return merchantPassword;
-    }
-
-    public void setMerchantPassword(String merchantPassword) {
-        this.merchantPassword = merchantPassword;
     }
 
     public double getPriceAmount() {
@@ -106,11 +92,11 @@ public class RequestDTO {
         this.hashedOrderId = hashedOrderId;
     }
 
-    public String getBankName() {
-        return bankName;
+    public Map<String, String> getParams() {
+        return params;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setParams(Map<String, String> params) {
+        this.params = params;
     }
 }

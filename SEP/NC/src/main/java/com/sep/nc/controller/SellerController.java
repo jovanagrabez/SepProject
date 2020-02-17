@@ -39,6 +39,6 @@ public class SellerController {
         }
 
         UserDto seller = userService.getUserByEmail(email);
-        return ResponseEntity.ok("https://localhost:8762/koncentrator_placanja/api/seller/" + seller.getId());
+        return ResponseEntity.ok("https://localhost:4201/new-seller/" + seller.getId());
     }
 }
