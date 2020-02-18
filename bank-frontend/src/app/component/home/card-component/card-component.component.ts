@@ -17,6 +17,7 @@ export class CardComponentComponent implements OnInit {
   private data;
   private nesto;
   private seller;
+  private merchantId;
   cardElements = {sellerId: 0, pan: '', securityCode: 0, cardHolderName: '', validTo: null, paymentId: 0,
     amount: 0,
     merchantOrderId: 0, hashedId: 0, merchantId: 0};
@@ -30,6 +31,9 @@ export class CardComponentComponent implements OnInit {
       this.data = res;
       this.cardService.getSeller(this.Id).subscribe( result  => {
         this.seller = result;
+        this.cardService.gerMerchanId(this.data.sellerId).subscribe( rezultat =>{
+          this.merchantId = rezultat;
+        });
       });
 
     });
@@ -43,7 +47,7 @@ export class CardComponentComponent implements OnInit {
     this.cardElements.paymentId = this.data.paymentId;
     this.cardElements.hashedId = this.Id;
     this.cardElements.sellerId = this.data.sellerId;
-    this.cardElements.merchantId = this.seller.merchantId;
+    this.cardElements.merchantId = this.merchantId.value;
 
     this.cardService.submitData(this.cardElements, this.bank).subscribe(res => {
       if (res['status'] === 'SUCCESS') {

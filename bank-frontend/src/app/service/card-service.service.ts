@@ -21,4 +21,8 @@ export class CardServiceService {
   getSeller(id) {
     return this.http.get('https://localhost:8762/koncentrator_placanja/api/transaction/getSeller/' + id);
   }
+
+  gerMerchanId(id) {
+    return this.http.get('https://localhost:8762/koncentrator_placanja/api/transaction/getMerchantId/' + id);
+  }
 }
