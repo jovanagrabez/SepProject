@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface JournalPlanRepository extends JpaRepository<JournalPlan, Long> {
     JournalPlan findJournalPlanByJournal(String name);
     JournalPlan findJournalPlanById(Long id);
+    JournalPlan findByPlanId(String planId);
 }

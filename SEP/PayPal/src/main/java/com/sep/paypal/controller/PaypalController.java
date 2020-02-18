@@ -112,15 +112,15 @@ public class PaypalController {
     }
 
     @PostMapping(value = "/plan/subscribe")
-    public ResponseEntity subscribeToPlan(@RequestBody SubscribeDto subscribeDto) {
-        String url = paypalService.subscribeToPlan(subscribeDto.getJournalId());
+    public ResponseEntity subscribeToPlan(@RequestBody CreatePlanRequest subscribeDto) {
+        String url = paypalService.subscribeToPlan(subscribeDto);
         return ResponseEntity.ok(url);
     }
 
     @GetMapping(value = "/plan/finishSubscription")
     public ResponseEntity finishSubscription(@RequestParam("token") String token){
         paypalService.finishSubscription(token);
-        return ResponseEntity.ok("Subscription finished");
+        return ResponseEntity.ok("Subscription finished <a href='https://localhost:4200'>Go home</a>");
     }
 
     @GetMapping(value = "/status/{hashedId}")

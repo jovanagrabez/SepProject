@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
 
   magazinesList: any;
   userLogged: boolean;
+  currentMagazineId: any;
+  insertTimeMode: boolean = false;
+  subscriptionPeriod: number = 1;
 
   constructor(private magazineService: MagazineService, private userService: UserService,
     private subscribeService: SubscribeService) { }
@@ -27,7 +30,18 @@ export class HomeComponent implements OnInit {
   buyMagazine(magazineId: any) {
     this.magazineService.buyMagazine(magazineId);
   }
-  subscribeToMagazine(magazineId: any) {
-    this.subscribeService.subscribe(magazineId);
+
+  subscribeToMagazine() {
+    this.subscribeService.subscribe(this.currentMagazineId, this.subscriptionPeriod);
+    this.insertTimeMode = false;
+  }
+
+  addSubscriptionTime(magazineId: any) {
+    this.currentMagazineId = magazineId;
+    this.insertTimeMode = true;
+  }
+
+  cancel() {
+    this.insertTimeMode = false;
   }
 }
