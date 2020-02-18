@@ -11,6 +11,7 @@ public interface UserService {
 
     UserDto getUserByEmail(String email);
     User saveUser(User user);
+    User registerUser(UserDto userDto);
 
     // TODO remove from user service
     void setMagazinePurchaseStatus(String email, Long purchaseId, PurchaseStatus purchaseStatus);

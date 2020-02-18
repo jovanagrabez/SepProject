@@ -61,6 +61,8 @@ public class User implements Serializable, UserDetails {
 
     public User() {
         magazinePurchases = new ArrayList<>();
+        roles = new ArrayList<>();
+        scientificAreasOfInterest = new ArrayList<>();
     }
 
     @Override

@@ -14,6 +14,7 @@ public class UserDto {
     private String city;
     private String country;
 
+    public UserDto(){}
     public UserDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
