@@ -5,14 +5,14 @@ import java.util.Date;
 public class CardDTO {
 
     private String pan;
-    private int securityCode;
+    private String securityCode;
     private String cardHolderName;
     private Date validTo;
 
     public CardDTO() {
     }
 
-    public CardDTO(String pan, int securityCode, String cardHolderName, Date validTo) {
+    public CardDTO(String pan, String securityCode, String cardHolderName, Date validTo) {
         this.pan = pan;
         this.securityCode = securityCode;
         this.cardHolderName = cardHolderName;
@@ -27,11 +27,11 @@ public class CardDTO {
         this.pan = pan;
     }
 
-    public int getSecurityCode() {
+    public String getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(int securityCode) {
+    public void setSecurityCode(String securityCode) {
         this.securityCode = securityCode;
     }
 

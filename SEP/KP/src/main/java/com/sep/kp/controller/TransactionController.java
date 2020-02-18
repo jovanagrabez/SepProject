@@ -1,11 +1,7 @@
 package com.sep.kp.controller;
 
 import com.sep.kp.model.*;
-import com.sep.kp.model.Currency;
 import com.sep.kp.model.DTO.*;
-import com.sep.kp.model.PaymentRequest;
-import com.sep.kp.model.Seller;
-import com.sep.kp.model.Transaction;
 import com.sep.kp.repository.PaymentMethodRepository;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
@@ -20,10 +16,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -181,7 +178,7 @@ public class TransactionController {
     public String finishTransaction(@RequestBody TransactionResultDTO transactionDTO) {
 
 
-        Transaction transaction = this.transactionRepository.findByMerchantOrderId( transactionDTO.getMerchantOrderId());
+        Transaction transaction = this.transactionRepository.findTransactionByIdHashValue( transactionDTO.getHashedOrderId());
 
         transaction.setTimestamp(transactionDTO.getAcquirerTimestamp());
         this.transactionRepository.save(transaction);
@@ -229,6 +226,18 @@ public class TransactionController {
 
     return this.sellerService.getSellerByHashedTransactionId(hashedId);
 
+    }
+
+    @GetMapping(value = "/getMerchantId/{sellerId}")
+    public PaymentData getMerchantId (@PathVariable String sellerId){
+        PaymentData paymentData = new PaymentData();
+        Seller s = this.sellerRepository.getOne(Long.parseLong(sellerId));
+        for(PaymentData data :s.getPaymentsData()){
+            if (data.getName().equals("merchantId")){
+              paymentData = data;
+            }
+        }
+        return paymentData;
     }
 
 }

@@ -19,7 +19,7 @@ insert into payment_data(id, name, value) values (2, 'merchantPassword', '123');
 insert into payment_data(id, name, value) values (3, 'bankName', 'bank2');
 insert into payment_data(id, name, value) values (4, 'bitcoinToken', 'LePn5ZVweTDw_3yquEPHP-BhfFuS15-D3U5ggYb8');
 
-insert into payment_data(id, name, value) values (5, 'merchantId', '2');
+insert into payment_data(id, name, value) values (5, 'merchantId', '98765');
 insert into payment_data(id, name, value) values (6, 'merchantPassword', '123');
 insert into payment_data(id, name, value) values (7, 'bankName', 'bank1');
 insert into payment_data(id, name, value) values (8, 'bitcoinToken', '9gLpd_BuuCxxzqp25ZCKMPfkkRSgXfXyYGzMLTL_');

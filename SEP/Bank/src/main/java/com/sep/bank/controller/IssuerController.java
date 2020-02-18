@@ -1,6 +1,7 @@
 package com.sep.bank.controller;
 
 
+import com.sep.bank.AES;
 import com.sep.bank.model.DTO.AcquirerDTO;
 import com.sep.bank.model.DTO.PaymentResultDTO;
 import com.sep.bank.service.BankService;
@@ -21,9 +22,12 @@ public class IssuerController {
     @Autowired
     private BankService bankService;
 
+    private AES aes;
+
     @PostMapping("/pay-by-card-forwarded")
     public PaymentResultDTO payByCardForwarded(@RequestBody AcquirerDTO
                                                            acquirerDataDTO) {
+
         String status = bankService.checkCard(acquirerDataDTO);
 
         PaymentResultDTO paymentResultDTO = new PaymentResultDTO();

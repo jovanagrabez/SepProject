@@ -1,6 +1,7 @@
 package com.sep.bank.service.serviceImpl;
 
 
+import com.sep.bank.AES;
 import com.sep.bank.model.Account;
 import com.sep.bank.model.Card;
 import com.sep.bank.model.DTO.*;
@@ -45,6 +46,9 @@ public class BankServiceImpl implements BankService {
     @Autowired
     RestTemplate restTemplate;
 
+    private AES aes;
+
+
 
     @Override
     public PaymentDTO getPaymentUrl(RequestDTO requestDTO) {
@@ -80,6 +84,9 @@ public class BankServiceImpl implements BankService {
         LOGGER.info("Finding card: " + card);
         LOGGER.info("Merchant id: " + card.getMerchantId());
 
+        String pan = aes.encrypt(card.getPan());
+        card.setPan(pan);
+        System.out.println("USAO I NASAO" + pan);
         Card foundCard = cardService.find(card.getPan());
 
         Transaction transaction = new Transaction();
@@ -137,6 +144,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public String checkCard(AcquirerDTO acquirerDataDTO) {
         CardDTO card = acquirerDataDTO.getCard();
+        System.out.println("forwarded lala" + card.getPan());
         Card foundCard = cardService.find(card.getPan());
 
         if (foundCard != null) {

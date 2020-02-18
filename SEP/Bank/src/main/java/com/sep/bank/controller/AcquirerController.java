@@ -40,11 +40,6 @@ public class AcquirerController {
         return ResponseEntity.ok(paymentData.getPaymentUrl());
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> testiraj(){
-        String str = "LALALA";
-        return ResponseEntity.ok(str);
-    }
 
     @PostMapping("/pay-by-card")
     public Map<String, String> payByCard(@RequestBody CardAmountDTO cardAmountDTO) {

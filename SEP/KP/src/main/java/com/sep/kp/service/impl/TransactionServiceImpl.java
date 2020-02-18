@@ -1,9 +1,9 @@
 package com.sep.kp.service.impl;
 
 
-import com.sep.kp.model.*;
 import com.sep.kp.model.DTO.AvailablePaymentMethodsDto;
 import com.sep.kp.model.DTO.CreateTransactionDto;
+import com.sep.kp.model.*;
 import com.sep.kp.repository.SellerRepository;
 import com.sep.kp.repository.TransactionRepository;
 import com.sep.kp.service.PaymentRequestService;
@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -51,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService {
         } else if (status.equals(TransactionStatus.Cancelled)) {
             url = paymentRequest.getFailedUrl();
         } else {
-            url = paymentRequest.getErrorUrl();
+            url = "error"; // paymentRequest.getErrorUrl();
         }
 //        switch (status) {
 //            case "SUCCESS":

@@ -7,7 +7,7 @@ public class CardAmountDTO {
     private Long merchantOrderId;
     private Long paymentId;
     private String pan;
-    private int securityCode;
+    private String securityCode;
     private String cardHolderName;
     private Date validTo;
     private double amount;
@@ -18,7 +18,7 @@ public class CardAmountDTO {
     public CardAmountDTO() {
     }
 
-    public CardAmountDTO(Long sellerId,Long merchantOrderId, Long paymentId, String pan, int securityCode, String cardHolderName, Date validTo, double amount) {
+    public CardAmountDTO(Long sellerId,Long merchantOrderId, Long paymentId, String pan, String securityCode, String cardHolderName, Date validTo, double amount) {
         this.merchantOrderId = merchantOrderId;
         this.paymentId = paymentId;
         this.pan = pan;
@@ -70,11 +70,11 @@ public class CardAmountDTO {
         this.pan = pan;
     }
 
-    public int getSecurityCode() {
+    public String getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(int securityCode) {
+    public void setSecurityCode(String securityCode) {
         this.securityCode = securityCode;
     }
 
