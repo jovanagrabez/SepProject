@@ -15,7 +15,7 @@ public class Seller implements Serializable {
     private Long id;
 
     @Column
-    private String client;    // seller's token(id) from scientific centre
+    private Long clientId;    // seller's token(id) from scientific centre
 
     @Column
     private String magazine;        // TODO promeniti u listu magazina
@@ -24,18 +24,28 @@ public class Seller implements Serializable {
     private Long magazineId;
 
     @Column
-    private String clientId;
-
-    @Column
     private String clientPassword;
 
     @ManyToMany
     private List<PaymentMethod> paymentMethods;
 
     @Column
-    private String bitcoinToken;
+    private Long userId;
 
-    @Column
-    private String bankName;
+    @OneToMany
+    private List<PaymentData> paymentsData;
+//    @Column(nullable = true)
+//    private String merchantId;
+//
+//    @Column
+//    private String bankName;
+//
+//    @Column
+//    private String paypalClientId;
+//
+//    @Column
+//    private String paypalClientSecret;
+//    @Column
+//    private String bitcoinToken;
 
 }

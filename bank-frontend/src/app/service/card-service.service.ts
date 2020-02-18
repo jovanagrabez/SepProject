@@ -17,4 +17,12 @@ export class CardServiceService {
   getData(id) {
     return this.http.get('https://localhost:8762/koncentrator_placanja/api/transaction/getTransaction/' + id);
   }
+
+  getSeller(id) {
+    return this.http.get('https://localhost:8762/koncentrator_placanja/api/transaction/getSeller/' + id);
+  }
+
+  gerMerchanId(id) {
+    return this.http.get('https://localhost:8762/koncentrator_placanja/api/transaction/getMerchantId/' + id);
+  }
 }

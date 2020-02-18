@@ -15,7 +15,7 @@ public class Card {
     private String pan;
 
     @Column
-    private Integer securityCode;
+    private String securityCode;
 
     @Column
     private String cardholderName;
@@ -42,11 +42,11 @@ public class Card {
         this.pan = pan;
     }
 
-    public Integer getSecurityCode() {
+    public String getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(Integer securityCode) {
+    public void setSecurityCode(String securityCode) {
         this.securityCode = securityCode;
     }
 

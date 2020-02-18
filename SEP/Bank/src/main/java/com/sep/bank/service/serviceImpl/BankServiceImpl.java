@@ -1,6 +1,7 @@
 package com.sep.bank.service.serviceImpl;
 
 
+import com.sep.bank.AES;
 import com.sep.bank.model.Account;
 import com.sep.bank.model.Card;
 import com.sep.bank.model.DTO.*;
@@ -45,12 +46,15 @@ public class BankServiceImpl implements BankService {
     @Autowired
     RestTemplate restTemplate;
 
+    private AES aes;
+
+
 
     @Override
     public PaymentDTO getPaymentUrl(RequestDTO requestDTO) {
         LOGGER.info("Processing KP request: " + requestDTO);
 
-        Account account = accountService.checkMerchantData(requestDTO.getMerchantId(), requestDTO.getMerchantPassword());
+        Account account = accountService.checkMerchantData(requestDTO.getParams().get("merchantId"), requestDTO.getParams().get("merchantPassword"));
         LOGGER.info("Returning account: " + account);
 
 
@@ -58,8 +62,8 @@ public class BankServiceImpl implements BankService {
         if (account != null) {
             LOGGER.info("Account exists " );
 
-            paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getAmount(),
-                    "https://localhost:5000/home",  requestDTO.getMerchantOrderId());
+            paymentDTO = new PaymentDTO(RandomStringUtils.randomNumeric(16), requestDTO.getPriceAmount(),
+                    "https://localhost:5000/home".concat("/"+requestDTO.getParams().get("bankName")+"/" + requestDTO.getHashedOrderId()),  requestDTO.getMerchantOrderId());
 
             LOGGER.info("Generating paymentId " + paymentDTO.getPaymentId());
             LOGGER.info("Generating paymentURL: " + paymentDTO.getPaymentUrl());
@@ -78,7 +82,11 @@ public class BankServiceImpl implements BankService {
     @Override
     public Transaction checkBankForCard(CardAmountDTO card) {
         LOGGER.info("Finding card: " + card);
+        LOGGER.info("Merchant id: " + card.getMerchantId());
 
+        String pan = aes.encrypt(card.getPan());
+        card.setPan(pan);
+        System.out.println("USAO I NASAO" + pan);
         Card foundCard = cardService.find(card.getPan());
 
         Transaction transaction = new Transaction();
@@ -90,7 +98,7 @@ public class BankServiceImpl implements BankService {
 
         if (foundCard != null) {
             if (checkAmountOnAccount(foundCard, card.getAmount())) {
-                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                Account a = this.accountRepository.findByMerchantId(card.getMerchantId());
                 a.setAmount(a.getAmount()+card.getAmount());
                 this.accountRepository.save(a);
                 transaction.setStatus("SUCCESS");
@@ -106,15 +114,12 @@ public class BankServiceImpl implements BankService {
             LOGGER.error("Card not found , card with pan: " + card.getPan() );
 
             transaction = forwardToPcc(card, transaction);
-            if(transaction.getStatus().equals("SUCCESS")){
-                Account a = this.accountRepository.findByMerchantId(card.getSellerId().toString());
+                Account a = this.accountRepository.findByMerchantId(card.getMerchantId());
                 a.setAmount(a.getAmount()+card.getAmount());
                 this.accountRepository.save(a);
 
-            }
 
-      //      transaction.setStatus("FAILED");
-            // TODO dodati novac na racun
+
 
         }
 
@@ -139,6 +144,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public String checkCard(AcquirerDTO acquirerDataDTO) {
         CardDTO card = acquirerDataDTO.getCard();
+        System.out.println("forwarded lala" + card.getPan());
         Card foundCard = cardService.find(card.getPan());
 
         if (foundCard != null) {

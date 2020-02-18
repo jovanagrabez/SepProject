@@ -2,6 +2,8 @@ package com.sep.bitcoin;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class CreateOrderDTO {
 
@@ -16,6 +18,6 @@ public class CreateOrderDTO {
     private String cancelUrl;
     private String successUrl;
     private String token;
-    private String bitcoinToken;
+    private Map<String, String> params;
 
 }

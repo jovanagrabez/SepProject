@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {DOCUMENT} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, @Inject(DOCUMENT) private document: Document) {
+  }
 
   getToken(): string {
     const currentUser = JSON.parse(localStorage.getItem('loggedUser'));
@@ -57,16 +59,17 @@ export class UserService {
     if (user === null) {
       userRole = '';
     } else {
-      // for (const role of user.roles) {
-      //   if (role === 'ROLE_SISTEM_ADMIN') {
-      //     userRole = 'ROLE_SISTEM_ADMIN';
-      //   }  else if (role === 'ROLE_ADMIN') {
-      //     userRole = 'ROLE_ADMIN';
-      //   } else {
-      //     userRole = 'ROLE_USER';
-      //   }
-      // }
-      userRole = 'ROLE_USER';
+      for (const role of user.roles) {
+        if (role === 'AUTHOR') {
+          userRole = 'AUTHOR';
+        } else if (role === 'REVIEWER') {
+          userRole = 'REVIEWER';
+        } else if (role === 'EDITOR') {
+          userRole = 'EDITOR';
+        } else {
+          userRole = 'USER';
+        }
+      }
     }
     return userRole;
   }
@@ -75,4 +78,27 @@ export class UserService {
     return this.http.post('user-admin-service/api/users/register', user);
 
   }
+
+  registerPaymentMethodsForSeller() {
+
+    return this.http.get('https://localhost:8762/naucna_centrala/api/seller', {
+      headers: new HttpHeaders({
+        Accept: 'text/html',
+        'Content-Type': 'application/json'
+      }),
+      responseType: 'text'
+    }).subscribe(url => {
+      // @ts-ignore
+      this.document.location.href = url;
+    });
+    // return this.http.get('https://localhost:8762/koncentrator_placanja/api/seller/1', {
+    //   headers: new HttpHeaders({
+    //     Accept: 'text/html',
+    //     'Content-Type': 'application/json'
+    //   }),
+    //   responseType: 'text'
+    // });
+  }
 }
+
+

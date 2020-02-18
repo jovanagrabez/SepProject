@@ -33,18 +33,13 @@ public class AcquirerController {
 
     private ModelMapper modelMapper = new ModelMapper();
     @PostMapping("/get-payment-url")
-    public ResponseEntity<PaymentDTO> getPaymentUrl(@RequestBody RequestDTO request) {
+    public ResponseEntity<String> getPaymentUrl(@RequestBody RequestDTO request) {
 
          System.out.println("ULAZIIIIIIIIIIII");
         PaymentDTO paymentData = bankService.getPaymentUrl(request);
-        return ResponseEntity.ok(paymentData);
+        return ResponseEntity.ok(paymentData.getPaymentUrl());
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> testiraj(){
-        String str = "LALALA";
-        return ResponseEntity.ok(str);
-    }
 
     @PostMapping("/pay-by-card")
     public Map<String, String> payByCard(@RequestBody CardAmountDTO cardAmountDTO) {
@@ -68,6 +63,9 @@ public class AcquirerController {
     public ResponseEntity<String> getUpdateAboutOrderStatus(@PathVariable String hashedId) {
         Transaction transaction = transactionRepository.findTransactionByHashedOrderId(hashedId);
 
+        if (transaction == null) {
+            return ResponseEntity.ok("Cancelled");
+        }
         if (transaction.getStatus().equals("SUCCESS")) {
             return ResponseEntity.ok("Paid");
         } else if (transaction.getStatus().equals("FAILED")) {

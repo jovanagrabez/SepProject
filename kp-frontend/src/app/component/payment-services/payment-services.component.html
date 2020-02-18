@@ -1,0 +1,8 @@
+
+<h1  style="margin-left: 40%">Choose a payment method</h1>
+<br/><br/>
+<div style="margin-left: 25%">
+  <div *ngFor="let service of paymentServices" >
+    <p class="list-group-item list-group-item-secondary"><a style="color: black" class="display-4" [href]="service['url']"><img src="{{service['imageAssociated']}}">{{service['name']}}</a></p>
+  </div>
+</div>

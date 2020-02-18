@@ -1,0 +1,23 @@
+<div style="margin-left: 30%; margin-right: 20%">
+  <form name="submit" (submit)="submit()">
+    <div *ngFor="let paymentMethod of paymentMethods">
+      <h1>{{paymentMethod['name']}}</h1>
+      <div *ngFor="let formData of paymentMethod['requiredFormData']">
+        <div class="form-group" *ngIf="formData['type'] === 'String' ">
+          <label class="text-black-50 font-weight-bold" for="{{formData['name']}}">{{formData['name']}}</label>
+          <input type="text" class="form-control" [name]="formData['name']"
+                 [(ngModel)]="formData['value']">
+        </div>
+        <div class="form-group" *ngIf="formData['type'] === 'number' ">
+          <label for="{{formData['name']}}">{{formData['name']}}</label>
+          <input type="number" [min]="1" class="form-control" [name]="formData['name']"
+                 [(ngModel)]="formData['value']">
+        </div>
+
+      </div>
+    </div>
+    <button class="btn btn-secondary" type="submit">Submit</button>
+
+  </form>
+
+</div>

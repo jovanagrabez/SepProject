@@ -2,6 +2,7 @@ package com.sep.nc.service.impl;
 
 import com.sep.nc.entity.MagazinePurchase;
 import com.sep.nc.entity.User;
+import com.sep.nc.entity.dto.UserDto;
 import com.sep.nc.entity.enumeration.PurchaseStatus;
 import com.sep.nc.repository.MagazinePurchasesRepository;
 import com.sep.nc.repository.MagazineRepository;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return this.userRepository.findUserByEmail(email);
+    public UserDto getUserByEmail(String email) {
+        return new UserDto(this.userRepository.findUserByEmail(email));
     }
 
     @Override

@@ -14,10 +14,10 @@ export class SubscribeService {
     return this.http.get('https://localhost:8762/naucna_centrala/api/subscribe/'.concat(magazineId)).subscribe(url => {
         console.log(url["url"]);
         // @ts-ignore
-        //this.router.navigate([url["url"]]);
+        // this.router.navigate([url["url"]]);
         window.open(url["url"], "_blank");
-        //this.document.location.href = url["url"];
-        //this.http.get(url['url']).subscribe(ret =>{
+        // this.document.location.href = url["url"];
+        // this.http.get(url['url']).subscribe(ret =>{
         //    console.log('success');
         //});
     }, error => {
