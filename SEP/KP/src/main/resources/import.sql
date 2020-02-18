@@ -2,9 +2,9 @@ insert into payment_method (id, name, create_transactionuri, check_statusuri, is
 insert into payment_method (id, name, create_transactionuri, check_statusuri, is_bank, image_associated) values (2, 'PayPal', 'https://localhost:8762/paypal_service/api/pay', 'https://localhost:8762/paypal_service/api/status', false, 'https://img.icons8.com/color/96/000000/paypal.png');
 insert into payment_method (id, name, create_transactionuri, check_statusuri, is_bank, image_associated) values (3, 'Bitcoin', 'https://localhost:8762/bitcoin_service/api/order', 'https://localhost:8762/bitcoin_service/api/order/status', false, 'https://img.icons8.com/office/80/000000/bitcoin.png');
 
-insert into seller (id, client_id, client_password, magazine, magazine_id) values (1, 1,'123','magazin', 1);
-insert into seller (id, client_id, client_password, magazine, magazine_id) values (2, 2,'123','magazin 1', 2);
-insert into seller (id, client_id, client_password, magazine, magazine_id) values (3, 3,'123','magazin 2', 3);
+insert into seller (id, client_id, client_password, magazine, magazine_id, user_id) values (1, 1,'123','magazin', 1, 3);
+insert into seller (id, client_id, client_password, magazine, magazine_id, user_id) values (2, 2,'123','magazin 1', 2, 4);
+insert into seller (id, client_id, client_password, magazine, magazine_id, user_id) values (3, 3,'123','magazin 2', 3, 5);
 
 insert into seller_payment_methods(seller_id, payment_methods_id) VALUES (1, 1);
 insert into seller_payment_methods(seller_id, payment_methods_id) VALUES (1, 3);

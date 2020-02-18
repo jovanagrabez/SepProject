@@ -43,9 +43,9 @@ public class PaypalService {
         transactions.add(transaction);
 
         Payer payer = new Payer();
-        payer.setPaymentMethod(method.toString());
+        payer.setPaymentMethod(PaymentMethod.PAYPAL.toString());
         Payment payment = new Payment();
-        payment.setIntent(intent.toString());
+        payment.setIntent(PaymentIntent.ORDER.toString());
         payment.setPayer(payer);
         payment.setTransactions(transactions);
 

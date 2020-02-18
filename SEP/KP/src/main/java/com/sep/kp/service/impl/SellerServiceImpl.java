@@ -63,10 +63,18 @@ public class SellerServiceImpl implements SellerService {
             }
         }
 
-        for (PaymentData paymentData : seller.getPaymentsData()) {
-            this.paymentDataRepository.save(paymentData);
+        List<PaymentData> paymentData = seller.getPaymentsData();
+        seller.setPaymentsData(null);
+        this.sellerRepository.save(seller);
+
+        for (int i = 0; i < paymentData.size(); i++) {
+            PaymentData pd = new PaymentData();
+            pd.setName(paymentData.get(i).getName());
+            pd.setValue(paymentData.get(i).getValue());
+            paymentData.set(i, this.paymentDataRepository.save(pd));
         }
 
+        seller.setPaymentsData(paymentData);
         this.sellerRepository.save(seller);
 
         return true;

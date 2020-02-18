@@ -27,7 +27,7 @@ export class AddSellerServiceComponent implements OnInit {
     this.paymentService.newPaymentMethods(this.id, this.paymentMethods).subscribe(ret => {
       this.toastr.successToastr('Success', 'Payment methods successfully updated');
       document.location.href = 'https://localhost:4200';
-    },err => {
+    }, err => {
       this.toastr.errorToastr('Error', 'Error while updating payment methods');
       document.location.href = 'https://localhost:4200';
     });
