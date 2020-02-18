@@ -29,14 +29,8 @@ public class PaypalService {
     @Autowired
     private JournalPlanRepository journalPlanRepository;
 
-    public Payment createPayment(
-            Double total,
-            String currency,
-            PaymentMethod method,
-            PaymentIntent intent,
-            String description,
-            String cancelUrl,
-            String successUrl) throws PayPalRESTException{
+    public Payment createPayment(Double total, String currency, PaymentMethod method, PaymentIntent intent,
+            String description, String cancelUrl, String successUrl) throws PayPalRESTException{
         Amount amount = new Amount();
         amount.setCurrency(currency);
         amount.setTotal(String.valueOf(total));
