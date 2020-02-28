@@ -29,14 +29,8 @@ public class PaypalService {
     @Autowired
     private JournalPlanRepository journalPlanRepository;
 
-    public Payment createPayment(
-            Double total,
-            String currency,
-            PaymentMethod method,
-            PaymentIntent intent,
-            String description,
-            String cancelUrl,
-            String successUrl) throws PayPalRESTException{
+    public Payment createPayment(Double total, String currency, PaymentMethod method, PaymentIntent intent,
+            String description, String cancelUrl, String successUrl) throws PayPalRESTException{
         Amount amount = new Amount();
         amount.setCurrency(currency);
         amount.setTotal(String.valueOf(total));
@@ -49,9 +43,9 @@ public class PaypalService {
         transactions.add(transaction);
 
         Payer payer = new Payer();
-        payer.setPaymentMethod(method.toString());
+        payer.setPaymentMethod(PaymentMethod.PAYPAL.toString());
         Payment payment = new Payment();
-        payment.setIntent(intent.toString());
+        payment.setIntent(PaymentIntent.ORDER.toString());
         payment.setPayer(payer);
         payment.setTransactions(transactions);
 
@@ -71,7 +65,7 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecute);
     }
 
-    public void createPlanForSubscription(CreatePlanRequest request){
+    public Long createPlanForSubscription(CreatePlanRequest request){
         //Build plan object
         Plan plan = new Plan();
         plan.setName(request.getNameOfJournal());
@@ -100,17 +94,17 @@ public class PaypalService {
         //merchant preferences
         MerchantPreferences merchantPreferences = new MerchantPreferences();
         merchantPreferences.setSetupFee(currency);
-        merchantPreferences.setCancelUrl("https://example.com/cancel");
-        merchantPreferences.setReturnUrl("https://localhost:8762/paypal_service/api/plan/finishSubscription");
+        merchantPreferences.setCancelUrl("https://localhost:4200");
+        merchantPreferences.setReturnUrl("https://localhost:8762/paypal_service/api/plan/finishSubscription/");
         merchantPreferences.setMaxFailAttempts("0");
         merchantPreferences.setAutoBillAmount("YES");
         merchantPreferences.setInitialFailAmountAction("CONTINUE");
         plan.setMerchantPreferences(merchantPreferences);
 
-        activatePlan(plan, request.getNameOfJournal());
+        return activatePlan(plan, request.getNameOfJournal());
     }
 
-    private void activatePlan(Plan plan, String nameOfJournal) {
+    private Long activatePlan(Plan plan, String nameOfJournal) {
         try {
             Plan createdPlan = plan.create(apiContext);
             log.info("Created plan with id = {}", createdPlan.getId());
@@ -131,14 +125,19 @@ public class PaypalService {
             createdPlan.update(apiContext, patchRequestList);
             JournalPlan journalPlan;
             journalPlan = JournalPlan.builder().journal(nameOfJournal).planId(createdPlan.getId()).build();
-            journalPlanRepository.save(journalPlan);
+            JournalPlan journalPlan1 = journalPlanRepository.save(journalPlan);
+            return journalPlan1.getId();
 
         } catch (PayPalRESTException e) {
             log.error(e.getDetails().getMessage());
         }
+        return 0L;
     }
 
-    public String subscribeToPlan(Long journalId) {
+    public String subscribeToPlan(CreatePlanRequest request) {
+
+        Long journalId = createPlanForSubscription(request);
+
         Agreement agreement = new Agreement();
         agreement.setName(String.format("Subscription for magazin no %s", journalId));
         agreement.setDescription("Basic Agreement");
@@ -148,7 +147,8 @@ public class PaypalService {
         agreement.setStartDate(df.format(rightNow));
 
         Plan plan = new Plan();
-        plan.setId(journalPlanRepository.findJournalPlanById(journalId).getPlanId());
+        JournalPlan journalPlan = journalPlanRepository.findJournalPlanById(journalId);
+        plan.setId(journalPlan.getPlanId());
         agreement.setPlan(plan);
 
         Payer payer = new Payer();
@@ -157,7 +157,6 @@ public class PaypalService {
 
         try {
             agreement = agreement.create(apiContext);
-
             for (Links links : agreement.getLinks()) {
                 if ("approval_url".equals(links.getRel())) {
                     return links.getHref();
@@ -174,7 +173,6 @@ public class PaypalService {
     public void finishSubscription(String token) {
         Agreement agreement = new Agreement();
         agreement.setToken(token);
-
         try {
             Agreement activeAgreement = agreement.execute(apiContext, agreement.getToken());
             log.info("Agreement created with ID {}", activeAgreement.getId());

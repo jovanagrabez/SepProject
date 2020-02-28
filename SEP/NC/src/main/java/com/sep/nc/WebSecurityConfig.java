@@ -90,6 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/api").permitAll()
+                .antMatchers("/api/user/register").permitAll()
                 .and();
 
         // presretni svaki zahtev filterom

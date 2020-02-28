@@ -25,4 +25,7 @@ public class JournalPlan implements Serializable {
 
     @Column
     private String planId;
+
+    @Column
+    private String agreementId;
 }

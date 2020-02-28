@@ -24,9 +24,8 @@ public class SubscribeController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping(value = "/subscribe/{magazineId}")
-    public String subscribeToPlan(@PathVariable Long magazineId) {
-        SubscribeDto subscribeDto = new SubscribeDto(magazineId);
+    @PostMapping(value = "/subscribe")
+    public String subscribeToPlan(@RequestBody SubscribeDto subscribeDto) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));

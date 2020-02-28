@@ -75,7 +75,7 @@ export class UserService {
   }
 
   register(user): any {
-    return this.http.post('user-admin-service/api/users/register', user);
+    return this.http.post('https://localhost:8762/naucna_centrala/api/user/register', user);
 
   }
 
